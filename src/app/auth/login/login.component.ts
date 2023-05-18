@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { User } from 'src/app/shared/models';
-import { AuthService } from 'src/app/shared/services';
+import { User } from 'src/app/shared/models/Index';
+import { AuthService } from 'src/app/shared/services/Index';
 
 @Component({
   selector: 'app-login',

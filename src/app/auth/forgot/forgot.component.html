@@ -25,15 +25,16 @@
             <div class="col-md-6 col-lg-5">
                 <div class="login-box bg-white box-shadow border-radius-10">
                     <div class="login-title">
-                        <h2 class="text-center text-primary">Login To DeskApp</h2>
+                        <h2 class="text-center text-primary">Reset Password</h2>
                     </div>
-                    <form [formGroup]="loginForm">
+                    <form [formGroup]="forgotForm">
                         <div class="input-group custom">
                             <input
                                 type="email"
                                 formControlName="email"
                                 id="email"
                                 value=""
+                                [attr.readonly]="email_status != 'yet'  ? true : null"
                                 class="form-control form-control-lg"
                                 placeholder="Email"
                             />
@@ -43,14 +44,45 @@
                                 ></span>
                             </div>
                         </div>
-                        <div class="input-group custom">
+                        <div class="input-group custom" *ngIf="email_status == 'approved'">
+                            <input
+                                type="text"
+                                formControlName="code"
+                                value=""
+                                [attr.readonly]="code_status != 'yet' ? true : null"
+                                id="code"
+                                class="form-control form-control-lg"
+                                placeholder="Enter Code"
+                            />
+                            <div class="input-group-append custom">
+                                <span class="input-group-text"
+                                    ><i class="dw dw-coding"></i
+                                ></span>
+                            </div>
+                        </div>
+                        <div class="input-group custom" *ngIf="code_status == 'approved'">
                             <input
                                 type="{{password_type}}"
                                 formControlName="password"
                                 value=""
                                 id="password"
                                 class="form-control form-control-lg"
-                                placeholder="Enter Password"
+                                placeholder="New Password"
+                            />
+                            <div class="input-group-append custom" (click)="setpassword_type()">
+                                <span class="input-group-text"
+                                    ><i class="dw" [ngClass]="{'dw-padlock1': password_type == 'password', 'dw-eye': password_type == 'text'}"></i
+                                ></span>
+                            </div>
+                        </div>
+                        <div class="input-group custom" *ngIf="password_status == 'VALID'">
+                            <input
+                                type="{{password_type}}"
+                                formControlName="confirmationpassword"
+                                value=""
+                                id="confirmationpassword"
+                                class="form-control form-control-lg"
+                                placeholder="Retype Password"
                             />
                             <div class="input-group-append custom" (click)="setpassword_type()">
                                 <span class="input-group-text"
@@ -61,39 +93,16 @@
                         <div>
                             <p>{{message}}</p>
                         </div>
-                        <div class="row pb-30">
-                            <div class="col-6">
-                                <div class="custom-control custom-checkbox">
-                                    <input
-                                        type="checkbox"
-                                        class="custom-control-input"
-                                        id="customCheck1"
-                                    />
-                                    <label class="custom-control-label" for="customCheck1"
-                                        >Remember</label
-                                    >
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="forgot-password">
-                                    <a  href="javascript:void()" [routerLink]="['/auth/forgot']" routerLinkActive="router-link-active">Forgot Password</a>
-                                </div>
-                            </div>
-                        </div>
                         <div class="row">
                             <div class="col-sm-12">
                                 <div class="input-group mb-0">
-                                    <!--
-                                    use code for form submit
-                                    <input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign In">
-                                -->
-                                    <a
+                                    <a *ngIf="!changed"
                                         class="btn btn-primary btn-lg btn-block"
-                                        href="javascript:void()" (click)="signIn($event)"
-                                        >Sign In</a
+                                        href="javascript:void()" (click)="submit($event)"
+                                        >Submit</a
                                     >
                                 </div>
-                                <div
+                                <div *ngIf="!changed"
                                     class="font-16 weight-600 pt-10 pb-10 text-center"
                                     data-color="#707373"
                                 >
@@ -102,8 +111,8 @@
                                 <div class="input-group mb-0">
                                     <a
                                         class="btn btn-outline-primary btn-lg btn-block"
-                                        href="javascript:void()" [routerLink]="['/auth/register']" routerLinkActive="router-link-active"
-                                        >Create Account</a
+                                        href="javascript:void()" [routerLink]="['/auth/login']" routerLinkActive="router-link-active"
+                                        >Login </a
                                     >
                                 </div>
                             </div>
