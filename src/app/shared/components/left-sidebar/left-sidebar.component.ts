@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 declare const $:any
 @Component({
   selector: 'app-left-sidebar',
@@ -6,7 +6,7 @@ declare const $:any
   styleUrls: ['./left-sidebar.component.scss']
 })
 export class LeftSidebarComponent implements OnInit {
-
+  @ViewChild('accordion-menu') accordion:ElementRef;
   constructor() { }
 
   ngOnInit(): void {
@@ -17,12 +17,12 @@ export class LeftSidebarComponent implements OnInit {
       $(".mobile-menu-overlay").toggleClass("show");
     });
     	// sidebar menu Active Class
-	// $("#accordion-menu").each(function () {
-	// 	var vars = window.location.href.split("/").pop();
-	// 	$(this)
-	// 		.find('a[href="' + vars + '"]')
-	// 		.addClass("active");
-	// });
+      $(this.el.nativeElement).each(function () {
+		var vars = window.location.href.split("/").pop();
+		$(this)
+			.find('a[href="' + vars + '"]')
+			.addClass("active");
+	});
 
     $("input:radio[name=menu-dropdown-icon]").change( ()=> {
 			// var className = $('input:radio[name=menu-dropdown-icon]:checked').val().toLowerCase().replace(/\s+/, "-");
