@@ -1,10 +1,17 @@
 # Sparklingv2
 
-Framework: [Angular CLI](https://github.com/angular/angular-cli) version 12.2.18.
-Design Template: [`Deskapp`](https://dropways.github.io/deskapp) by [`Ankit Hingarajiya`](https://github.com/dropways) 
-Project Developer: [`Chibuchi Somto`](https://github.com/orajiakuchibuchi)
 
-Purpose: This is an enterprise admin app built on angular while using the best software development standard for an enterprise environment.
+## Framework
+[Angular CLI](https://github.com/angular/angular-cli) version 12.2.18.
+
+## Design Template
+[`Deskapp`](https://dropways.github.io/deskapp) by [`Ankit Hingarajiya`](https://github.com/dropways) 
+
+## Project Developer
+[`Chibuchi Somto`](https://github.com/orajiakuchibuchi)
+
+## Purpose
+This is an enterprise admin app built on angular while using the best software development standard for an enterprise environment.
 
 ## Project-Centric Structure 
 - dist [`Built Project Result. Only this should be deployed to the server`]
