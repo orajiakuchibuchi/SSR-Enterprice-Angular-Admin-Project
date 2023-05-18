@@ -21,7 +21,7 @@ Purpose: This is an enterprise admin app built on angular while using the best s
     - environment [`Contains all versions of env files`]
     - index.html [`Landing File of project`]
     - main.ts [`Lunching Js File (Angular Custom)`]
-server.js [`Custom Angular SSR Applciation Server built on (ExpressJS)`]
+- server.js [`Custom Angular SSR Applciation Server built on (ExpressJS)`]
 
 ## Route Pattern 
 - / => `src/app`
