@@ -36,6 +36,7 @@ This is an enterprise admin app built on angular while using the best software d
 
 
 ## Proceedure to Lunch
+- Install `node modules` --legacy-peer-deps (To download node_modules )folder)
 - Boot or Start App
 - Serve App
 

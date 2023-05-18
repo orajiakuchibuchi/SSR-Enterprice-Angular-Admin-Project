@@ -2,11 +2,16 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialExampleModule } from './material.module';
-
+import { PageLoaderComponent, HeaderComponent, RightSidebarComponent,LeftSidebarComponent } from './components/Index';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    PageLoaderComponent,
+    HeaderComponent,
+    RightSidebarComponent,
+    LeftSidebarComponent
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -17,7 +22,11 @@ import { MaterialExampleModule } from './material.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialExampleModule
+    MaterialExampleModule,
+    PageLoaderComponent,
+    HeaderComponent,
+    RightSidebarComponent,
+    LeftSidebarComponent
   ]
 })
 export class SharedModule { }
