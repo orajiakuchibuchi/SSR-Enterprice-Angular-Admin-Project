@@ -35,14 +35,10 @@
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
-              "src/assets/vendors/styles/core.css",
-              "src/assets/vendors/styles/icon-font.min.css",
-              "src/assets/vendors/styles/style.css",
               "src/styles.scss"
             ],
             "scripts": [
-              "src/assets/vendors/scripts/jq.min.js",
-              "src/assets/vendors/scripts/layout-settings.js"
+              
             ]
           },
           "configurations": {
