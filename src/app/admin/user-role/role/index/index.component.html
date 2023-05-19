@@ -1,0 +1,70 @@
+
+<div class="page-header">
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>All Roles</h4>
+            </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="javascript:void()" [routerLink]="['/admin/user-role/records']" routerLinkActive="router-link-active" >User & Roles</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        All Roles
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="row pb-10">
+            <div class="col-xl-12 col-lg-12 col-md-12 mb-20">
+                <div class="card-box height-100-p widget-style3">
+                    <div class="d-flex flex-wrap">
+                        <div class="widget-data">
+                            <div class="row">
+                                <div class="col-md-3 border-right">
+                                    <div class="weight-700 font-24 text-dark">5</div>
+                                    <div class="font-14 text-secondary weight-500">
+                                        Total Roles
+                                    </div>
+                                </div>
+                                <div class="col-md-3 border-right">
+                                    <div class="weight-700 font-24 text-dark"><small>4</small></div>
+                                    <div class="font-14 text-secondary weight-500">
+                                        <small>Active</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 border-right">
+                                    <div class="weight-700 font-24 text-dark"><small>1</small></div>
+                                    <div class="font-14 text-secondary weight-500">
+                                        <small>Inactive</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="weight-700 font-24 text-dark"><small>1</small></div>
+                                    <div class="font-14 text-secondary weight-500">
+                                        <small>Deleted</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-icon">
+                            <div class="icon" data-color="#ff5b5b" style="color: rgb(255, 91, 91);">
+                                <span class="icon-copy dw dw-user-11"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-12 col-lg-12 col-md-12 mb-20">
+        <app-role-list></app-role-list>
+    </div>
+</div>

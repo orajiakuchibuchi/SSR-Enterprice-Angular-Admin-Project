@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col-12">
+        <mat-stepper [linear]="isLinear" #stepper [style.background-color]="'#142127'">
+            <mat-step [stepControl]="firstFormGroup">
+                <form [formGroup]="firstFormGroup">
+                    <ng-template matStepLabel class="text-white">Role Info</ng-template>
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <mat-form-field>
+                                <mat-label class="text-white">Name</mat-label>
+                                <input class="text-white" matInput placeholder="Name"
+                                    formControlName="name" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-12">
+
+                            <mat-form-field>
+                                <mat-label class="text-white">Status</mat-label>
+                                <input class="text-white" matInput placeholder="Status"
+                                    formControlName="status" required>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-12">
+
+                            <mat-form-field>
+                                <mat-label class="text-white">Search By Name</mat-label>
+                                <input class="text-white" matInput formControlName="searchName"
+                                    placeholder="searchName" type="text" required>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div>
+                        <button mat-button matStepperNext class="text-white btn">Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel class="text-white">Confirmation</ng-template>
+                <div *ngIf="!saved">
+                    <p class="text-white">You are almsot now done.</p>
+                    <p class="text-white">name: {{firstControls.name.value}}</p>
+                    <p class="text-white">status: {{firstControls.status.value}}</p>
+                   <p class="text-white">searchName: {{firstControls.searchName.value}}</p>
+                </div>
+                <div *ngIf="saved">
+                    <p class="text-white">{{message}}</p>
+                </div>
+                <div>
+                    <button mat-button matStepperPrevious class="text-white btn spacel" *ngIf="!saved">Back</button>
+                    <button mat-button class="text-white btn" [style.background-color]="'#009b72'" *ngIf="!saved" (click)="submit()">Save</button>
+                </div>
+            </mat-step>
+        </mat-stepper>
+    </div>
+</div>

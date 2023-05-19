@@ -8,6 +8,7 @@ declare const $: any
 })
 export class LeftSidebarComponent implements OnInit, AfterViewInit {
   @ViewChild('accordionmenu') accordion!: ElementRef;
+  activePage:string = '';
   constructor(private router: Router) { }
   ngAfterViewInit(): void {
     $('.menu-icon, [data-toggle="left-sidebar-close"]').on("click", ()=> {
@@ -84,6 +85,7 @@ export class LeftSidebarComponent implements OnInit, AfterViewInit {
   
       item.unbind("click").on("click", ()=> {
         var a = $(this.accordion.nativeElement);
+        console.log(a)
         if (options.autohide) {
           a.parent()
             .parent()
@@ -133,7 +135,7 @@ export class LeftSidebarComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-
+    this.setActivePage();
   }
   /**
  * Set local storage property value
@@ -149,8 +151,23 @@ export class LeftSidebarComponent implements OnInit, AfterViewInit {
   getOptions() {
     return JSON.parse(<any>localStorage.getItem("optionsObject"));
   }
-  navigateTo(route:any){
-    this.router.navigate([route])
+  setActivePage(){
+    const url = window.location.href.split("/")[4];
+    switch (url) {
+      case 'home':
+        this.activePage = 'Home';
+        break;
+      case 'user-role':
+        this.activePage = 'Users & Roles';
+        break;
+    }
+    console.log(this.activePage)
+  }
+  navigateTo(event: any, route:any){
+    event.preventDefault();
+    this.router.navigate([route]).finally(()=>{
+      this.setActivePage();
+    })
   }
 
 }

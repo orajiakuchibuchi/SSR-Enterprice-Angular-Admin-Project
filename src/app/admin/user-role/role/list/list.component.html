@@ -1,0 +1,107 @@
+<div class="card-box pb-10">
+    <div class="clearfix mb-20 pd-20">
+        <div class="pull-left">
+            <div class="h5 mb-0" *ngIf="showCreateForm">Create New Role</div>
+            <div class="h5 mb-0" *ngIf="!showCreateForm">List Of Roles</div>
+            <p *ngIf="!showCreateForm">Total <code *ngIf="(roles$ | async) as roles">{{roles.length}}</code></p>
+            <!-- <p *ngIf="showCreateForm">Action: <small>About to add new role</small></p> -->
+        </div>
+        <div class="pull-right">
+            <a href="javascript:void()" class="btn btn-primary btn-sm scroll-click" (click)="closeForm($event)"
+                rel="content-y" data-toggle="collapse" role="button" aria-expanded="true">
+
+                <i class="fa fa-plus" *ngIf="!showCreateForm"></i>
+                <i class="fa fa-step-backward" *ngIf="showCreateForm"></i>
+                <span *ngIf="!showCreateForm" class="ml-2">Create</span>
+                <span *ngIf="showCreateForm" class="ml-2">Back</span>
+            </a>
+        </div>
+    </div>
+    <div class="table-responsive" *ngIf="(roles$ | async) as roles">
+        <table class="data-table table nowrap" *ngIf="!showCreateForm && roles.length > 0">
+            <thead>
+                <tr>
+                    <th class="table-plus"><small>Name</small></th>
+                    <th><small>Assigned Users</small></th>
+                    <th><small>Status</small></th>
+                    <th><small>Created At</small></th>
+                    <th><small>Updated At</small></th>
+                    <th class="datatable-nosort">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let role of roles">
+                    <td class="table-plus">
+                        <div class="name-avatar d-flex align-items-center">
+                            <div class="txt">
+                                <div class="weight-600">{{role?.name}}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>{{role?.name}}</td>
+                    <td>{{role?.status}}</td>
+                    <td>{{role?.created_at | date}}</td>
+                    <td>{{role?.updated_at | date}}</td>
+                    <td>
+                        <div class="table-actions">
+                            <a href="javascript:void()" data-color="#265ed7"><i class="icon-copy dw dw-edit2"></i></a>
+                            <a href="javascript:void()" data-color="#e95959"><i
+                                    class="icon-copy dw dw-delete-3"></i></a>
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center p-2" *ngIf="(roles$ | async) as roles">
+        <p *ngIf="roles.length < 1">No record found</p>
+    </div>
+    <div *ngIf="showCreateForm" class="p-2">
+        <div class="row">
+            <div class="col-xl-8 col-lg-8 col-md-6 mb-20" *ngIf="(roles$ | async) as roles">
+                <div class="table-responsive" *ngIf="roles.length < 1" >
+                    <table class="data-table table nowrap">
+                        <thead>
+                            <tr>
+                                <th class="table-plus">Name</th>
+                                <th>Assigned Users</th>
+                                <th>Status</th>
+                                <th>Created At</th>
+                                <th>Last updated</th>
+                                <th class="datatable-nosort">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr *ngFor="let role of roles$ | async">
+                                <td class="table-plus">
+                                    <div class="name-avatar d-flex align-items-center">
+                                        <div class="txt">
+                                            <div class="weight-600">{{role?.name}}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{role?.name}}</td>
+                                <td>{{role?.status}}</td>
+                                <td>{{role?.created_at | date}}</td>
+                                <td>{{role?.updated_at | date}}</td>
+                                <td>
+                                    <div class="table-actions">
+                                        <a href="javascript:void()" data-color="#265ed7"><i
+                                                class="icon-copy dw dw-edit2"></i></a>
+                                        <a href="javascript:void()" data-color="#e95959"><i
+                                                class="icon-copy dw dw-delete-3"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-4 col-md-6 mb-20">
+                <app-role-create (doneCreating)="saveCompleted($event)"></app-role-create>
+            </div>
+        </div>
+    </div>
+</div>
