@@ -1,0 +1,143 @@
+
+<div class="page-header" *ngIf="title">
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>All Booking</h4>
+            </div>
+            <nav aria-label="breadcrumb" booking="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="javascript:void()" [routerLink]="['/admin/home/dashboard']" routerLinkActive="router-link-active" >Home</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Booking list
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<div class="card-box pb-10">
+    <div class="clearfix mb-20 pd-20" >
+        <div class="pull-left">
+            <div class="h5 mb-0">List Of bookings</div>
+            <div class="h6 mb-0" *ngIf="showCreateForm">Create New booking</div>
+            <p *ngIf="!showCreateForm">Total <code *ngIf="(bookings$ | async) as bookings">{{bookings.length}}</code></p>
+            <!-- <p *ngIf="showCreateForm">Action: <small>About to add new booking</small></p> -->
+        </div>
+        <div class="pull-right" *ngIf="showCreateButton">
+            <a href="javascript:void()" class="btn btn-primary btn-sm scroll-click" (click)="closeForm($event)"
+                rel="content-y" data-toggle="collapse" booking="button" aria-expanded="true">
+
+                <i class="fa fa-plus" *ngIf="!showCreateForm"></i>
+                <i class="fa fa-step-backward" *ngIf="showCreateForm"></i>
+                <span *ngIf="!showCreateForm" class="ml-2">Create</span>
+                <span *ngIf="showCreateForm" class="mvscode-file://vscode-app/c:/Users/HP/AppData/Local/Programs/Microsoft%20VS%20Code/resources/app/out/vs/code/electron-sandbox/workbench/workbench.htmll-2">Back</span>
+            </a>
+        </div>
+    </div>
+    <div class="table-responsive" *ngIf="(bookings$ | async) as bookings">
+        <table class="data-table table nowrap" *ngIf="!showCreateForm && bookings.length > 0">
+            <thead>
+                <tr>
+                    <th class="table-plus"><small>Name</small></th>
+                    <th><small>Country</small></th>
+                    <th><small>Postal</small></th>
+                    <th><small>Start</small></th>
+                    <th><small>End</small></th>
+                    <th><small>Status</small></th>
+                    <th><small>Created At</small></th>
+                    <th><small>Updated At</small></th>
+                    <th class="datatable-nosort">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let booking of bookings; let i=index;">
+                    <td class="table-plus">
+                        <div class="name-avatar d-flex align-items-center">
+                            <div class="txt">
+                                <div class="weight-600">{{booking.name}}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>{{booking.country}}</td>
+                    <td>{{booking.postal}}</td>
+                    <td>{{booking.start | date}}</td>
+                    <td>{{booking.end | date}}</td>
+                    <td>{{booking.status}}</td>
+                    <td>{{booking.created_at | date}}</td>
+                    <td>{{booking.updated_at | date}}</td>
+                    <td>
+                        <div class="table-actions">
+                            <a href="javascript:void()" data-color="#265ed7">
+                                <app-view [booking]="booking" [showLabel]="true" [index]="i" [showIcon]="false"></app-view>
+                            </a>
+                            
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center p-2" *ngIf="(bookings$ | async) as bookings">
+        <p *ngIf="bookings.length < 1">No record found</p>
+    </div>
+    <div *ngIf="showCreateForm" class="p-2">
+        <div class="row">
+            <div class="col-xl-6 col-lg-6col-md-6 mb-20" *ngIf="(bookings$ | async) as bookings">
+                <div class="table-responsive" *ngIf="bookings.length >0" >
+                    <table class="data-table table nowrap">
+                        <thead>
+                            <tr>
+                                <th class="table-plus"><small>Name</small></th>
+                                <th><small>Country</small></th>
+                                <th><small>Postal</small></th>
+                                <th><small>Start</small></th>
+                                <th><small>End</small></th>
+                                <th><small>Status</small></th>
+                                <th><small>Created At</small></th>
+                                <th><small>Updated At</small></th>
+                                <th class="datatable-nosort">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let booking of bookings">
+                                <td class="table-plus">
+                                    <div class="name-avatar d-flex align-items-center">
+                                        <div class="txt">
+                                            <div class="weight-600">{{booking.name}}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{booking.country}}</td>
+                                <td>{{booking.postal}}</td>
+                                <td>{{booking.start | date}}</td>
+                                <td>{{booking.end | date}}</td>
+                                <td>{{booking.status}}</td>
+                                <td>{{booking.created_at | date}}</td>
+                                <td>{{booking.updated_at | date}}</td>
+                                <td>
+                                    <div class="table-actions">
+                                        <a href="javascript:void()" data-color="#265ed7"><i class="icon-copy dw dw-edit2"></i></a>
+                                        <a href="javascript:void()" data-color="#e95959"><i
+                                                class="icon-copy dw dw-delete-3"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+            
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center p-2" *ngIf="bookings.length ==0" >
+                    <p>No record found</p>
+                </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 mb-20">
+                <app-calendar></app-calendar>
+            </div>
+        </div>
+    </div>
+</div>

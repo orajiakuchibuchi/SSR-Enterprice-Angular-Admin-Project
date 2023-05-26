@@ -2,6 +2,8 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/shared/models/Index';
 import { AuthService } from 'src/app/shared/services/Index';
+import { shareReplay } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,8 +12,9 @@ import { AuthService } from 'src/app/shared/services/Index';
 })
 export class LoginComponent implements OnInit, AfterViewInit {
   loginForm: FormGroup;
+  user: any = null;
   message: any = '';
-  constructor(private formBuilder: FormBuilder, private auth: AuthService) {
+  constructor(private formBuilder: FormBuilder,private router: Router, private auth: AuthService) {
     this.loginForm = this.formBuilder.group({
       created_at: [new Date(Date.now()), Validators.required],
       submited_at: [null, Validators.required],
@@ -29,6 +32,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    if(this.auth.sessionAuth){
+      this.router.navigate(['admin'])
+    }
 
   }
 
@@ -62,13 +68,17 @@ export class LoginComponent implements OnInit, AfterViewInit {
       return;
     }
     const user = this.postUserToServer();
-    this.auth.login(user).subscribe(
-      res=>{
+    this.user = user;
+    this.auth.login(this.user).pipe(
+      shareReplay()
+    ).subscribe(
+      (res:any)=>{
         console.log(res);
         this.message = res.response;
-      },
-      err =>{
-        console.log(err)
+        if(res.status == '200'){
+          this.router.navigate(['admin']);
+        }
+
       }
     )
   }

@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SettingComponent } from './setting/setting.component';
 import { HomeComponent } from './home.component';
+import { NotificationComponent } from './notification/notification.component';
 
 const routes: Routes = [
   {
@@ -20,7 +21,11 @@ const routes: Routes = [
       {
         path: 'setting',
         component: SettingComponent
-      }
+      },
+      {
+        path: 'notification',
+        component: NotificationComponent
+      },
     ]
   }
 ];

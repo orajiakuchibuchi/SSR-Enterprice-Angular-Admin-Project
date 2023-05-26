@@ -26,6 +26,10 @@ export class RegisterComponent implements OnInit {
   constructor(private _formBuilder: FormBuilder, private auth: AuthService, private router: Router) { }
 
   ngOnInit(): void {
+    if(this.auth.sessionAuth){
+      this.router.navigate(['admin'])
+    }
+
   }
 
   get firstControls(){
@@ -42,6 +46,10 @@ export class RegisterComponent implements OnInit {
       phone: this.firstControls.phone.value,
       email: this.secondControls.email.value,
       password: this.secondControls.password.value,
+      created_at: new Date(Date.now()).toISOString(),
+      updated_at: new Date(Date.now()).toISOString(),
+      role: ['Customer'],
+      status:'Active',
     }
     this.auth.register(user)
     .pipe(

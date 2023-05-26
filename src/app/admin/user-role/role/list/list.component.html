@@ -1,8 +1,8 @@
 <div class="card-box pb-10">
-    <div class="clearfix mb-20 pd-20">
+    <div class="clearfix mb-20 pd-20" >
         <div class="pull-left">
-            <div class="h5 mb-0" *ngIf="showCreateForm">Create New Role</div>
-            <div class="h5 mb-0" *ngIf="!showCreateForm">List Of Roles</div>
+            <div class="h5 mb-0">List Of Roles</div>
+            <div class="h6 mb-0" *ngIf="showCreateForm">Create New Role</div>
             <p *ngIf="!showCreateForm">Total <code *ngIf="(roles$ | async) as roles">{{roles.length}}</code></p>
             <!-- <p *ngIf="showCreateForm">Action: <small>About to add new role</small></p> -->
         </div>
@@ -13,7 +13,7 @@
                 <i class="fa fa-plus" *ngIf="!showCreateForm"></i>
                 <i class="fa fa-step-backward" *ngIf="showCreateForm"></i>
                 <span *ngIf="!showCreateForm" class="ml-2">Create</span>
-                <span *ngIf="showCreateForm" class="ml-2">Back</span>
+                <span *ngIf="showCreateForm" class="mvscode-file://vscode-app/c:/Users/HP/AppData/Local/Programs/Microsoft%20VS%20Code/resources/app/out/vs/code/electron-sandbox/workbench/workbench.htmll-2">Back</span>
             </a>
         </div>
     </div>
@@ -60,7 +60,7 @@
     <div *ngIf="showCreateForm" class="p-2">
         <div class="row">
             <div class="col-xl-8 col-lg-8 col-md-6 mb-20" *ngIf="(roles$ | async) as roles">
-                <div class="table-responsive" *ngIf="roles.length < 1" >
+                <div class="table-responsive" *ngIf="roles.length >0" >
                     <table class="data-table table nowrap">
                         <thead>
                             <tr>
@@ -74,7 +74,7 @@
                         </thead>
                         <tbody>
 
-                            <tr *ngFor="let role of roles$ | async">
+                            <tr *ngFor="let role of roles">
                                 <td class="table-plus">
                                     <div class="name-avatar d-flex align-items-center">
                                         <div class="txt">
@@ -97,6 +97,9 @@
                             </tr>
                         </tbody>
                     </table>
+                </div>
+                <div class="text-center p-2" *ngIf="roles.length ==0" >
+                    <p>No record found</p>
                 </div>
             </div>
             <div class="col-xl-4 col-lg-4 col-md-6 mb-20">

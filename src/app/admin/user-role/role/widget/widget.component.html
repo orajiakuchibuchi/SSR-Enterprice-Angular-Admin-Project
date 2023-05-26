@@ -1,0 +1,35 @@
+<div class="row pb-10">
+    <div class="col-xl-12 col-lg-12 col-md-12 mb-20">
+        <div class="card-box height-100-p widget-style3">
+            <div class="d-flex flex-wrap">
+                <div class="widget-data">
+                    <div class="row" *ngIf="(users$ | async) as users">
+                        <div class="col-md-4 border-right">
+                            <div class="weight-700 font-24 text-dark" *ngIf="totalRoles | async as total">{{total}}</div>
+                            <div class="font-14 text-secondary weight-500">
+                                Total Roles
+                            </div>
+                        </div>
+                        <div class="col-md-4 border-right">
+                            <div class="weight-700 font-24 text-dark"><small>{{admins}}</small></div>
+                            <div class="font-14 text-secondary weight-500">
+                                <small>Admins</small>
+                            </div>
+                        </div>
+                        <div class="col-md-4 border-right">
+                            <div class="weight-700 font-24 text-dark"><small>{{customers}}</small></div>
+                            <div class="font-14 text-secondary weight-500">
+                                <small>Customers</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-icon">
+                    <div class="icon" data-color="#ff5b5b" style="color: rgb(255, 91, 91);">
+                        <span class="icon-copy dw dw-human-resources"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

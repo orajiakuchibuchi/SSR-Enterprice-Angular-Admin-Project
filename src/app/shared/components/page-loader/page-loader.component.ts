@@ -44,7 +44,6 @@ export class PageLoaderComponent implements OnInit {
     }, stepTime);
     // Fading Out Loadbar on Finised
     setTimeout(function () {
-      console.log('herer')
       $('.pre-loader').fadeOut(300);
     }, this.time);
   }

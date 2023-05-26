@@ -1,0 +1,127 @@
+<div class="page-header">
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>Pricing</h4>
+            </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="javascript:void()" [routerLink]="['/admin/home/dashboard']"
+                            routerLinkActive="router-link-active">Home</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Pricing
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-lg-4 mb-30" *ngIf="isadmin | async ">
+        <div class="card-box pricing-card-style2">
+            <div class="pricing-card-header">
+                <div class="left">
+                    <h5 *ngIf="!newPlan.name.status">New Plan</h5>
+                    <h5 *ngIf="newPlan.name.status">{{newPlan.name.value}}</h5>
+                    <p *ngIf="!newPlan.suggestion.status">Your exclusive plan highlight</p>
+                    <p *ngIf="newPlan.suggestion.status">{{newPlan.suggestion.value}}</p>
+                </div>
+                <div class="right">
+                    <div class="pricing-price">€{{newPlan.amount.status ? newPlan.amount.value : 'unit price'}}<span>/ hour</span></div>
+                </div>
+            </div>
+            <div class="pricing-card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <form>
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-md-12 col-lg-2 col-form-label">Name</label>
+                                <div class="col-sm-12 col-md-12 col-lg-10">
+                                    <input class="form-control" [(ngModel)]="newPlan.name.value" (ngModelChange)="newPlan.name.changed($event)" name="name" type="text" placeholder="Enter plan name">
+                                </div>
+                            </div>
+                            <div class="form-group row" *ngIf="newPlan.name.status">
+                                <label class="col-sm-12 col-md-12 col-lg-2 col-form-label">Suggestion</label>
+                                <div class="col-sm-12 col-md-12 col-lg-10">
+                                    <input class="form-control" [(ngModel)]="newPlan.suggestion.value" name="suggestion" (ngModelChange)="newPlan.suggestion.changed($event)" placeholder="Suggestion " type="text">
+                                </div>
+                            </div>
+                            <div class="form-group row" *ngIf="newPlan.suggestion.status">
+                                <label class="col-sm-12 col-md-12 col-lg-2 col-form-label">Amount</label>
+                                <div class="col-sm-12 col-md-12 col-lg-10">
+                                    <input class="form-control" [(ngModel)]="newPlan.amount.value" name="amount" (ngModelChange)="newPlan.amount.changed($event)" type="number">
+                                </div>
+                            </div>
+                            <div class="form-group row" *ngIf="newPlan.amount.status">
+                                <label class="col-sm-12 col-md-12 col-lg-2 col-form-label">Features</label>
+                                <div class="col-sm-12 col-md-12 col-lg-10">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" [(ngModel)]="newPlan.features.value" name="features" (ngModelChange)="newPlan.features.changed($event)" placeholder="Feature text" aria-label="Feature text" aria-describedby="button-addon2">
+                                        <div class="input-group-append" *ngIf="newPlan.features.status">
+                                          <button class="btn btn-outline-secondary" (click)="newPlan.features.save()" type="button" id="button-addon2">Add</button>
+                                        </div>
+                                    </div>                                      
+                                </div>
+                                
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+                <div class="pricing-points" *ngIf="newPlan.features.children.length > 0">
+                    <ul>
+                        <li *ngFor="let feature of newPlan.features.children; let i=index;" [id]="newPlan.features._childId(feature)">
+                            <span class="row">
+                                <div class="col-10">{{feature}}</div>
+                                <div class="col-2 pointer" (click)="newPlan.features.removeChild(i)">
+                                    <i class="icon-copy bi bi-archive text-danger"></i>
+                                </div>
+                            </span>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="cta" *ngIf="
+            newPlan.features.children.length > 0 
+
+            && newPlan.amount.status
+            
+            &&
+            newPlan.suggestion.status
+
+            &&
+            newPlan.name.status
+            ">
+                <a href="javascript:void(0)" (click)="newPlan._submit()" class="btn btn-primary btn-rounded btn-lg">Create</a>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-6 col-lg-4 mb-30" *ngFor="let plan of plans$ | async">
+        <div class="card-box pricing-card-style2">
+            <div class="pricing-card-header">
+                <div class="left">
+                    <h5>{{plan.name}}</h5>
+                    <p>{{plan.suggestion}}</p>
+                </div>
+                <div class="right">
+                    <div class="pricing-price">€{{plan.amount}}<span>/hour</span></div>
+                </div>
+            </div>
+            <div class="pricing-card-body">
+                <div class="pricing-points">
+                    <ul>
+                        <li *ngFor="let feature of plan.features">{{feature}}</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="cta">
+                <a href="javascript:void(0)" class="btn btn-primary btn-rounded btn-lg" *ngIf="isadmin | async ">Update</a>
+            </div>
+        </div>
+    </div>
+</div>

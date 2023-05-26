@@ -1,0 +1,116 @@
+<a href="javascript:void()" data-toggle="modal" class="btn-block"
+
+[attr.data-target]="'#bd-example-modal-lg-'+index" type="button">
+    <i class="icon-copy dw dw-edit2" *ngIf="showIcon"></i> <span *ngIf="showLabel"></span>
+    <small>View</small>
+</a>
+
+<div class="modal fade bs-example-modal-lg" [id]="'bd-example-modal-lg-'+index" tabindex="-1" role="dialog"
+    [attr.aria-labelledby]="'myLargeModalLabel'+index" aria-hidden="true" data-backdrop="static" >
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myLargeModalLabel{{index}}">
+                    Booking Information
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="pd-20 card-box">
+                    <h4 class="mb-30 h4">{{booking?.name}}, {{booking?.postal}} , {{booking?.country}}</h4>
+                    <dl class="row">
+                        <dt class="col-sm-3">Created At</dt>
+                        <dd class="col-sm-9">
+                            {{booking?.created_at | date}}
+                        </dd>
+
+                        <dt class="col-sm-3">Status</dt>
+                        <dd class="col-sm-9">
+                            <p>
+                                {{ booking?.status  | titlecase}}
+                            </p>
+                        </dd>
+
+                        <dt class="col-sm-3">Begins At</dt>
+                        <dd class="col-sm-9">
+                            {{booking?.start | date}}
+                        </dd>
+
+                        <dt class="col-sm-3 text-truncate">
+                            Ending At
+                        </dt>
+                        <dd class="col-sm-9">
+                            {{booking?.end | date}}
+                        </dd>
+
+                        <dt class="col-sm-3 text-truncate">
+                            How frequently?
+                        </dt>
+                        <dd class="col-sm-9">
+                            {{booking?.frequency | titlecase}}
+                        </dd>
+
+                        <dt class="col-sm-3 text-truncate">
+                            Pricing
+                        </dt>
+                        <dd class="col-sm-9">
+                            {{booking?.pricing}}
+                        </dd>
+                        <dt class="col-sm-3 text-truncate">
+                            Cleaner
+                        </dt>
+                        <dd class="col-sm-9">
+                            {{booking?.cleaner}}
+                        </dd>
+
+                        <dt class="col-sm-3 text-truncate">
+                            Last Updated
+                        </dt>
+                        <dd class="col-sm-9">
+                            {{booking?.updated_at | date}}
+                        </dd>
+                        <dt class="col-sm-3 text-truncate">
+                            Description
+                        </dt>
+                        <dd class="col-sm-9">
+                            <span class="wrap">
+                                {{booking?.description}}
+                            </span>
+                        </dd>
+                    </dl>
+                    <div class="form-group" *ngIf="isAdmin | async as admin">
+                        <label>Change Cleaner</label>
+                        <select *ngIf="cleaners$ | async as cleaners" class="form-control" name="cleaner" [(ngModel)]="booking.cleaner">
+                            <option value="" selected>Assign Cleaner</option>
+                            <option [value]="cleaner.id" *ngFor="let cleaner of cleaners">{{ cleaner.firstName  | titlecase }} {{ cleaner.lastName  | titlecase }}</option>
+                        </select>
+                    </div>
+                    <div class="form-group" >
+                        <label>{{(isAdmin | async) ? 'Booking Status': 'Request update'}}</label>
+                        <select class="form-control" *ngIf="cleaners$ | async as cleaners" name="cleaner" [(ngModel)]="booking.status">
+                            <option [value]="booking.status  | titlecase" selected>{{booking.status  | titlecase}}</option>
+                            <option [value]="stat" *ngFor="let stat of statList">{{ stat  | titlecase }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-outline-danger" data-dismiss="modal" *ngIf="isAdmin | async as admin">
+                    <a href="javascript:void()" data-color="#e95959"><i
+                        class="icon-copy dw dw-delete-3"></i> Delete</a>
+                </button>
+                <a *ngIf="user$ | async as user" 
+                href="mailto:{{user.email}}?Subject=My Booking #{{booking.id}}&body=Order was booked at {{booking?.created_at | date}} of current status {{ booking?.status}} starts at {{ booking?.start | date}} ending at {{ booking?.end | date}} frequently {{booking?.frequency}} and was last updated at {{booking?.updated_at | date}} \n Booking Description {{booking?.description}} \nAddress: {{booking?.name}}, {{booking?.postal}} , {{booking?.country}}" 
+                type="button" class="btn btn-primary text-white btn-sm" target="_top">Mail Invoice</a>
+                <button type="button" class="btn btn-success" (click)="updateBooking()">
+                    Update
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

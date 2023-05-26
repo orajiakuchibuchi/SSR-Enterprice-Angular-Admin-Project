@@ -2,7 +2,11 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MaterialExampleModule } from './material.module';
-import { PageLoaderComponent, HeaderComponent, RightSidebarComponent,LeftSidebarComponent } from './components/Index';
+import { PageLoaderComponent, HeaderComponent, RightSidebarComponent,LeftSidebarComponent, CalendarComponent } from './components/Index';
+import { FlutterwaveModule } from "flutterwave-angular-v3"
+import { HttpClientModule } from '@angular/common/http';
+import { NotificationComponent } from './components/notification/notification.component';
+import { SitemapComponent } from './components/sitemap/sitemap.component';
 
 
 @NgModule({
@@ -10,13 +14,18 @@ import { PageLoaderComponent, HeaderComponent, RightSidebarComponent,LeftSidebar
     PageLoaderComponent,
     HeaderComponent,
     RightSidebarComponent,
-    LeftSidebarComponent
+    LeftSidebarComponent,
+    CalendarComponent,
+    NotificationComponent,
+    SitemapComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialExampleModule
+    MaterialExampleModule,
+    FlutterwaveModule,
+    HttpClientModule
   ],
   exports: [
     CommonModule,
@@ -26,7 +35,11 @@ import { PageLoaderComponent, HeaderComponent, RightSidebarComponent,LeftSidebar
     PageLoaderComponent,
     HeaderComponent,
     RightSidebarComponent,
-    LeftSidebarComponent
+    LeftSidebarComponent,
+    CalendarComponent,
+    HttpClientModule,
+    FlutterwaveModule,
+    NotificationComponent
   ]
 })
 export class SharedModule { }

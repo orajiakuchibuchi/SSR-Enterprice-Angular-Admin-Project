@@ -1,3 +1,4 @@
+import { CalendarComponent } from "./calendar/calendar.component";
 import { HeaderComponent } from "./header/header.component";
 import { LeftSidebarComponent } from "./left-sidebar/left-sidebar.component";
 import { PageLoaderComponent } from "./page-loader/page-loader.component";
@@ -8,4 +9,5 @@ export {
     HeaderComponent,
     RightSidebarComponent,
     LeftSidebarComponent,
+    CalendarComponent
 }

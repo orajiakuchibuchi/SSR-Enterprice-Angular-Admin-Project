@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserService } from '../../services/user/user.service';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { User } from '../../models/User';
+import { AuthService } from '../../services/Index';
 declare const $: any
 @Component({
   selector: 'app-left-sidebar',
@@ -9,7 +14,12 @@ declare const $: any
 export class LeftSidebarComponent implements OnInit, AfterViewInit {
   @ViewChild('accordionmenu') accordion!: ElementRef;
   activePage:string = '';
-  constructor(private router: Router) { }
+  isAdmin: Observable<boolean> = this._us.user$.pipe(
+    map((user:User)=>{
+      return user.role.includes('Admin')
+    })
+  )
+  constructor(private router: Router, private _us: UserService, private _auth: AuthService) { }
   ngAfterViewInit(): void {
     $('.menu-icon, [data-toggle="left-sidebar-close"]').on("click", ()=> {
       //$(this.accordion.nativeElement).toggleClass('open');
@@ -136,6 +146,11 @@ export class LeftSidebarComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.setActivePage();
+    
+  }
+  logout(){
+    this._auth.logout();
+    this.router.navigate(['auth/login'])
   }
   /**
  * Set local storage property value
@@ -153,6 +168,7 @@ export class LeftSidebarComponent implements OnInit, AfterViewInit {
   }
   setActivePage(){
     const url = window.location.href.split("/")[4];
+    console.log(url)
     switch (url) {
       case 'home':
         this.activePage = 'Home';
@@ -160,12 +176,21 @@ export class LeftSidebarComponent implements OnInit, AfterViewInit {
       case 'user-role':
         this.activePage = 'Users & Roles';
         break;
+      case 'pricing':
+        this.activePage = 'Pricing';
+        break;
+      case 'booking':
+        this.activePage = 'Booking';
+        break;
     }
     console.log(this.activePage)
   }
-  navigateTo(event: any, route:any){
+  navigateTo(event: any, route:string){
     event.preventDefault();
-    this.router.navigate([route]).finally(()=>{
+    console.log(route)
+    this.router.navigate([route]).catch((reason:any)=>{
+      console.log(reason);
+    }).finally(()=>{
       this.setActivePage();
     })
   }

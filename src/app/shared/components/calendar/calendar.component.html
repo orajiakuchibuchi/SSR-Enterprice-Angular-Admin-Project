@@ -1,0 +1,210 @@
+<div class="pd-20 card-box mb-30">
+    <div class="calendar-wrap">
+        <div [id]="id"></div>
+    </div>
+    <!-- calendar modal -->
+    <div
+        id="modal-view-event"
+        class="modal modal-top fade calendar-modal"
+    >
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <h4 class="h4">
+                        <span class="event-icon weight-400 mr-3"></span
+                        ><span class="event-title"></span>
+                    </h4>
+                    <div class="event-postal"></div>
+                    <div class="event-country"></div>
+                    <div class="event-frequency"></div>
+                    <div class="event-start"></div>
+                    <div class="event-end"></div>
+                    <div class="event-cleaner"></div>
+                    <div class="event-body"></div>
+                    <div class="event-extra_service"></div>
+                </div>
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        class="btn btn-primary"
+                        data-dismiss="modal"
+                    >
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div
+        id="modal-view-event-add"
+        class="modal modal-top fade calendar-modal"
+    >
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <form id="add-event">
+                    <div class="modal-body" *ngIf="canCreate">
+                        <h4 class="text-blue h4 mb-10">Create Booking {{selectedPeriod | date}}</h4>
+                        
+
+                        <div class="form-group">
+                            <label>Country <span class="text-danger">Country</span></label>
+                            <select class="form-control" [(ngModel)]="newBooking.country"  name="country">
+                                <option value="" selected>Country</option>
+                                <option value="USA">USA</option>
+                                <option value="UK">UK</option>
+                                <option value="Nigeria">Nigeria</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Address <span class="text-danger">*</span></label>
+                            <input
+                                type="text"
+                                [(ngModel)]="newBooking.name"
+                                class="form-control"
+                                name="name"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label>Postal code <span class="text-danger">*</span></label>
+                            <input type="text" [(ngModel)]="newBooking.postal" class="form-control" name="postal" />
+                        </div>
+                        <div class="form-group">
+                            <label>Start Period <span class="text-danger">*</span></label>
+                            <input
+                                type="datetime-local"
+                                [(ngModel)]="newBooking.start"
+                                class="datetimepicker form-control"
+                                name="start"
+                                min="{{today}}"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label>End Period <span class="text-danger">*</span></label>
+                            <input
+                                type="datetime-local"
+                                [(ngModel)]="newBooking.end"
+                                class="datetimepicker form-control"
+                                name="end"
+                                min="{{today}}"
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label>Property Details <span class="text-danger">*</span></label>
+                            <textarea class="form-control" [(ngModel)]="newBooking.description" name="description" placeholder="Enter your property details: Number of bedrooms and bathrooms and more"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Cleaning Frequency <span class="text-danger">*</span></label>
+                            <select class="form-control" [(ngModel)]="newBooking.frequency"  name="frequency">
+                                <option value="" selected>Cleaning frequency</option>
+                                <option value="Weekly">Weekly</option>
+                                <option value="Fortnightly">Fortnightly</option>
+                                <option value="One-off">One-off</option>
+                                <option value="Multiple days a week">Multiple days a week</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Pricing <span class="text-danger">*</span></label>
+                            <select class="form-control" name="pricing" (ngModelChange)="setAmount($event)" [(ngModel)]="newBooking.pricing">
+                                <option value="" selected>Select Pricing</option>
+                                <option [value]="plan.id" *ngFor="let plan of plans$ | async">
+                                    {{plan.name}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Extra Service</label>
+                            <select class="form-control" [(ngModel)]="newBooking.extra_service"  name="extra_service">
+                                <option value="" selected>Extra Services</option>
+                                <option value="Ironing">Ironing</option>
+                                <option value="Oven cleaning">Oven cleaning</option>
+                                <option value="Fridge cleaning">Fridge cleaning</option>
+                                <option value="window cleaning">window cleaning</option>
+                                <option value="Laundry cleaning supplies and detergents">Laundry cleaning supplies and detergents</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Event Color</label>
+                            <select class="form-control" name="color" [(ngModel)]="newBooking.color">
+                                <option value="fc-bg-default" selected>Default</option>
+                                <option value="fc-bg-blue">Blue</option>
+                                <option value="fc-bg-lightgreen">
+                                    Green
+                                </option>
+                                <option value="fc-bg-pinkred">Pink</option>
+                                <option value="fc-bg-deepskyblue">
+                                    Dark Blue
+                                </option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Event Icon</label>
+                            <select class="form-control" name="icon" [(ngModel)]="newBooking.icon">
+                                <option value="circle" selected>general</option>
+                                <option value="cog">emergency</option>
+                                <option value="group">family</option>
+                                <option value="suitcase">work</option>
+                                <option value="calendar">regular reminder</option>
+                            </select>
+                        </div>
+                        <div class="form-group" *ngIf="cleaners$ | async as cleaners">
+                            <label>Select Cleaner</label>
+                            <select class="form-control" name="cleaner" [(ngModel)]="newBooking.cleaner">
+                                <option value="" selected>Auto assign cleaner</option>
+                                <option [value]="cleaner.id" *ngFor="let cleaner of cleaners">{{ cleaner.firstName }} {{ cleaner.lastName }}</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="text-danger">{{message}}</label>
+                        </div>
+                    </div>
+                    <div class="modal-body" id="accordion" *ngIf="!canCreate">
+                        <h4 class="text-blue h4 mb-10">Bookings on {{selectedPeriod| date}}</h4>
+                        <div class="card" *ngFor="let list of eventList; let i=index">
+                            <div class="card-header">
+                                <button
+                                    class="btn btn-block"
+                                    data-toggle="collapse"
+                                   [attr.data-target]="'#eventList_'+i"
+                                >
+                                    {{list.postal}} <small>{{list.start}} - {{list.end}}</small>
+                                </button>
+                            </div>
+                            <div id="eventList_{{i}}" class="collapse" data-parent="#accordion">
+                                <div class="card-body">
+                                    {{list.cleaner}}
+                                    {{list.postal}}
+                                    {{list.country}}
+                                    {{list.extra_service}}
+                                    {{list.frequency}}
+                                    {{list.description}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <!-- <flutterwave-make-payment [public_key]="publicKey" [amount]="customerDetails.amount"
+                        currency='GBP' text="Pay {{amount}}" [customer]="customerDetails" [customizations]="customizations"
+                        [meta]="meta" [tx_ref]="reference" (callback)="makePaymentCallback($event)"
+                        (close)="closedPaymentModal()">
+                     </flutterwave-make-payment> -->
+                        <button type="button" (click)="submit()" class="btn btn-primary" *ngIf="canCreate">
+                            Save
+                        </button>
+                        <button type="button" class="btn btn-primary" *ngIf="!canCreate">
+                            Download
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            data-dismiss="modal"
+                            id="closeCreateModal"
+                        >
+                            Close
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

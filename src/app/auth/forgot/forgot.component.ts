@@ -1,6 +1,7 @@
 
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { User } from 'src/app/shared/models/Index';
 import { AuthService } from 'src/app/shared/services/Index';
 
@@ -13,7 +14,7 @@ export class ForgotComponent implements OnInit, AfterViewInit {
   forgotForm: FormGroup;
   message: any = '';
   changed: boolean = false;
-  constructor(private formBuilder: FormBuilder, private auth: AuthService) {
+  constructor(private formBuilder: FormBuilder, private auth: AuthService, private router: Router) {
     this.forgotForm = this.formBuilder.group({
       created_at: [new Date(Date.now()), Validators.required],
       submited_at: [null, Validators.required],
@@ -31,6 +32,10 @@ export class ForgotComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    if(this.auth.sessionAuth){
+      this.router.navigate(['admin'])
+    }
+
 
   }
 
