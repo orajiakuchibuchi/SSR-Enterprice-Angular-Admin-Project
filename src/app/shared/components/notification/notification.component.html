@@ -14,16 +14,15 @@
 </ul> -->
 
 <mat-accordion>
-    <mat-expansion-panel (opened)="panelOpenState = true"
-                         (closed)="panelOpenState = false">
+    <mat-expansion-panel *ngFor="let notify of notifications$ | async" (opened)="notify.status = 'seen'">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Self aware panel
+          {{notify.title}}
         </mat-panel-title>
         <mat-panel-description>
-          Currently I am {{panelOpenState ? 'open' : 'closed'}}
+          {{notify.created_at | date}} {{notify.status}}
         </mat-panel-description>
       </mat-expansion-panel-header>
-      <p>I'm visible because I am open</p>
+      <p>{{notify.message}}</p>
     </mat-expansion-panel>
   </mat-accordion>

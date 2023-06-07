@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-md-6 col-sm-12">
             <div class="title">
-                <h4>Setting</h4>
+                <h4>Account</h4>
             </div>
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
@@ -11,15 +11,553 @@
                         <a href="javascript:void()" [routerLink]="['/admin/home/dashboard']" routerLinkActive="router-link-active" >Home</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        Setting
+                        Account Setting
                     </li>
                 </ol>
             </nav>
         </div>
     </div>
 </div>
+
 <div class="row">
-    <div class="col-12">
-        <p>Page content</p>
+    <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12 mb-30">
+        <div class="pd-20 card-box height-100-p" *ngIf="$user | async as user">
+            <div class="profile-photo">
+                <a
+                    href="modal"
+                    data-toggle="modal"
+                    data-target="#modal"
+                    class="edit-avatar"
+                    ><i class="fa fa-pencil"></i
+                ></a>
+                <img
+                    src="assets/vendors/images/photo1.jpg"
+                    alt=""
+                    class="avatar-photo"
+                />
+                <div
+                    class="modal fade"
+                    id="modal"
+                    tabindex="-1"
+                    role="dialog"
+                    aria-labelledby="modalLabel"
+                    aria-hidden="true"
+                >
+                    <div
+                        class="modal-dialog modal-dialog-centered"
+                        role="document"
+                    >
+                        <div class="modal-content">
+                            <div class="modal-body pd-5">
+                                <div class="img-container">
+                                    <img
+                                        id="image"
+                                        src="assets/vendors/images/photo2.jpg"
+                                        alt="Picture"
+                                    />
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <input
+                                    type="submit"
+                                    value="Update"
+                                    class="btn btn-primary"
+                                />
+                                <button
+                                    type="button"
+                                    class="btn btn-default"
+                                    data-dismiss="modal"
+                                >
+                                    Close
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h5 class="text-center h5 mb-0">{{user.firstName}} {{user.lastName}}</h5>
+            <p class="text-center text-muted font-14">
+                Joined {{user.created_at | date}}
+            </p>
+            <div class="profile-info">
+                <h5 class="mb-20 h5 text-blue">Contact Information</h5>
+                <ul>
+                    <li>
+                        <span>Email Address:</span>
+                        {{user.email}}
+                    </li>
+                    <li>
+                        <span>Phone Number:</span>
+                        {{user.phone}}
+                    </li>
+                    <li>
+                        <span>Country:</span>
+                        {{user.country}}
+                    </li>
+                    <li>
+                        <span>Status:</span>
+                        {{user.status}}<br />
+                    </li>
+                    <li>
+                        <span>Role:</span>
+                        {{user.role[0]}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 mb-30">
+        <div class="card-box height-100-p overflow-hidden">
+            <div class="profile-tab height-100-p">
+                <div class="tab height-100-p">
+                    <ul class="nav nav-tabs customtab" role="tablist">
+                        <!-- <li class="nav-item">
+                            <a
+                                class="nav-link"
+                                data-toggle="tab"
+                                href="#timeline"
+                                role="tab"
+                                >Timeline</a
+                            >
+                        </li> -->
+                        <li class="nav-item">
+                            <a
+                                class="nav-link active"
+                                data-toggle="tab"
+                                href="#setting"
+                                role="tab"
+                                >Information</a
+                            >
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a
+                                class="nav-link"
+                                data-toggle="tab"
+                                href="#tasks"
+                                role="tab"
+                                >Password & Sessions</a
+                            >
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <!-- Timeline Tab start -->
+                        <div
+                            class="tab-pane fade"
+                            id="timeline"
+                            role="tabpanel"
+                        >
+                            <div class="pd-20">
+                                <div class="profile-timeline">
+                                    <div class="timeline-month">
+                                        <h5>August, 2020</h5>
+                                    </div>
+                                    <div class="profile-timeline-list">
+                                        <ul>
+                                            <li>
+                                                <div class="date">12 Aug</div>
+                                                <div class="task-name">
+                                                    <i class="ion-android-alarm-clock"></i> Task
+                                                    Added
+                                                </div>
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur
+                                                    adipisicing elit.
+                                                </p>
+                                                <div class="task-time">09:30 am</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">10 Aug</div>
+                                                <div class="task-name">
+                                                    <i class="ion-ios-chatboxes"></i> Task Added
+                                                </div>
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur
+                                                    adipisicing elit.
+                                                </p>
+                                                <div class="task-time">09:30 am</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">10 Aug</div>
+                                                <div class="task-name">
+                                                    <i class="ion-ios-clock"></i> Event Added
+                                                </div>
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur
+                                                    adipisicing elit.
+                                                </p>
+                                                <div class="task-time">09:30 am</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">10 Aug</div>
+                                                <div class="task-name">
+                                                    <i class="ion-ios-clock"></i> Event Added
+                                                </div>
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur
+                                                    adipisicing elit.
+                                                </p>
+                                                <div class="task-time">09:30 am</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="timeline-month">
+                                        <h5>July, 2020</h5>
+                                    </div>
+                                    <div class="profile-timeline-list">
+                                        <ul>
+                                            <li>
+                                                <div class="date">12 July</div>
+                                                <div class="task-name">
+                                                    <i class="ion-android-alarm-clock"></i> Task
+                                                    Added
+                                                </div>
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur
+                                                    adipisicing elit.
+                                                </p>
+                                                <div class="task-time">09:30 am</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">10 July</div>
+                                                <div class="task-name">
+                                                    <i class="ion-ios-chatboxes"></i> Task Added
+                                                </div>
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur
+                                                    adipisicing elit.
+                                                </p>
+                                                <div class="task-time">09:30 am</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="timeline-month">
+                                        <h5>June, 2020</h5>
+                                    </div>
+                                    <div class="profile-timeline-list">
+                                        <ul>
+                                            <li>
+                                                <div class="date">12 June</div>
+                                                <div class="task-name">
+                                                    <i class="ion-android-alarm-clock"></i> Task
+                                                    Added
+                                                </div>
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur
+                                                    adipisicing elit.
+                                                </p>
+                                                <div class="task-time">09:30 am</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">10 June</div>
+                                                <div class="task-name">
+                                                    <i class="ion-ios-chatboxes"></i> Task Added
+                                                </div>
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur
+                                                    adipisicing elit.
+                                                </p>
+                                                <div class="task-time">09:30 am</div>
+                                            </li>
+                                            <li>
+                                                <div class="date">10 June</div>
+                                                <div class="task-name">
+                                                    <i class="ion-ios-clock"></i> Event Added
+                                                </div>
+                                                <p>
+                                                    Lorem ipsum dolor sit amet, consectetur
+                                                    adipisicing elit.
+                                                </p>
+                                                <div class="task-time">09:30 am</div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Timeline Tab End -->
+                        <!-- Setting Tab start -->
+                        <div
+                            class="tab-pane fade show active height-100-p"
+                            id="setting"
+                            role="tabpanel"
+                        >
+                            <div class="profile-setting">
+                                <form>
+                                    <ul class="profile-edit-list row">
+                                        <li class="weight-500 col-md-12">
+                                            <h4 class="text-blue h5 mb-20">
+                                                Edit Your Personal Setting
+                                            </h4>
+                                            <div class="row" *ngIf="$user | async as user">
+                                                <div class="form-group col-md-6">
+                                                    <label>Firstname</label>
+                                                    <input
+                                                        class="form-control form-control-sm"
+                                                        type="text"
+                                                        name="firstName"
+                                                        [(ngModel)]="user.firstName"
+                                                    />
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Lastname</label>
+                                                    <input
+                                                        class="form-control form-control-sm"
+                                                        type="text"
+                                                        name="lastName"
+                                                        [(ngModel)]="user.lastName"
+                                                    />
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Country</label>
+                                                    <select
+                                                        class="form-control form-control-sm"
+                                                        data-style="btn-outline-secondary btn-lg"
+                                                        title="Change region"
+                                                        name="country"
+                                                        [(ngModel)]="user.country"
+                                                    >
+                                                        <option [value]="'USA'" [attr.selected]="(user.country == 'USA' || user.country == 'United States Of America') ? true : null">United States Of America</option>
+                                                        <option [value]="'Nigeria'" [attr.selected]="(user.country == 'Nigeria' || user.country == 'nigeria') ? true : null">Nigeria</option>
+                                                        <option [value]="'UK'" [attr.selected]="(user.country == 'UK' || user.country == 'United Kindom') ? true : null">United Kindom (UK)</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-md-6">
+                                                    <label>Phone Number</label>
+                                                    <input
+                                                        class="form-control form-control-sm"
+                                                        type="text"
+                                                        name="phone"
+                                                        [(ngModel)]="user.phone"
+                                                    />
+                                                </div>
+                                                <div class="form-group mb-0 ml-2">
+                                                    <input
+                                                        type="button"
+                                                        (click)="save(user)"
+                                                        class="btn btn-primary"
+                                                        value="Update Information"
+                                                    />
+                                                </div>
+    
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- Setting Tab End -->
+                        
+                        <!-- Tasks Tab start -->
+                        <div class="tab-pane fade" id="tasks" role="tabpanel">
+                            <div class="pd-20 profile-task-wrap">
+                                <div class="container pd-0">
+                                    <!-- Open Task start -->
+                                    <div class="task-title row align-items-center">
+                                        <div class="col-md-8 col-sm-12">
+                                            <h5>Session history</h5>
+                                        </div>
+                                        <div class="col-md-4 col-sm-12 text-right">
+                                            <a
+                                                href="task-add"
+                                                data-toggle="modal"
+                                                data-target="#task-add"
+                                                class="bg-light-blue btn text-blue weight-500"
+                                                ><i class="ion-plus-round"></i> Change Password</a
+                                            >
+                                        </div>
+                                    </div>
+                                    <div class="task-title row align-items-center">
+                                        <div class="col-md-12 col-sm-12">
+                                            <h5>Current Sessions</h5>
+                                        </div>
+                                    </div>
+                                    <div class="profile-task-list pb-30">
+                                        <ul>
+                                            <li>
+                                                <div
+                                                    class="custom-control custom-checkbox mb-5"
+                                                >
+                                                    <input
+                                                        type="checkbox"
+                                                        class="custom-control-input"
+                                                        id="task-1"
+                                                    />
+                                                    <label
+                                                        class="custom-control-label"
+                                                        for="task-1"
+                                                    ></label>
+                                                </div>
+                                                <div class="task-type">SSSSSSSSSSSSSSS</div>
+                                                Session token <small><strong> SSSSSSSSSSSSSSS  </strong></small> was created at --/--/----  
+                                                <div class="task-assign">
+                                                    UserId: 1, Auth-Id: 1
+                                                    <div class="due-date">
+                                                        due date <span>22 February 2019</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- Open Task End -->
+                                    <!-- Close Task start -->
+                                    <div class="task-title row align-items-center">
+                                        <div class="col-md-12 col-sm-12">
+                                            <h5>Other Sessions</h5>
+                                        </div>
+                                    </div>
+                                    <div class="profile-task-list close-tasks">
+                                        <ul>
+                                            <li>
+                                                <div
+                                                    class="custom-control custom-checkbox mb-5"
+                                                >
+                                                    <input
+                                                        type="checkbox"
+                                                        class="custom-control-input"
+                                                        id="task-close-1"
+                                                        checked=""
+                                                        disabled=""
+                                                    />
+                                                    <label
+                                                        class="custom-control-label"
+                                                        for="task-close-1"
+                                                    ></label>
+                                                </div>
+                                                <div class="task-type">SSSSSSSSSSSSSSS</div>
+                                                Session token <small><strong> SSSSSSSSSSSSSSS  </strong></small> was created at --/--/----  
+                                                <div class="task-assign">
+                                                    UserId: 1, Auth-Id: 1
+                                                    <div class="due-date">
+                                                        due date <span>22 February 2019</span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!-- Close Task start -->
+                                    <!-- add task popup start -->
+                                    <div
+                                        class="modal fade customscroll"
+                                        id="task-add"
+                                        tabindex="-1"
+                                        role="dialog"
+                                    >
+                                        <div
+                                            class="modal-dialog modal-dialog-centered"
+                                            role="document"
+                                        >
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5
+                                                        class="modal-title"
+                                                        id="exampleModalLongTitle"
+                                                    >
+                                                        Password Authentication
+                                                    </h5>
+                                                    <button
+                                                        type="button"
+                                                        class="close"
+                                                        data-dismiss="modal"
+                                                        aria-label="Close"
+                                                        data-toggle="tooltip"
+                                                        data-placement="bottom"
+                                                        title=""
+                                                        data-original-title="Close Modal"
+                                                    >
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body pd-0">
+                                                    <div class="task-list-form">
+                                                        <ul>
+                                                            <li>
+                                                                <form>
+                                                                    <div class="form-group row">
+                                                                        <label class="col-md-4"
+                                                                            >Current Password</label
+                                                                        >
+                                                                        <div class="col-md-8">
+                                                                            <input
+                                                                                type="text"
+                                                                                class="form-control"
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                            </li>
+                                                            <li>
+
+                                                                <form *ngIf="changingPassword">
+                                                                    <div class="form-group row">
+                                                                        <label class="col-md-4"
+                                                                            >New Password</label
+                                                                        >
+                                                                        <div class="col-md-8">
+                                                                            <input
+                                                                                type="text"
+                                                                                class="form-control"
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row mb-0">
+                                                                        <label class="col-md-4"
+                                                                            >Retype Password</label
+                                                                        >
+                                                                        <div class="col-md-8">
+                                                                            <input
+                                                                                type="text"
+                                                                                class="form-control"
+                                                                            />
+                                                                        </div>
+                                                                    </div>
+                                                                </form>
+                                                                <div class="add-more-task">
+                                                                    <a
+                                                                        href="javascript:void()"
+                                                                        data-toggle="tooltip"
+                                                                        data-placement="bottom"
+                                                                        title="Change password"
+                                                                        (click)="changingPassword = !changingPassword"
+                                                                        data-original-title="Change password"
+                                                                        ><i class="ion-plus-circled"></i> {{
+                                                                            changingPassword ? 'Not Changing Anymore' : 'I Want To Change My Password'
+                                                                        }}
+                                                                        </a
+                                                                    >
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button
+                                                        type="button"
+                                                        (click)="submit()"
+                                                        class="btn btn-primary btn-sm"
+                                                    >
+                                                        Submit
+                                                    </button>
+                                                    <button
+                                                        type="button"
+                                                        class="btn btn-secondary btn-sm"
+                                                        data-dismiss="modal"
+                                                    >
+                                                        Close
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- add task popup End -->
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Tasks Tab End -->
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

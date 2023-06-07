@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../services/user/user.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { User } from '../../models/User';
+import { User , Notification} from '../../models/Index';
+import { DeviceService } from '../../services/client/device.service';
 
 declare const $:any;
 declare const jQuery:any;
@@ -14,7 +15,8 @@ declare const jQuery:any;
 })
 export class RightSidebarComponent implements OnInit {
 	user$: Observable<any> = this._us.user$;
-	constructor(private _us: UserService) { }
+	notifications$: Observable<Notification[]> = this._ds.getNotificationApi$
+	constructor(private _us: UserService, private _ds: DeviceService) { }
   
   ngOnInit(): void {
     		//Layout settings visible
@@ -24,7 +26,8 @@ export class RightSidebarComponent implements OnInit {
 
 		//THEME OPTION CLOSE BUTTON
 		$('[data-toggle="right-sidebar-close"]').on("click", function () {
-			jQuery(".right-sidebar").removeClass("right-sidebar-visible");
+			jQuery
+			(".right-sidebar").removeClass("right-sidebar-visible");
 		});
 
   }

@@ -1,0 +1,102 @@
+
+
+
+
+
+<!-- <client-header></client-header> -->
+
+
+<div class="wrapper">
+    <!-- Header Start -->
+    <div class="header home">
+        <div class="container-fluid">
+            <div class="header-top row align-items-center">
+                <div class="col-lg-3">
+                    <div class="brand">
+                        <a href="javascript:void()">
+                            <span class="font-9 titlText">Sparking Green</span>
+                            <!-- <img src="assets/img/logo.png" alt="Logo"> -->
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="topbar">
+                        <div class="topbar-col">
+                            <a href="tel:+447948750605" target="_blank"><i class="fa fa-phone-alt"></i>+44 7948 750605</a>
+                        </div>
+                        <div class="topbar-col">
+                            <a href="mailto:buchi@morrhtech.com" target="_blank"><i class="fa fa-envelope"></i>info@sparklinggreen.com</a>
+                        </div>
+                        <div class="topbar-col">
+                            <div class="topbar-social">
+                                <!-- <a href=""><i class="fab fa-twitter"></i></a> -->
+                                <!-- <a href=""><i class="fab fa-facebook-f"></i></a> -->
+                                <a href="javascript:void()" [routerLink]="['/admin']" routerLinkActive="router-link-active" ><i class="fa fa-users"></i></a>
+                                <a href="tel:+447948750605" target="_blank"><i class="fab fa-instagram"></i></a>
+                                <a href="tel:+447948750605" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="navbar navbar-expand-lg bg-light navbar-light">
+                        <a href="javascript:void()" class="navbar-brand">Sparkling Green</a>
+                        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+
+                        <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                            <div class="navbar-nav ml-auto">
+                                <a href="javascript:void()" [routerLink]="['/']" routerLinkActive="router-link-active"  class="nav-item nav-link" [ngClass]="{'active': urL == '/'}">Home</a>
+                                <a  href="javascript:void()" [routerLink]="['/about']" routerLinkActive="router-link-active" class="nav-item nav-link" [ngClass]="{'active': urL == '/about'}">About</a>
+                                <a  href="javascript:void()" [routerLink]="['/services']" routerLinkActive="router-link-active" class="nav-item nav-link" [ngClass]="{'active': urL == '/services'}">Service</a>
+                                <a href="javascript:void()" [routerLink]="['/admin']" routerLinkActive="router-link-active" class="btn" *ngIf="isloggedIn && $user | async">{{($user | async).firstName + "'s"}} Dashboard</a>
+                                <a href="javascript:void()" [routerLink]="['/auth/login']" routerLinkActive="router-link-active" class="btn" *ngIf="!isloggedIn">Book now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero row align-items-center" id="HeroTop">
+                <div class="col-md-7">
+                    <h2>The Finest</h2>
+                    <h2><span>Organic Cleaning</span> Service</h2>
+                    <p>
+                        Find local cleaners near you
+Request my cleaning
+Regular or irregular, no commitment
+
+                    </p>
+                    <a class="btn" href="javascript:void()" *ngIf="$user | async as user" [routerLink]="[isloggedIn ? '/admin/booking/all' : 'auth/register']" routerLinkActive="router-link-active">Book Now</a>
+                </div>
+                <div class="col-md-5">
+                    <div class="form">
+                        <h3>Get A Quote</h3>
+                        <form>
+                            <input class="form-control" type="text" placeholder="Your Name">
+                            <input class="form-control" type="text" placeholder="Mobile Number">
+                            <div class="control-group">
+                                <select class="custom-select">
+                                    <option selected>Choose a service</option>
+                                    <option value="1">House Cleaning</option>
+                                    <option value="2">Apartment Cleaning</option>
+                                    <option value="3">Office Cleaning</option>
+                                </select>
+                            </div>
+                            <textarea class="form-control" placeholder="Description"></textarea>
+                            <button class="btn btn-block">Get A Quote</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Header End -->
+    
+    
+    <router-outlet></router-outlet>
+    <!-- Footer Start -->
+    <client-footer></client-footer>
+    <!-- Footer End -->
+    
+    <a href="javascript:void()" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+</div>

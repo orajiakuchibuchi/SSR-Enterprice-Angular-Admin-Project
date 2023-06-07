@@ -1,4 +1,4 @@
-export interface User {
+interface User {
     id: number;
     firstName: string;
     lastName: string;
@@ -13,3 +13,25 @@ export interface User {
     updated_at: string;
     userID: number;
 }
+
+
+const GUESS: User = {
+    firstName: '',
+    lastName: '',
+    country: '',
+    phone: 1234567890,
+    email: '',
+    password: '',
+    created_at: '',
+    updated_at: '',
+    role: [],
+    status: '',
+    userID: 0 ,
+    authToken: '',
+    id: 0
+  }
+
+  export {
+    User,
+    GUESS
+  }

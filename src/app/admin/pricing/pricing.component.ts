@@ -13,7 +13,7 @@ import { map } from 'rxjs/operators';
 })
 export class PricingComponent implements OnInit {
   newPlan: any = this.planReset;
-  plans$: Observable<Plan[]> = this.ps.plans$;
+  plans$: Observable<Plan[]> = this.ps.getPlansApi$;
   isadmin: Observable<any> = this._us.user$.pipe(
 		map((user:User)=>{
 			return user && user.role && (<string[]>user.role).includes('Admin')
@@ -43,6 +43,12 @@ export class PricingComponent implements OnInit {
         message: '',
         status: false,
         changed: (e:any)=>this.changed('amount', e)
+      },
+      icon: {
+        value: 'circle',
+        message: 'Optional. Defsult: Circle',
+        status: true,
+        changed: (e:any)=>this.changed('icon', e)
       },
       features: {
         value: '',
@@ -85,7 +91,8 @@ export class PricingComponent implements OnInit {
           name: this.newPlan.name.value,
           amount: this.newPlan.amount.value,
           features: this.newPlan.features.children,
-          suggestion: this.newPlan.suggestion.value
+          suggestion: this.newPlan.suggestion.value,
+          icon: this.newPlan.icon.value
         } );
       }
     }
@@ -117,6 +124,10 @@ export class PricingComponent implements OnInit {
       case 'amount': 
         this.newPlan.amount.message = 'Amount accepted!';
         this.newPlan.amount.status = true;
+        break;
+      case 'icon': 
+        this.newPlan.icon.message = 'Icon accepted!';
+        this.newPlan.icon.status = true;
         break;
       case 'features': 
         this.newPlan.features.status = value.length < 150;

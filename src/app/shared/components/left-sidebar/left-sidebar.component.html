@@ -1,9 +1,9 @@
 <div class="left-side-bar">
     <div class="brand-logo">
         <a href="javascript:void()" (click)="navigateTo($event,'admin/home')">
-            <img src="assets/vendors/images/deskapp-logo.svg" alt="" class="dark-logo" />
+            <img src="assets/img/sparkling-green-logo-rectangle.PNG" alt="" class="dark-logo" />
             <img
-                src="assets/vendors/images/deskapp-logo-white.svg"
+                src="assets/img/sparkling-green-logo-rectangle.PNG"
                 alt=""
                 class="light-logo"
             />
@@ -22,6 +22,7 @@
                     </a>
                     <ul class="submenu">
                         <li><a href="javascript:void()" (click)="navigateTo($event,'admin/home/dashboard')" >Dashboard</a></li>
+                        <li><a href="javascript:void()" (click)="navigateTo($event,'admin/home/setting')">Account</a></li>
                         <li><a href="javascript:void()" (click)="navigateTo($event,'admin/home/notification')">Notification</a></li>
                     </ul>
                 </li>
@@ -55,7 +56,7 @@
                         <!-- <li><a href="javascript:void()" (click)="navigateTo($event, 'admin/user-role/records')">Completed Bookings</a></li> -->
                     </ul>
                 </li>
-                <li class="dropdown">
+                <!-- <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
                         <span class="micon bi bi-diagram-3"></span
                         ><span class="mtext">Services</span>
@@ -63,7 +64,7 @@
                     <ul class="submenu">
                         <li><a href="javascript:void()" (click)="navigateTo($event, 'admin/user-role/records')">All Services</a></li>
                     </ul>
-                </li>
+                </li> -->
                 <li>
                     <div class="dropdown-divider"></div>
                 </li>
@@ -88,7 +89,7 @@
                 </li>
                 <li>
                     <a
-                    href="javascript:void()" (click)="navigateTo($event, 'admin/home')"
+                    href="javascript:void()" (click)="navigateTo($event, '')"
                         target="_blank"
                         class="dropdown-toggle no-arrow"
                     >

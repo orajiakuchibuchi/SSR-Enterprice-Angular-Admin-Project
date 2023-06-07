@@ -17,7 +17,7 @@ export class BookingService {
   bookings$: Observable<Booking[]> = this.listOfBookings.asObservable();
   public getBookingApi$: Observable<Booking[]> = this._us.user$.pipe(
     switchMap((user:any)=>{
-      if(user.id){
+      if(user && user.id && user.authToken){
         return this.getBookingsApi(user.role, user)
       }
       return of([])
@@ -35,7 +35,7 @@ export class BookingService {
     if(role.includes('Admin')){
       return this.http.get(`${this.apiUrl}/bookings`)
     }
-    let headerParams = new HttpParams().set('user.id', user.userID);
+    let headerParams = new HttpParams().set('user.userID', user.userID);
     return this.http.get(`${this.apiUrl}/bookings`, {params: headerParams})
   }
   add(event: any) {
@@ -50,5 +50,17 @@ export class BookingService {
       })
     )
 
+  }
+  delete(id:any){
+    return this.http.delete(`${this.apiUrl}/bookings/${id}`, ).pipe(
+      tap((evnt:any)=>{
+        const list = this.listOfBookings.value;
+        const index = list.findIndex(bk=>bk.id == id);
+        if(index > -1){
+          list.splice(index,1);
+          this.listOfBookings.next(list);
+        }
+      })
+    )
   }
 }

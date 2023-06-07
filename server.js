@@ -12,10 +12,10 @@ const SEC_PORT = '5001';
 // where '/dist/admin' is the final built directory
 const staticRoot = __dirname + '/dist/Sparklingv2/';
 
+const NODE_ENV_PORT = process.env.PORT || process.env.NODE_ENV; 
+const PORT = NODE_ENV_PORT || SEC_PORT;
 
-const env = process.env.NODE_ENV || SEC_PORT;
-
-app.set('port', env);
+app.set('port', PORT);
 
 // Compression middleware
 app.use(compression());

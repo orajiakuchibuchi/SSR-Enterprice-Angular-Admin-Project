@@ -149,8 +149,14 @@ export class LeftSidebarComponent implements OnInit, AfterViewInit {
     
   }
   logout(){
-    this._auth.logout();
-    this.router.navigate(['auth/login'])
+    this._auth.logout().subscribe(
+      res=>{
+        console.log(res);
+        this._us.forgetUser();
+        this.router.navigate(['']);
+      }
+    );
+    // this.router.navigate([''])
   }
   /**
  * Set local storage property value

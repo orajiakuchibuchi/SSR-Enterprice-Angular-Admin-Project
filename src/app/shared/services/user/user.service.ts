@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, throwError, of } from 'rxjs';
 import { tap, map, shareReplay } from 'rxjs/operators';
-import { Role, User, Menu } from '../../models/Index';
+import { Role, User, Menu, GUESS } from '../../models/Index';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../Index';
@@ -10,14 +10,14 @@ import { AuthService } from '../Index';
   providedIn: 'root'
 })
 export class UserService {
-  private user: BehaviorSubject<User> = new BehaviorSubject<any>({});
+  private user: BehaviorSubject<any> = new BehaviorSubject<any>({});
   private listOfUsers: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([
   ]);
   private listOfMenu: BehaviorSubject<Menu[]> = new BehaviorSubject<Menu[]>([]);
   public user$: Observable<User> = this.user.asObservable();
   public list$: Observable<User[]> = this.listOfUsers.asObservable();
-  public getAuthUserApi$: Observable<User>;
-  public getUsersApi$: Observable<User[]>;
+  public getAuthUserApi$: Observable<User> = of(GUESS);
+  public getUsersApi$: Observable<User[]> = of([]);
   public cleaners$: Observable<User[]> = this.listOfUsers.asObservable().pipe(
     map((users: User[]) => {
       return users.filter(u => u.role?.includes('Cleaner'));
@@ -121,6 +121,12 @@ export class UserService {
     })
   }
 
+  forgetUser(){
+    this.user.next(GUESS);
+    if(this._auth.sessionAuth){
+      this._auth.clearsessionAuth();
+    }
+  }
   createRole(role: Role) {
     const doesRoleExist = this.findRole(<string>role.name);
     if (!doesRoleExist) {

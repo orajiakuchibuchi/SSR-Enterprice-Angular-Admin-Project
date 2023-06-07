@@ -1,12 +1,11 @@
-<a href="javascript:void()" data-toggle="modal" class="btn-block"
-
-[attr.data-target]="'#bd-example-modal-lg-'+index" type="button">
+<a href="javascript:void()" data-toggle="modal" class="btn-block" [attr.data-target]="'#bd-example-modal-lg-'+index"
+    type="button">
     <i class="icon-copy dw dw-edit2" *ngIf="showIcon"></i> <span *ngIf="showLabel"></span>
     <small>View</small>
 </a>
 
 <div class="modal fade bs-example-modal-lg" [id]="'bd-example-modal-lg-'+index" tabindex="-1" role="dialog"
-    [attr.aria-labelledby]="'myLargeModalLabel'+index" aria-hidden="true" data-backdrop="static" >
+    [attr.aria-labelledby]="'myLargeModalLabel'+index" aria-hidden="true" data-backdrop="static">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -29,7 +28,7 @@
                         <dt class="col-sm-3">Status</dt>
                         <dd class="col-sm-9">
                             <p>
-                                {{ booking?.status  | titlecase}}
+                                {{ booking?.status | titlecase}}
                             </p>
                         </dd>
 
@@ -56,7 +55,7 @@
                             Pricing
                         </dt>
                         <dd class="col-sm-9">
-                            {{booking?.pricing}}
+                            £{{booking?.payment.amount}}
                         </dd>
                         <dt class="col-sm-3 text-truncate">
                             Cleaner
@@ -80,18 +79,43 @@
                             </span>
                         </dd>
                     </dl>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card card-box">
+                                <img class="card-img-top mx-h-300" src="assets/img/team-1.jpg" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title weight-500">Cleaner Name</h5>
+                                    <p class="card-text">
+                                        Cleaner rating
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+
+                            <div class="form-group">
+                                <label>{{(isAdmin | async) ? 'Booking Status': 'Request update'}}</label>
+                                <select class="form-control" *ngIf="cleaners$ | async as cleaners" name="cleaner"
+                                    [(ngModel)]="booking.status">
+                                    <option [value]="booking.status  | titlecase" selected>{{booking.status |
+                                        titlecase}}</option>
+                                    <option [value]="stat" *ngFor="let stat of statList">{{ stat | titlecase }}</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Message</label>
+                                <textarea class="form-control" name="message" rows="3" cols="3" placeholder="Optional Message"></textarea>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group" *ngIf="isAdmin | async as admin">
                         <label>Change Cleaner</label>
-                        <select *ngIf="cleaners$ | async as cleaners" class="form-control" name="cleaner" [(ngModel)]="booking.cleaner">
+                        <select *ngIf="cleaners$ | async as cleaners" class="form-control" name="cleaner"
+                            [(ngModel)]="booking.cleaner">
                             <option value="" selected>Assign Cleaner</option>
-                            <option [value]="cleaner.id" *ngFor="let cleaner of cleaners">{{ cleaner.firstName  | titlecase }} {{ cleaner.lastName  | titlecase }}</option>
-                        </select>
-                    </div>
-                    <div class="form-group" >
-                        <label>{{(isAdmin | async) ? 'Booking Status': 'Request update'}}</label>
-                        <select class="form-control" *ngIf="cleaners$ | async as cleaners" name="cleaner" [(ngModel)]="booking.status">
-                            <option [value]="booking.status  | titlecase" selected>{{booking.status  | titlecase}}</option>
-                            <option [value]="stat" *ngFor="let stat of statList">{{ stat  | titlecase }}</option>
+                            <option [value]="cleaner.id" *ngFor="let cleaner of cleaners">{{ cleaner.firstName |
+                                titlecase }} {{ cleaner.lastName | titlecase }}</option>
                         </select>
                     </div>
                 </div>
@@ -100,14 +124,15 @@
                 <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
                     Close
                 </button>
-                <button type="button" class="btn btn-outline-danger" data-dismiss="modal" *ngIf="isAdmin | async as admin">
-                    <a href="javascript:void()" data-color="#e95959"><i
-                        class="icon-copy dw dw-delete-3"></i> Delete</a>
+                <button type="button" class="btn btn-sm" [ngClass]="{'btn-outline-danger': !confirmed, 'btn-danger':confirmed}"
+                    *ngIf="isAdmin | async as admin">
+                    <a href="javascript:void()" data-color="#ffffff" class="text-dark" (click)="confirmed = true" *ngIf="!confirmed"><i class="icon-copy dw dw-delete-3"></i> Delete</a>
+                    <a href="javascript:void()" data-color="#ffffff" class="text-white" data-dismiss="modal" (click)="deleteBooking($event)" *ngIf="confirmed"><i class="icon-copy dw dw-delete-3"></i> Yes, I want to delete</a>
                 </button>
-                <a *ngIf="user$ | async as user" 
-                href="mailto:{{user.email}}?Subject=My Booking #{{booking.id}}&body=Order was booked at {{booking?.created_at | date}} of current status {{ booking?.status}} starts at {{ booking?.start | date}} ending at {{ booking?.end | date}} frequently {{booking?.frequency}} and was last updated at {{booking?.updated_at | date}} \n Booking Description {{booking?.description}} \nAddress: {{booking?.name}}, {{booking?.postal}} , {{booking?.country}}" 
-                type="button" class="btn btn-primary text-white btn-sm" target="_top">Mail Invoice</a>
-                <button type="button" class="btn btn-success" (click)="updateBooking()">
+                <a *ngIf="user$ | async as user"
+                    href="mailto:{{user.email}}?Subject=My Booking #{{booking.id}}&body=Order was booked at {{booking?.created_at | date}} of current status {{ booking?.status}} starts at {{ booking?.start | date}} ending at {{ booking?.end | date}} frequently {{booking?.frequency}} and was last updated at {{booking?.updated_at | date}} \n Booking Description {{booking?.description}} \nAddress: {{booking?.name}}, {{booking?.postal}} , {{booking?.country}}"
+                    type="button" class="btn btn-primary text-white btn-sm" target="_top">Mail Invoice</a>
+                <button type="button" class="btn btn-success btn-sm" (click)="updateBooking()">
                     Update
                 </button>
             </div>

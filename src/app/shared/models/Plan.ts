@@ -3,5 +3,8 @@ export interface Plan {
     name: string;
     suggestion: string;
     amount: number;
+    icon:string;
     features: string[];
+    created_at: string | Date;
+    updated_at: string | Date;
 }

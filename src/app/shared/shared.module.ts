@@ -7,6 +7,7 @@ import { FlutterwaveModule } from "flutterwave-angular-v3"
 import { HttpClientModule } from '@angular/common/http';
 import { NotificationComponent } from './components/notification/notification.component';
 import { SitemapComponent } from './components/sitemap/sitemap.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { SitemapComponent } from './components/sitemap/sitemap.component';
     LeftSidebarComponent,
     CalendarComponent,
     NotificationComponent,
-    SitemapComponent
+    SitemapComponent,
+    NotFoundComponent
   ],
   imports: [
     CommonModule,
@@ -39,7 +41,8 @@ import { SitemapComponent } from './components/sitemap/sitemap.component';
     CalendarComponent,
     HttpClientModule,
     FlutterwaveModule,
-    NotificationComponent
+    NotificationComponent,
+    NotFoundComponent
   ]
 })
 export class SharedModule { }

@@ -2,8 +2,9 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/shared/models/Index';
 import { AuthService } from 'src/app/shared/services/Index';
-import { shareReplay } from 'rxjs/operators';
+import { shareReplay, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { DeviceService } from 'src/app/shared/services/client/device.service';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   loginForm: FormGroup;
   user: any = null;
   message: any = '';
-  constructor(private formBuilder: FormBuilder,private router: Router, private auth: AuthService) {
+  constructor(private formBuilder: FormBuilder, private router: Router, private auth: AuthService, private _ds:DeviceService) {
     this.loginForm = this.formBuilder.group({
       created_at: [new Date(Date.now()), Validators.required],
       submited_at: [null, Validators.required],
@@ -75,8 +76,22 @@ export class LoginComponent implements OnInit, AfterViewInit {
       (res:any)=>{
         console.log(res);
         this.message = res.response;
-        if(res.status == '200'){
-          this.router.navigate(['admin']);
+        if(res.status == '200'){          
+          const _notificication = {
+            title: 'Login Successful',
+            message: `You have scuccessfully logged in at ${new Date(Date.now()).toLocaleString()}`,
+            status:'unseen',
+            userID: res.user.id,
+            created_at: new Date(Date.now()),
+            updated_at: new Date(Date.now()),
+          }
+          this.router.navigate(['']).finally(
+            ()=>{
+              this._ds.add(_notificication).subscribe(
+                res=>console.log(res)
+              )
+            }
+          );
         }
 
       }

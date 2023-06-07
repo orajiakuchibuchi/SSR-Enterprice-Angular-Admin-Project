@@ -41,6 +41,10 @@
               "src/assets/src/plugins/datatables/css/dataTables.bootstrap4.min.css",
               "src/assets/src/plugins/datatables/css/responsive.bootstrap4.min.css",
               "src/assets/vendors/styles/style.css",
+              "src/assets/lib/bootstrap/4.4.1/css/bootstrap.min.css",
+              "src/assets/lib/font-awesome/5.10.0/css/all.min.css",
+              "src/assets/lib/owlcarousel/assets/owl.carousel.min.css",
+              "src/assets/lib/lightbox/css/lightbox.min.css",
               "src/styles.scss"
             ],
             "scripts": [
@@ -49,12 +53,19 @@
               "src/assets/vendors/scripts/core.js",
               "src/assets/vendors/scripts/script.min.js",
               "src/assets/vendors/scripts/layout-settings.js",
+              "src/assets/src/plugins/cropperjs/dist/cropper.js",
               "src/assets/src/plugins/fullcalendar/fullcalendar.min.js",
               "src/assets/src/plugins/apexcharts/apexcharts.min.js",
               "src/assets/src/plugins/datatables/js/jquery.dataTables.min.js",
               "src/assets/src/plugins/datatables/js/dataTables.bootstrap4.min.js",
               "src/assets/src/plugins/datatables/js/dataTables.responsive.min.js",
-              "src/assets/src/plugins/datatables/js/responsive.bootstrap4.min.js"
+              "src/assets/src/plugins/datatables/js/responsive.bootstrap4.min.js",
+              "src/assets/lib/bootstrap/4.4.1/js/bootstrap.bundle.min.js",
+              "src/assets/lib/easing/easing.min.js",
+              "src/assets/lib/owlcarousel/owl.carousel.min.js",
+              "src/assets/lib/isotope/isotope.pkgd.min.js",
+              "src/assets/lib/lightbox/js/lightbox.min.js",
+              "src/assets/js/main.js"
             ]
           },
           "configurations": {
@@ -62,13 +73,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "30kb",
+                  "maximumError": "25kb"
                 }
               ],
               "fileReplacements": [

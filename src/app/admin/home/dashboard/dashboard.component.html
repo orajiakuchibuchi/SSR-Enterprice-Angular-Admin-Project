@@ -63,7 +63,7 @@
                 </div>
                 <div class="widget-icon">
                     <div class="icon" data-color="#ff5b5b" style="color: rgb(255, 91, 91);">
-                        <span class="fa fa-bell-o"></span>
+                        <span class="fa fa-minus"></span>
                     </div>
                 </div>
             </div>
@@ -73,9 +73,9 @@
         <div class="card-box height-100-p widget-style3">
             <div class="d-flex flex-wrap">
                 <div class="widget-data">
-                    <div class="weight-700 font-24 text-dark">400+</div>
+                    <div class="weight-700 font-24 text-dark" *ngIf="user$ | async as user">{{user.role[0]}}</div>
                     <div class="font-14 text-secondary weight-500">
-                        Available Services
+                        User Role
                     </div>
                 </div>
                 <div class="widget-icon">

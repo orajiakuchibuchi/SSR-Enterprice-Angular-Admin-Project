@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { User , Notification} from '../../models/Index';
+import { DeviceService } from '../../services/client/device.service';
 
 @Component({
   selector: 'app-notification',
@@ -7,10 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotificationComponent implements OnInit {
   panelOpenState = false;
-
-  constructor() { }
+  notifications$: Observable<Notification[]> = this._ds.getNotificationApi$
+  constructor(private _ds: DeviceService) { }
 
   ngOnInit(): void {
+    this.notifications$.subscribe(
+      l=>console.log(l)
+    )
   }
 
 }

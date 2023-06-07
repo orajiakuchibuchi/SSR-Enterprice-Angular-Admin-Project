@@ -1,0 +1,38 @@
+<div class="price">
+    <div class="container">
+        <div class="section-header">
+            <p> No Extra Hidden Charges (Flutterwave, Paystacks, Bank & Card Payments, Paypal etc..)</p>
+            <h2>Pricing Plan</h2>
+        </div>
+        <div class="row">
+            <div class="col-md-4" *ngFor="let plan of prices$ | async">
+                <div class="price-item">
+                    <div class="price-header">
+                        <div class="price-icon">
+                            <i class="fa" [class]="'fa-'+plan.icon"></i>
+                        </div>
+                        <div class="price-title">
+                            <h2>{{plan.name}}</h2>
+                        </div>
+                        <div class="price-pricing">
+                            <h2><small>£ </small>{{plan.amount}}</h2>
+                        </div>
+                    </div>
+                    <div class="price-body">
+                        <div class="price-des">
+                            <ul>
+                                <li>{{plan.suggestion}}</li>
+                                <li *ngFor="let pont of plan.features">{{pont}}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="price-footer">
+                        <div class="price-action">
+                            <a href="javascript:void()" (click)="navigateTo('admin/booking/records')" ><i class="fa fa-shopping-cart"></i>Book Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

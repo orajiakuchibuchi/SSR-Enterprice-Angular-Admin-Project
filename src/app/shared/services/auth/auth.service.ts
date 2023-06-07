@@ -14,7 +14,7 @@ export class AuthService {
   public user$: Observable<User> = this.user.asObservable();
   apiUrl: string = environment.api;
   constructor(private http: HttpClient) {
-    let registedUser = sessionStorage.getItem('registedUser');
+    let registedUser = localStorage.getItem('registedUser');
     if (registedUser) {
       this.listOfUsers.next(JSON.parse(registedUser));
     }
@@ -28,7 +28,7 @@ export class AuthService {
     let list = this.listOfUsers.value;
     // user.id = list.length;
     list.push(user);
-    sessionStorage.setItem('registedUser', JSON.stringify(list));
+    localStorage.setItem('registedUser', JSON.stringify(list));
     this.listOfUsers.next(list);
     return this.http.post(`${this.apiUrl}/users`, user).pipe(
       map(
@@ -50,25 +50,28 @@ export class AuthService {
     })
   }
   get sessionAuth(): any {
-    return sessionStorage.getItem('_authToken');
+    return localStorage.getItem('_authToken');
   }
   setsessionAuth(token: string) {
-    sessionStorage.setItem('_authToken', token)
+    localStorage.setItem('_authToken', token)
   }
   clearsessionAuth() {
-    sessionStorage.removeItem('_authToken')
+    localStorage.removeItem('_authToken')
   }
   logout(){
-    this.clearsessionAuth();
-    this.user.next(undefined)
+    return this.deleteAuthTokenApi(this.sessionAuth).pipe(
+      tap((res:any)=>{
+        this.clearsessionAuth();
+        this.user.next(undefined);
+        this._clearsession();
+      })
+    )
+  }
+  private _clearsession(){
+    localStorage.clear();
   }
 
   private authticateUserApi(user: User) {
-    // return of({
-    //   status: '200',
-    //   response: 'User successfully registered in the server',
-    //   user
-    // })
     user.userID = user.id;
     let authUser:any = user;
     authUser.id = undefined;
@@ -112,6 +115,7 @@ export class AuthService {
         if (response.status) {
           return this.authticateUserApi(response.user).pipe(
             tap((response: any) => {
+              console.log(response)
               this.setsessionAuth(response.res.authToken);
               this.user.next(response.res);
             })
@@ -132,8 +136,57 @@ export class AuthService {
     let headerParams = new HttpParams().set('authToken', token);
     return this.http.get(`${this.apiUrl}/auth`, { params: headerParams })
   }
+  private deleteAuthTokenApi(token: any): Observable<any> {
+    if(token){
+      return this.getAuthUserApi(token).pipe(
+        map((res:any[])=>res.pop()),
+        switchMap((result:any)=>{
+          if(result.id){
+            return this.http.delete(`${this.apiUrl}/auth/${result.id}`).pipe(
+              map(res=>{
+                return {
+                  status: '200',
+                  response:'Successfully logged out user',
+                  data: res
+                }
+              })
+            )
+          }
+          return of(
+            {
+              status: '403',
+              response: 'Invalid user in session'
+            }
+          )
+        })
+      )
+    }      
+    return of(
+      {
+        status: '403',
+        response: 'Invalid token in session'
+      }
+    )
+  }
+  private getUserByEmailApi(email: any): Observable<any> {
+    let headerParams = new HttpParams().set('email', email);
+    return this.http.get(`${this.apiUrl}/users`, { params: headerParams })
+  }
   register(data: any) {
-    return this.registerApi(data);
+    return this.getUserByEmailApi(data.email).pipe(
+      switchMap((response:any)=>{
+        if(response && response.length > 0){
+          return of(
+            {
+              status: '403',
+              response: 'User with email already exists'
+            }
+          )
+        }
+        return this.registerApi(data);
+      })
+    )
+    
   }
   login(data: User) {
     return this.loginApi(data);

@@ -158,11 +158,13 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
     this._us.user$.subscribe(
       u=>{
         this.user = u;
-        console.log(u)
-        this.customerDetails.name = <string>u.firstName;
-        this.customerDetails.email = u.email;
-        this.customerDetails.phone_number = (<any>u.phone);
-        this.meta.counsumer_id = (<any>u.id);
+        console.log(u);
+        if(u && u.id){
+          this.customerDetails.name = <string>u.firstName;
+          this.customerDetails.email = u.email;
+          this.customerDetails.phone_number = (<any>u.phone);
+          this.meta.counsumer_id = (<any>u.id);
+        }
       }
     )
     this.plans$.subscribe(
