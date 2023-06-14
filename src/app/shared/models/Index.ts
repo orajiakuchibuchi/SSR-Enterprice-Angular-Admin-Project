@@ -5,6 +5,8 @@ import {Menu} from './Menu'
 import {Plan} from './Plan'
 import {Booking} from './Booking'
 import {Notification} from './Notification'
+import {Preference} from './Preference'
+import {App} from './App'
 export {
     User,
     Role,
@@ -13,5 +15,7 @@ export {
     Plan,
     Booking,
     Notification,
+    Preference,
+    App,
     GUESS
 }

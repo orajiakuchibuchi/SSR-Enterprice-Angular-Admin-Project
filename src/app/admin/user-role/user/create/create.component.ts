@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/Index';
 import { map, tap } from 'rxjs/operators';
@@ -13,6 +13,8 @@ import { UserService } from 'src/app/shared/services/user/user.service';
   styleUrls: ['./create.component.scss']
 })
 export class CreateComponent implements OnInit {
+  @Input('role') role:string='';
+  @Input('showTitle') showTitle:boolean=false;
   firstFormGroup = this._formBuilder.group({
     firstName: ['', Validators.required],
     lastName: ['', Validators.required],
@@ -22,14 +24,14 @@ export class CreateComponent implements OnInit {
   secondFormGroup = this._formBuilder.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
-    role: ['', [Validators.required]],
+    role: [this.role, [Validators.required]],
   });
   isLinear = true;
   saved = false;
   message = '';
   assignableRole:Observable<Role[]> = this._us.roles$.pipe(
     map((roles:Role[])=>{
-      return roles.filter(r=>r.name == 'Admin' || r.name =='Cleaner')
+      return roles.filter(r=>r.name != 'Master')
     })
   );
   @Output() hasSaved: EventEmitter<Role> = new EventEmitter<Role>();

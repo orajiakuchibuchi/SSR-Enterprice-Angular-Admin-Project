@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserRoleComponent } from './user-role.component';
 import { RecordComponent } from './record/record.component';
-import { RoleIndex } from './role/Index';
+import { RoleIndex, RoleShow } from './role/Index';
 import { UserIndex } from './user/Index';
 
 const routes: Routes = [
@@ -17,6 +17,10 @@ const routes: Routes = [
       {
         path: 'all-roles',
         component: RoleIndex
+      },
+      {
+        path: 'role/show/:id',
+        component: RoleShow
       },
       {
         path: 'all-users',

@@ -17,6 +17,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     background-color: #142127;
     color: #FFF;
 }
+.text-primary{
+  color: #092403 !important;
+}
 
 .shakeit {
     animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;

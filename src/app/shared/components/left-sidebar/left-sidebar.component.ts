@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../../models/User';
 import { AuthService } from '../../services/Index';
+import { Preference } from '../../models/Preference';
+import { DeviceService } from '../../services/client/device.service';
 declare const $: any
 @Component({
   selector: 'app-left-sidebar',
@@ -19,7 +21,13 @@ export class LeftSidebarComponent implements OnInit, AfterViewInit {
       return user.role.includes('Admin')
     })
   )
-  constructor(private router: Router, private _us: UserService, private _auth: AuthService) { }
+  isMaster: Observable<boolean> = this._us.user$.pipe(
+    map((user:User)=>{
+      return user.role.includes('Master')
+    })
+  )
+  config$:Observable<Preference> =this._ds.preference$;
+  constructor(private router: Router, private _us: UserService,private _ds: DeviceService, private _auth: AuthService) { }
   ngAfterViewInit(): void {
     $('.menu-icon, [data-toggle="left-sidebar-close"]').on("click", ()=> {
       //$(this.accordion.nativeElement).toggleClass('open');

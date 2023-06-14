@@ -1,9 +1,9 @@
 <div class="right-sidebar">
     <div class="sidebar-title">
         <h3 class="weight-600 font-16 text-blue">
-            Settings
+            Sparkling Green
             <span class="btn-block font-weight-400 font-12"
-                >User Interface Settings</span
+                >Switch to other available app & services </span
             >
         </h3>
         <div class="close-sidebar" data-toggle="right-sidebar-close">
@@ -12,23 +12,42 @@
     </div>
     <div class="right-sidebar-body customscroll">
         <div class="right-sidebar-body-content">
-            <h4 class="weight-600 font-18 pb-10 h4">My Information</h4>
             <div class="row" *ngIf="user$ | async as user">
-                <div class="col-12">
-                    <p>Firstname: {{user.firstName}}</p>
-                    <p>Lastname: {{user.lastName}}</p>
-                    <p>Phone: {{user.phone}}</p>
-                    <p>Country: {{user.country}}</p>
-                    <p>Email: {{user.email}}</p>
-                    <p>Roles: <span *ngFor="let role of user.role">{{role}}</span></p>
+                <label class="col-sm-12 col-md-12 col-form-label">
+                    Switch Apps
+                </label>
+                <div class="col-6 p-2 app_item" *ngFor="let app of apps| async">
+                    <div class="card bg-light bg-white card-box mn-h-100" [ngClass]="{'active': (selectedApp | async ) && (selectedApp | async )?.id == app.id}" (click)="changeApp(app)">
+                        <img class="card-img" [src]="app.icon" height="70" [alt]="app.short_name">
+                        <div class="card-img-overlay">
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="mx-h-350 customscroll">
-                <app-sitemap></app-sitemap>
+            <div class="mx-h-350 mt-10 P-2 customscroll">
+                <div class="row" *ngIf="config | async as preference">
+                    <!-- <div class="col-12 mb-5">
+                        <h4>Theme</h4>
+                    </div> -->
+                    <div class="col-12">
+                        <hr>
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-12 col-form-label">Sidenav background <strong></strong> ({{preference.sideNavColor }})</label>
+                            <div class="col-sm-12 col-md-12">
+                                <input class="form-control" [value]="preference.sideNavColor" [(ngModel)]="preference.sideNavColor" name="color" (ngModelChange)="changeColor(preference)" type="color">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-12">
+                        <app-sitemap></app-sitemap>
+                    </div> -->
+                </div>
             </div>
 
             <div class="reset-options pt-30 text-center">
-                <button class="btn btn-danger" id="reset-settings" *ngIf="user$ | async as user">
+                <button class="btn btn-danger" id="reset-settings" (click)="logout()" *ngIf="user$ | async as user">
                     Logout
                 </button>
             </div>

@@ -6,14 +6,14 @@
             <p *ngIf="!showCreateForm">Total <code *ngIf="(roles$ | async) as roles">{{roles.length}}</code></p>
             <!-- <p *ngIf="showCreateForm">Action: <small>About to add new role</small></p> -->
         </div>
-        <div class="pull-right">
+        <div class="pull-right" *ngIf="(isMaster | async) == true ">
             <a href="javascript:void()" class="btn btn-primary btn-sm scroll-click" (click)="closeForm($event)"
                 rel="content-y" data-toggle="collapse" role="button" aria-expanded="true">
 
                 <i class="fa fa-plus" *ngIf="!showCreateForm"></i>
                 <i class="fa fa-step-backward" *ngIf="showCreateForm"></i>
                 <span *ngIf="!showCreateForm" class="ml-2">Create</span>
-                <span *ngIf="showCreateForm" class="mvscode-file://vscode-app/c:/Users/HP/AppData/Local/Programs/Microsoft%20VS%20Code/resources/app/out/vs/code/electron-sandbox/workbench/workbench.htmll-2">Back</span>
+                <span *ngIf="showCreateForm" class="pl-2">Back</span>
             </a>
         </div>
     </div>
@@ -22,7 +22,7 @@
             <thead>
                 <tr>
                     <th class="table-plus"><small>Name</small></th>
-                    <th><small>Assigned Users</small></th>
+                    <!-- <th><small>Assigned Users</small></th> -->
                     <th><small>Status</small></th>
                     <th><small>Created At</small></th>
                     <th><small>Updated At</small></th>
@@ -38,15 +38,15 @@
                             </div>
                         </div>
                     </td>
-                    <td>{{role?.name}}</td>
+                    <!-- <td>{{role?.name}}</td> -->
                     <td>{{role?.status}}</td>
                     <td>{{role?.created_at | date}}</td>
                     <td>{{role?.updated_at | date}}</td>
                     <td>
                         <div class="table-actions">
-                            <a href="javascript:void()" data-color="#265ed7"><i class="icon-copy dw dw-edit2"></i></a>
-                            <a href="javascript:void()" data-color="#e95959"><i
-                                    class="icon-copy dw dw-delete-3"></i></a>
+                            <a href="javascript:void()" (click)="showRole(role)" data-color="#265ed7"><i class="icon-copy dw dw-eye"></i></a>
+                            <!-- <a href="javascript:void()" data-color="#e95959"><i
+                                    class="icon-copy dw dw-delete-3"></i></a> -->
                         </div>
                     </td>
                 </tr>
@@ -88,10 +88,10 @@
                                 <td>{{role?.updated_at | date}}</td>
                                 <td>
                                     <div class="table-actions">
-                                        <a href="javascript:void()" data-color="#265ed7"><i
-                                                class="icon-copy dw dw-edit2"></i></a>
-                                        <a href="javascript:void()" data-color="#e95959"><i
-                                                class="icon-copy dw dw-delete-3"></i></a>
+                                        <a href="javascript:void()" data-color="#265ed7" (click)="showRole(role)"><i
+                                                class="icon-copy dw dw-eye"></i></a>
+                                        <!-- <a href="javascript:void()" data-color="#e95959"><i
+                                                class="icon-copy dw dw-delete-3"></i></a> -->
                                     </div>
                                 </td>
                             </tr>

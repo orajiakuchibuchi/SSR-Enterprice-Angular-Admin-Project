@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, throwError, of } from 'rxjs';
-import { Notification } from '../../models/Index';
+import { Notification, Preference } from '../../models/Index';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { tap, map, shareReplay, switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -12,14 +12,31 @@ import { NotificationsService } from 'angular2-notifications';
   providedIn: 'root'
 })
 export class DeviceService {
-  private listOfNotifications: BehaviorSubject<Notification[]> = new BehaviorSubject<Notification[]>([]);
+  apiUrl: string = environment.api;
   private toastOptions: any = {
     timeOut: 3000,
     showProgressBar: true,
     pauseOnHover: true,
     clickToClose: true
   };
+  private listOfNotifications: BehaviorSubject<Notification[]> = new BehaviorSubject<Notification[]>([]);
   notifications$: Observable<Notification[]> = this.listOfNotifications.asObservable();
+  private configuration: BehaviorSubject< Preference > = new BehaviorSubject({
+    sideNavColor: ''
+  });
+  preference$: Observable <Preference> = this.configuration.asObservable().pipe(
+    switchMap((_pref: Preference)=>{
+      if(!this.localStorageSideNavColor && _pref.sideNavColor.length < 1){
+        _pref.sideNavColor = '#092403';
+      }
+      if(!this.localStorageSideNavColor){
+        this.setlocalStorageSideNavColor(_pref.sideNavColor); 
+      }
+      console.log(_pref);
+      return of(_pref);
+    }),
+    shareReplay()
+  );
   public getNotificationApi$: Observable<Notification[]> = this._us.user$.pipe(
     switchMap((user:any)=>{
       if(user.id){
@@ -32,9 +49,10 @@ export class DeviceService {
     }),
     shareReplay()
   );
-  apiUrl: string = environment.api;
   private user$: Observable<any> = this._us.user$;
-  constructor(private http: HttpClient, private _us: UserService, private _ns: NotificationsService) {  }
+  constructor(private http: HttpClient, private _us: UserService, private _ns: NotificationsService) { 
+    this.configuration;
+   }
   private getNotificationsApi(user:any): Observable<any> {
     let headerParams = new HttpParams().set('user.userID', user.userID);
     return this.http.get(`${this.apiUrl}/notifications`, {params: headerParams})
@@ -52,6 +70,21 @@ export class DeviceService {
     )
 
   }
+
+  private get localStorageSideNavColor(){
+    return localStorage.getItem('_sidenavcolor');
+  }
+
+  private setlocalStorageSideNavColor(value:string){
+    localStorage.setItem('_sidenavcolor',value);
+  }
+
+  setPreference(preference: Preference){
+    this.setlocalStorageSideNavColor(preference.sideNavColor);
+    this.configuration.next(preference)
+  }
+
+
   openSuccessNotification(title:string, content: string, clickHandler?: Function ){
     const _fullOption = {...this.toastOptions,id: this.listOfNotifications.value.length+1}
     const toast = this._ns.success(title, content, _fullOption);

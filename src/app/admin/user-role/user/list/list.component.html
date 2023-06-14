@@ -1,5 +1,5 @@
 <div class="card-box pb-10">
-    <div class="clearfix mb-20 pd-20">
+    <div class="clearfix mb-20 pd-10 pb-0">
         <div class="pull-left">
             <div class="h5 mb-0">List Of Users</div>
             <div class="hg mb-0" *ngIf="showCreateForm">Create new User</div>
@@ -16,7 +16,31 @@
             </a>
         </div>
     </div>
+    <hr>
     <div class="table-responsive" *ngIf="(users$ | async) as users">
+        <div class="row">
+            <div class="col-sm-12 col-md-3">
+                <div class="dataTables_length" id="DataTables_Table_0_length">
+                    <label>Show 
+                        <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" 
+                                class="custom-select custom-select-sm form-control form-control-sm">
+                                    <option value="10">10</option>
+                                    <option value="25">25</option>
+                                    <option value="50">50</option>
+                                    <option value="-1">All</option>
+                                </select>
+                    </label>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-9">
+                <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                    <label class="label">Search: 
+                        <input type="search" class="form-control form-control-sm" placeholder="Search" 
+                            aria-controls="DataTables_Table_0">
+                    </label>
+                </div>
+            </div>
+        </div>
         <table class="data-table table nowrap" *ngIf="!showCreateForm && users.length > 0">
             <thead>
                 <tr>
@@ -24,7 +48,7 @@
                     <th>Email</th>
                     <th>Country</th>
                     <th>Phone</th>
-                    <th>role</th>
+                    <th>Role</th>
                     <!-- <th class="datatable-nosort">Actions</th> -->
                 </tr>
             </thead>
@@ -65,7 +89,7 @@
     <div *ngIf="showCreateForm" class="p-2">
         <div class="row">
             <div class="col-xl-4 col-lg-4 col-md-6 col-sm-12 mb-20">
-                <app-user-create (hasSaved)="saveCompleted($event)"></app-user-create>
+                <app-user-create (hasSaved)="saveCompleted($event)" [showTitle]="showCreateFormTitle" [role]="filterByRole"></app-user-create>
             </div>
             <div class="col-xl-8 col-lg-8 col-md-6 col-sm-12 mb-20">
                 <div class="table-responsive" >

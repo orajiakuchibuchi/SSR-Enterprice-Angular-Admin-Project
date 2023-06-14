@@ -5,7 +5,7 @@ import { AuthService } from 'src/app/shared/services/Index';
 import { shareReplay, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { DeviceService } from 'src/app/shared/services/client/device.service';
-
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,6 +15,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
   loginForm: FormGroup;
   user: any = null;
   message: any = '';
+  appName: string = environment.appName;
   constructor(private formBuilder: FormBuilder, private router: Router, private auth: AuthService, private _ds:DeviceService) {
     this.loginForm = this.formBuilder.group({
       created_at: [new Date(Date.now()), Validators.required],
@@ -85,7 +86,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
             created_at: new Date(Date.now()),
             updated_at: new Date(Date.now()),
           }
-          this.router.navigate(['']).finally(
+          this.router.navigate(['admin/home/dashboard']).finally(
             ()=>{
               this._ds.add(_notificication).subscribe(
                 res=>console.log(res)

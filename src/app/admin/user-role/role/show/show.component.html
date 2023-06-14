@@ -1,0 +1,332 @@
+
+<div class="page-header">
+    <div class="row">
+        <div class="col-md-6 col-sm-12" *ngIf="role$ | async as role">
+            <div class="title">
+                <h4>Role Information</h4>
+            </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="javascript:void()" [routerLink]="['/admin/user-role/records']" routerLinkActive="router-link-active" >User & Roles</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="javascript:void()" [routerLink]="['/admin/user-role/records']" routerLinkActive="router-link-active" >Role List</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        {{role.name | titlecase}} ({{menu | titlecase}})
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4 mb-20">
+        <div class="card text-white bg-dark card-box mb-20" *ngIf="role$ | async as role">
+            <div class="card-header">{{role.name | titlecase}}</div>
+            <div class="card-body">
+                <h5 class="card-title text-white">Created At: {{role.created_at | date}}</h5>
+                <p class="card-text">
+                    The {{role.name | titlecase}} role is currently {{role.status | titlecase }} and was last updated in {{role.updated_at | date}} with the role ID #{{role.id}}
+                </p>
+            </div>
+        </div>
+        <div class="card-box pd-20 min-height-200px">
+            <div class="d-flex justify-content-between pb-10">
+                <div class="card-header">Role Menu</div>
+            </div>
+            <div class="user-list">
+                <ul *ngIf="role$ | async as role">
+                    <li class="d-flex align-items-center justify-content-between" [ngClass]="{'activate': menu == 'users'}">
+                        <div class="name-avatar d-flex align-items-center pr-2">
+                            <div class="avatar mr-2 flex-shrink-0">
+                                <i class="dw dw-user1"></i>
+                            </div>
+                            <div class="txt">
+                                <span class="badge badge-pill badge-sm" data-bgcolor="#e7ebf5" data-color="#265ed7" style="color: rgb(38, 94, 215); background-color: rgb(231, 235, 245);">Users</span>
+                                <div class="font-14 weight-600">All Users</div>
+                                <div class="font-12 weight-500" data-color="#b2b1b6" style="color: rgb(178, 177, 182);">
+                                    Users with {{role.name | titlecase}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cta flex-shrink-0" *ngIf="menu != 'users'">
+                            <a href="javascript:void()" class="btn btn-sm btn-outline-primary" (click)="navigateTo('users')">Show</a>
+                        </div>
+                    </li>
+                    <li class="d-flex align-items-center justify-content-between" [ngClass]="{'activate': menu == 'modules'}">
+                        <div class="name-avatar d-flex align-items-center pr-2">
+                            <div class="avatar mr-2 flex-shrink-0">
+                                <i class="icon-copy bi bi-text-left"></i>
+                            </div>
+                            <div class="txt">
+                                <span class="badge badge-pill badge-sm" data-bgcolor="#e7ebf5" data-color="#265ed7" style="color: rgb(38, 94, 215); background-color: rgb(231, 235, 245);">Module</span>
+                                <div class="font-14 weight-600">Modules</div>
+                                <div class="font-12 weight-500" data-color="#b2b1b6" style="color: rgb(178, 177, 182);">
+                                    Show all modules
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cta flex-shrink-0" *ngIf="menu != 'modules'">
+                            <a href="javascript:void()" class="btn btn-sm btn-outline-primary" (click)="navigateTo('modules')">Show</a>
+                        </div>
+                    </li>
+                    <li class="d-flex align-items-center justify-content-between" [ngClass]="{'activate': menu == 'p&p'}">
+                        <div class="name-avatar d-flex align-items-center pr-2">
+                            <div class="avatar mr-2 flex-shrink-0">
+                                <i class="icon-copy bi bi-lock-fill"></i>
+                            </div>
+                            <div class="txt">
+                                <span class="badge badge-pill badge-sm" data-bgcolor="#e7ebf5" data-color="#265ed7" style="color: rgb(38, 94, 215); background-color: rgb(231, 235, 245);">Security</span>
+                                <div class="font-14 weight-600">Permission & Pervillages</div>
+                                <div class="font-12 weight-500" data-color="#b2b1b6" style="color: rgb(178, 177, 182);">
+                                    Set & manage P&P
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cta flex-shrink-0" *ngIf="menu != 'p&p'">
+                            <a href="javascript:void()" class="btn btn-sm btn-outline-primary" (click)="navigateTo('p&p')">Manage</a>
+                        </div>
+                    </li>
+                    <li class="d-flex align-items-center justify-content-between" [ngClass]="{'activate': menu == 'report'}">
+                        <div class="name-avatar d-flex align-items-center pr-2">
+                            <div class="avatar mr-2 flex-shrink-0">
+                                <i class="icon-copy bi bi-save-fill"></i>
+                            </div>
+                            <div class="txt">
+                                <span class="badge badge-pill badge-sm" data-bgcolor="#e7ebf5" data-color="#265ed7" style="color: rgb(38, 94, 215); background-color: rgb(231, 235, 245);">Reporting</span>
+                                <div class="font-14 weight-600">Reports & Logs</div>
+                                <div class="font-12 weight-500" data-color="#b2b1b6" style="color: rgb(178, 177, 182);">
+                                    Generate report
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cta flex-shrink-0" *ngIf="menu != 'report'">
+                            <a href="javascript:void()" class="btn btn-sm btn-outline-primary" (click)="navigateTo('report')">Download</a>
+                        </div>
+                    </li>
+                    <li class="d-flex align-items-center justify-content-between" [ngClass]="{'activate': menu == 'deactivate'}">
+                        <div class="name-avatar d-flex align-items-center pr-2">
+                            <div class="avatar mr-2 flex-shrink-0">
+                                <i class="icon-copy bi bi-trash"></i>
+                            </div>
+                            <div class="txt">
+                                <span class="badge badge-pill badge-sm" data-bgcolor="#e7ebf5" data-color="#265ed7" style="color: rgb(38, 94, 215); background-color: rgb(231, 235, 245);">Emergency</span>
+                                <div class="font-14 weight-600">Deactivate Role</div>
+                                <div class="font-12 weight-500" data-color="#b2b1b6" style="color: rgb(178, 177, 182);">
+                                    Revoke role
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="cta flex-shrink-0" *ngIf="menu != 'deactivate'">
+                            <a href="javascript:void()" class="btn btn-sm btn-outline-primary" (click)="navigateTo('deactivate')">Delete</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-8 col-lg-8 col-md-8 mb-20" *ngIf="role$ | async as role">
+        <app-user-list [filterByRole]="role.name" *ngIf="menu == 'users'" [showCreateFormTitle]="true" (totalUsers)="getTotalUsers($event)"></app-user-list>
+        <div class="row" *ngIf="menu == 'modules'">
+            <div class="col-md-12 mb-2">
+                <div class="card card-box">
+                    <h4 class="card-title weight-500 p-2">Modules</h4>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-box">
+                    <img class="card-img-top" src="assets/vendors/images/img3.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title weight-500">Auth Module</h5>
+                        <p class="card-text">
+                            Some quick example text to build on the card title and make
+                            up the bulk of the card's content.
+                        </p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-box">
+                    <img class="card-img-top" src="assets/vendors/images/img3.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title weight-500">Home</h5>
+                        <p class="card-text">
+                            Some quick example text to build on the card title and make
+                            up the bulk of the card's content.
+                        </p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card card-box">
+                    <img class="card-img-top" src="assets/vendors/images/img3.jpg" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title weight-500">User & Roles</h5>
+                        <p class="card-text">
+                            Some quick example text to build on the card title and make
+                            up the bulk of the card's content.
+                        </p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="menu == 'report'">
+            report
+        </div>
+        <div *ngIf="menu == 'deactivate'">
+            deactivate
+        </div>
+        
+        <div class="row" *ngIf="menu == 'p&p'">
+            <div class="card card-box">
+                <h4 class="card-title weight-500 p-2">Modules</h4>
+            </div>
+            <div class="col-md-12 mb-10">
+                <div class="row">
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                        <div class="sitemap">
+                            <h5 class="h5">Home</h5>
+                            <ul>
+                                <li><a href="index.html">Dashboard style 1</a></li>
+                                <li><a href="index2.html">Dashboard style 2</a></li>
+                            </ul>
+                        </div>
+                        <div class="sitemap">
+                            <h5 class="h5">Forms</h5>
+                            <ul>
+                                <li><a href="form-basic.html">Form Basic</a></li>
+                                <li>
+                                    <a href="advanced-components.html">Advanced Components</a>
+                                </li>
+                                <li><a href="form-wizard.html">Form Wizard</a></li>
+                                <li><a href="html5-editor.html">HTML5 Editor</a></li>
+                                <li><a href="form-pickers.html">Form Pickers</a></li>
+                                <li><a href="image-cropper.html">Image Cropper</a></li>
+                                <li><a href="image-dropzone.html">Image Dropzone</a></li>
+                            </ul>
+                        </div>
+                        <div class="sitemap">
+                            <h5 class="h5">Invoice</h5>
+                            <ul>
+                                <li><a href="invoice.html">Invoice</a></li>
+                            </ul>
+                        </div>
+                        <div class="sitemap">
+                            <h5 class="h5">Chat Module</h5>
+                            <ul>
+                                <li><a href="chat.html">Chat</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                        <div class="sitemap">
+                            <h5 class="h5">Tables</h5>
+                            <ul>
+                                <li><a href="basic-table.html">Basic Tables</a></li>
+                                <li><a href="datatable.html">DataTables</a></li>
+                            </ul>
+                        </div>
+                        <div class="sitemap">
+                            <h5 class="h5">Calendar</h5>
+                            <ul>
+                                <li><a href="calendar.html">Calendar</a></li>
+                            </ul>
+                        </div>
+                        <div class="sitemap">
+                            <h5 class="h5">Icons</h5>
+                            <ul>
+                                <li><a href="bootstrap-icon.html">Bootstrap Icons</a></li>
+                                <li><a href="font-awesome.html">FontAwesome Icons</a></li>
+                                <li><a href="foundation.html">Foundation Icons</a></li>
+                                <li><a href="ionicons.html">Ionicons Icons</a></li>
+                                <li><a href="themify.html">Themify Icons</a></li>
+                            </ul>
+                        </div>
+                        <div class="sitemap">
+                            <h5 class="h5">Charts</h5>
+                            <ul>
+                                <li><a href="highchart.html">Highchart</a></li>
+                                <li><a href="knob-chart.html">jQuery Knob</a></li>
+                                <li><a href="jvectormap.html">jvectormap</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                        <div class="sitemap">
+                            <h5 class="h5">UI Elements</h5>
+                            <ul>
+                                <li><a href="ui-buttons.html">Buttons</a></li>
+                                <li><a href="ui-cards.html">Cards</a></li>
+                                <li><a href="ui-cards-hover.html">Cards Hover</a></li>
+                                <li><a href="ui-modals.html">Modals</a></li>
+                                <li><a href="ui-tabs.html">Tabs</a></li>
+                                <li>
+                                    <a href="ui-tooltip-popover.html">Tooltip &amp; Popover</a>
+                                </li>
+                                <li><a href="ui-sweet-alert.html">Sweet Alert</a></li>
+                                <li><a href="ui-notification.html">Notification</a></li>
+                                <li><a href="ui-timeline.html">Timeline</a></li>
+                                <li><a href="ui-progressbar.html">Progressbar</a></li>
+                                <li><a href="ui-typography.html">Typography</a></li>
+                                <li><a href="ui-list-group.html">List group</a></li>
+                                <li><a href="ui-range-slider.html">Range slider</a></li>
+                                <li><a href="ui-carousel.html">Carousel</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6 col-sm-12">
+                        <div class="sitemap">
+                            <h5 class="h5">Additional Pages</h5>
+                            <ul>
+                                <li><a href="video-player.html">Video Player</a></li>
+                                <li><a href="login.html">Login</a></li>
+                                <li>
+                                    <a href="forgot-password.html">Forgot Password</a>
+                                </li>
+                                <li><a href="reset-password.html">Reset Password</a></li>
+                                <li><a href="403.html">403</a></li>
+                                <li><a href="404.html">404</a></li>
+                                <li><a href="500.html">500</a></li>
+                            </ul>
+                        </div>
+                        <div class="sitemap">
+                            <h5 class="h5">Extra Pages</h5>
+                            <ul>
+                                <li><a href="blank.html">Blank</a></li>
+                                <li>
+                                    <a href="contact-directory.html">Contact Directory</a>
+                                </li>
+                                <li><a href="blog.html">Blog</a></li>
+                                <li><a href="blog-detail.html">Blog Detail</a></li>
+                                <li><a href="product.html">Product</a></li>
+                                <li><a href="product-detail.html">Product Detail</a></li>
+                                <li><a href="faq.html">FAQ</a></li>
+                                <li><a href="profile.html">Profile</a></li>
+                                <li><a href="gallery.html">Gallery</a></li>
+                                <li><a href="pricing-table.html">Pricing Tables</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

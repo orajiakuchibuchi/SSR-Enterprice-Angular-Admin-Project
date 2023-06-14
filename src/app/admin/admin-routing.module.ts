@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminComponent } from './admin.component';
 import { UserResolver } from '../shared/resolvers/user/user.resolver';
+import { AppResolver } from '../shared/resolvers/app/app.resolver';
 import { AuthGuard } from '../shared/guards/auth/auth.guard';
 
 const routes: Routes = [
@@ -30,7 +31,7 @@ const routes: Routes = [
         loadChildren: () => import('./pricing/pricing.module').then(m=> m.PricingModule)
       }
     ],
-    resolve: [UserResolver],
+    resolve: [UserResolver, AppResolver],
     canActivate: [AuthGuard]
   }
 ];

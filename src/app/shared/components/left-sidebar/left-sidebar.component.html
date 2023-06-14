@@ -1,4 +1,4 @@
-<div class="left-side-bar">
+<div class="left-side-bar" [style.background-color]="(config$| async)?.sideNavColor">
     <div class="brand-logo">
         <a href="javascript:void()" (click)="navigateTo($event,'admin/home')">
             <img src="assets/img/sparkling-green-logo-rectangle.PNG" alt="" class="dark-logo" />
@@ -26,10 +26,10 @@
                         <li><a href="javascript:void()" (click)="navigateTo($event,'admin/home/notification')">Notification</a></li>
                     </ul>
                 </li>
-                <li class="dropdown" *ngIf="isAdmin | async">
+                <li class="dropdown" *ngIf="(isAdmin | async) || (isMaster | async)">
                     <a href="javascript:;" class="dropdown-toggle" [ngClass]="{'active': activePage == 'Users & Roles'}">
                         <span class="micon bi bi-file-person-fill"></span
-                        ><span class="mtext">Users & Roles</span>
+                        ><span class="mtext">User & Role Management</span>
                     </a>
                     <ul class="submenu">
                         <li><a href="javascript:void()" (click)="navigateTo($event, 'admin/user-role/records')">Records</a></li>

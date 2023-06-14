@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 import { PlanService } from '../../services/plan/plan.service';
 import { Plan } from '../../models/Plan';
 import { AsyncPaymentOptions, Flutterwave } from 'flutterwave-angular-v3';
+import { DeviceService } from '../../services/client/device.service';
 declare const jQuery: any;
 @Component({
   selector: 'app-calendar',
@@ -112,7 +113,9 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
     customer: this.customerDetails,
     customizations: this.customizations,
   };
-  constructor(private flutterwave: Flutterwave, private _ps: PlanService, private _us: UserService, private _bs: BookingService, private crf: ChangeDetectorRef) { }
+  constructor(
+    private _ds: DeviceService,
+    private flutterwave: Flutterwave, private _ps: PlanService, private _us: UserService, private _bs: BookingService, private crf: ChangeDetectorRef) { }
   ngOnDestroy(): void {
 
   }
@@ -270,6 +273,11 @@ export class CalendarComponent implements OnInit, AfterViewInit, OnDestroy {
               updated_at: ''
             }
             this.message = 'New booking created.';
+            const dismisscreateModal:any = document.getElementById('dismisscreateModal');
+            if(dismisscreateModal){
+              dismisscreateModal.click();
+            }
+            this._ds.openSuccessNotification('New Booking Created', 'Successfully placed a new booking')
             this.bookings$.subscribe(
               result => {
                 console.log(result);

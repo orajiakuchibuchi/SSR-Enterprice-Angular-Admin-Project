@@ -20,12 +20,12 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6 col-lg-7">
-                <img src="assets/vendors/images/login-page-img.png" alt="" />
+                <img src="assets/img/cleaning service-pana.svg" alt="" />
             </div>
             <div class="col-md-6 col-lg-5">
                 <div class="login-box bg-white box-shadow border-radius-10">
                     <div class="login-title">
-                        <h2 class="text-center text-primary">Login To DeskApp</h2>
+                        <h2 class="text-center text-primary">Login To {{appName}}</h2>
                     </div>
                     <form [formGroup]="loginForm">
                         <div class="input-group custom">
@@ -76,7 +76,7 @@
                             </div>
                             <div class="col-6">
                                 <div class="forgot-password">
-                                    <a  href="javascript:void()" [routerLink]="['/auth/forgot']" routerLinkActive="router-link-active">Forgot Password</a>
+                                    <a  href="javascript:void()" class="text-primary" [routerLink]="['/auth/forgot']" routerLinkActive="router-link-active">Forgot Password</a>
                                 </div>
                             </div>
                         </div>

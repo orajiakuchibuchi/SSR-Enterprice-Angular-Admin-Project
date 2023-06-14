@@ -1,0 +1,14 @@
+.card-img{
+    height: 70px !important;
+}
+.app_item{
+    cursor: pointer;
+}
+
+.app_item:hover{
+    opacity: 40%;
+    cursor: pointer;
+}
+.active{
+    border: 2px solid #20381c;
+}
