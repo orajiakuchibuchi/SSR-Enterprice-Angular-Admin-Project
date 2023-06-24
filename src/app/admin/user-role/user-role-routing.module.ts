@@ -12,7 +12,13 @@ const routes: Routes = [
     children: [
       {
         path: 'records',
-        component: RecordComponent
+        component: RecordComponent,
+        data: { component: 'Users'}
+      },
+      {
+        path: 'records-employees',
+        component: RecordComponent,
+        data: { component: 'Employees'}
       },
       {
         path: 'all-roles',
@@ -24,7 +30,13 @@ const routes: Routes = [
       },
       {
         path: 'all-users',
-        component: UserIndex
+        component: UserIndex,
+        data: { component: 'Users'}
+      },
+      {
+        path: 'all-employees',
+        component: UserIndex,
+        data: { component: 'Employees'}
       },
     ]
   }

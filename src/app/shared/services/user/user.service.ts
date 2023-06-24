@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject, throwError, of } from 'rxjs';
 import { tap, map, shareReplay, switchMap } from 'rxjs/operators';
-import { Role, User, Menu, GUESS } from '../../models/Index';
+import { Role, User, Menu, GUESS, App } from '../../models/Index';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { AuthService } from '../Index';
+import { AppService } from '../client/app.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,10 @@ export class UserService {
   private listOfUsers: BehaviorSubject<User[]> = new BehaviorSubject<User[]>([
   ]);
   private listOfMenu: BehaviorSubject<Menu[]> = new BehaviorSubject<Menu[]>([]);
+  private app_menus:BehaviorSubject<Menu[]> = new BehaviorSubject<Menu[]>([]);
+  public app_Menus$: Observable<Menu[]>;
+  // 
+  public menu:Map<number, Menu[]> = new Map<number, Menu[]>()
   public listOfViewedRoles: Map<string, Role> = new Map<string, Role>();
   public user$: Observable<User> = this.user.asObservable();
   public list$: Observable<User[]> = this.listOfUsers.asObservable();
@@ -24,6 +29,7 @@ export class UserService {
       return users.filter(u => u.role?.includes('Cleaner'));
     })
   )
+  
   private listOfRoles: BehaviorSubject<Role[]> = new BehaviorSubject<Role[]>([
     
   ]);
@@ -32,115 +38,38 @@ export class UserService {
     shareReplay(1)
   );
   apiUrl: string = environment.api;
-  private menus: Menu[] = [
-    {
-      id: 0,
-      name: 'Home',
-      icon: 'micon bi bi-house',
-      children: [
-        {
-          id: 0,
-          name: 'Dashboard',
-          children: [],
-          link: 'admin/home/dashboard',
-          roles: this.listOfRoles.value
-        },
-        {
-          id: 1,
-          name: 'Account',
-          children: [],
-          link: 'admin/home/setting',
-          roles: this.listOfRoles.value
-        },
-        {
-          id: 2,
-          name: 'Notification',
-          children: [],
-          link: 'admin/home/notification',
-          roles: this.listOfRoles.value
-        }
-      ],
-      link: undefined,
-      roles: this.listOfRoles.value
-    },
-    {
-      id: 1,
-      name: 'User & Role Management',
-      icon: 'micon bi bi-house',
-      children: [
-        {
-          id: 0,
-          name: 'Dashboard',
-          children: [],
-          link: 'admin/home/dashboard',
-          roles: this.listOfRoles.value
-        },
-        {
-          id: 1,
-          name: 'Account',
-          children: [],
-          link: 'admin/home/setting',
-          roles: this.listOfRoles.value
-        },
-        {
-          id: 2,
-          name: 'Notification',
-          children: [],
-          link: 'admin/home/notification',
-          roles: this.listOfRoles.value
-        }
-      ],
-      link: undefined,
-      roles: this.listOfRoles.value
-    },
-    {
-      id: 0,
-      name: 'Home',
-      icon: 'micon bi bi-house',
-      children: [
-        {
-          id: 0,
-          name: 'Dashboard',
-          children: [],
-          link: 'admin/home/dashboard',
-          roles: this.listOfRoles.value
-        },
-        {
-          id: 1,
-          name: 'Account',
-          children: [],
-          link: 'admin/home/setting',
-          roles: this.listOfRoles.value
-        },
-        {
-          id: 2,
-          name: 'Notification',
-          children: [],
-          link: 'admin/home/notification',
-          roles: this.listOfRoles.value
-        }
-      ],
-      link: undefined,
-      roles: this.listOfRoles.value
-    },
-  ]
-  constructor(private http: HttpClient, private _auth: AuthService) {
+  constructor(private http: HttpClient, private _auth: AuthService, private _app: AppService) {
     this.getAuthUserApi$ = this.getAuthUserApi(this._auth.sessionAuth).pipe(
       shareReplay()
     );
     this.getUsersApi$ = this.getUsersApi().pipe(
       shareReplay()
     );
+    this.app_Menus$ = this.user$.pipe(
+      switchMap((u:any)=>{
+        return this.getMenusApi().pipe(
+          map((res:any)=>{
+            const app:any = this._app.selectedApp.value;
+            console.log(app)
+            const menusForAppndRole:any =res.filter((m:any)=>{return (m.roles == 'everyone' || u.role.includes(m.roles)) && m.app_id ==  app.id});
+            console.log(menusForAppndRole);
+            this.app_menus.next(menusForAppndRole);
+            return this.app_menus.value;
+          }),
+          shareReplay(1)
+        )
+      })
+    );
     this.getUsersApi$ .subscribe(
       list=>this.listOfUsers.next(list)
-    )
+    );
     this.getAuthUserApi$.subscribe(
       (r:any) => {
         if(r.length){
           this.user.next(r[0]);
         }
       }
-    )
+    );
    }
   private createUserApi(user: User) {
     return this.http.post(`${this.apiUrl}/users`, user).pipe(
@@ -182,6 +111,10 @@ export class UserService {
     );
   }
 
+  listOfUsersValue():User[]{
+    return this.listOfUsers.value;
+  }
+
   forgetUser(){
     this.user.next(GUESS);
     if(this._auth.sessionAuth){
@@ -199,9 +132,12 @@ export class UserService {
       })
     }
   }
+  setapp_menus(values:any){
+    this.app_menus.next(values);
+  }
   findRole(name: string) {
     return this.listOfRoles.value.find(
-      (role: Role) => (<string>role.name).trim().toLocaleLowerCase() == name.trim().toLowerCase()
+      (role: Role) => (<string>role.name).trim().toLowerCase() == name.trim().toLowerCase()
     );
   }
   getAuthUserApi(token: any): Observable<any> {
@@ -212,17 +148,13 @@ export class UserService {
     return this.http.get(`${this.apiUrl}/users`)
   }
   getRolesApi(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/roles`)
+    return this.http.get(`${this.apiUrl}/roles`);
+  }
+  getMenusApi(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/menus`);
   }
   createUser(user: any, role: string) {
-    const doesUserExist = this.findUser(user.email);
-    const doesRoleExist = this.findRole(role);
-    if (!doesRoleExist) {
-      return of({
-        status: '500',
-        response: `No role with name ${role} available on platform`
-      })
-    }
+    const doesUserExist = this.findUser(user.email); 
     if (!doesUserExist) {
       return this.createUserApi(user).pipe(
       )

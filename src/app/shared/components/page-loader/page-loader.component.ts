@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ScriptsService } from '../../services/client/scripts.service';
+import { DeviceService } from '../../services/client/device.service';
 declare const $:any
 @Component({
   selector: 'app-page-loader',
@@ -19,10 +20,22 @@ export class PageLoaderComponent implements OnInit {
   durataion = this.time;
 
 
-  constructor(private script: ScriptsService) { }
+  constructor(private script: ScriptsService, private _device: DeviceService) { }
 
   ngOnInit(): void {
     this.animateValue(this.PercentageID, this.start, this.end, this.durataion);
+    // this._device.showPageLoader.next(this.durataion);
+    // this._device.showPageLoader.subscribe(
+    //   duration=>{
+    //     this.durataion = duration;
+    //     this.time = this.durataion;
+    //     console.log(this.durataion)
+    //     if(this.durataion > 0){
+      // this.animateValue(this.PercentageID, this.start, this.end, this.durataion);
+    //     }
+    //   }
+    // )
+    
   }
 
   animateValue(id: any, start: any, end: any, duration: any) {
@@ -43,8 +56,9 @@ export class PageLoaderComponent implements OnInit {
       }
     }, stepTime);
     // Fading Out Loadbar on Finised
-    setTimeout(function () {
+    setTimeout( () => {
       $('.pre-loader').fadeOut(300);
+      this._device.showPageLoader.next(0);
     }, this.time);
   }
 }

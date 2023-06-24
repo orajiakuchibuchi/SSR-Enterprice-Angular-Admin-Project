@@ -20,6 +20,7 @@ export class DeviceService {
     clickToClose: true
   };
   private listOfNotifications: BehaviorSubject<Notification[]> = new BehaviorSubject<Notification[]>([]);
+  showPageLoader: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   notifications$: Observable<Notification[]> = this.listOfNotifications.asObservable();
   private configuration: BehaviorSubject< Preference > = new BehaviorSubject({
     sideNavColor: ''
@@ -27,7 +28,7 @@ export class DeviceService {
   preference$: Observable <Preference> = this.configuration.asObservable().pipe(
     switchMap((_pref: Preference)=>{
       if(!this.localStorageSideNavColor && _pref.sideNavColor.length < 1){
-        _pref.sideNavColor = '#092403';
+        _pref.sideNavColor = '#021645';
       }
       if(!this.localStorageSideNavColor){
         this.setlocalStorageSideNavColor(_pref.sideNavColor); 
@@ -113,4 +114,5 @@ export class DeviceService {
       }
     })
   }
+  
 }

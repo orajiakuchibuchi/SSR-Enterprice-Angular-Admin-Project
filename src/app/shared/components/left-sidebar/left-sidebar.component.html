@@ -1,11 +1,11 @@
 <div class="left-side-bar" [style.background-color]="(config$| async)?.sideNavColor">
     <div class="brand-logo">
-        <a href="javascript:void()" (click)="navigateTo($event,'admin/home')">
-            <img src="assets/img/sparkling-green-logo-rectangle.PNG" alt="" class="dark-logo" />
+        <a href="javascript:void()" (click)="website($event,'admin/home')">
+            <img [src]="'assets/img/zinder_1.svg'" alt="" class="dark-logo lgbv" />
             <img
-                src="assets/img/sparkling-green-logo-rectangle.PNG"
+                [src]="'assets/img/zinder_1.svg'"
                 alt=""
-                class="light-logo"
+                class="light-logo lgbv"
             />
         </a>
         <div class="close-sidebar" data-toggle="left-sidebar-close">
@@ -14,19 +14,30 @@
     </div>
     <div class="menu-block customscroll">
         <div class="sidebar-menu">
-            <ul id="accordionmenu" #accordionmenu>
-                <li class="dropdown">
+            <ul id="accordionmenu" #accordionmenu *ngIf="selectedApp">
+                <li class="dropdown" ngbDropdown *ngFor="let m of menu.get(selectedApp.id)">
+                    <a href="javascript:void()" (click)="navigateTo($event,m)" 
+                    [ngClass]="{'active': activePage == m.name, 'no-arrow': m.children.length < 1}" 
+                    class="dropdown-toggle">
+                        <span [class]="m.icon"></span
+                        ><span class="mtext">{{m.name}}</span>
+                    </a>
+                    <ul class="submenu">
+                        <li *ngFor="let child of m.children"><a href="javascript:void()" (click)="navigateTo($event,child)" >{{child.name}}</a></li>
+                    </ul>
+                </li>
+                 <!-- <li class="dropdown">
                     <a href="javascript:;" [ngClass]="{'active': activePage == 'Home'}" class="dropdown-toggle">
                         <span class="micon bi bi-house"></span
                         ><span class="mtext">Home</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="javascript:void()" (click)="navigateTo($event,'admin/home/dashboard')" >Dashboard</a></li>
-                        <li><a href="javascript:void()" (click)="navigateTo($event,'admin/home/setting')">Account</a></li>
-                        <li><a href="javascript:void()" (click)="navigateTo($event,'admin/home/notification')">Notification</a></li>
+                        <li><a href="javascript:void()" (click)="website($event,'admin/home/dashboard')" >Dashboard</a></li>
+                        <li><a href="javascript:void()" (click)="website($event,'admin/home/setting')">Account</a></li>
+                        <li><a href="javascript:void()" (click)="website($event,'admin/home/notification')">Notification</a></li>
                     </ul>
-                </li>
-                <li class="dropdown" *ngIf="(isAdmin | async) || (isMaster | async)">
+                </li> -->
+                <!-- <li class="dropdown" *ngIf="(isAdmin | async) || (isMaster | async)">
                     <a href="javascript:;" class="dropdown-toggle" [ngClass]="{'active': activePage == 'Users & Roles'}">
                         <span class="micon bi bi-file-person-fill"></span
                         ><span class="mtext">User & Role Management</span>
@@ -53,9 +64,8 @@
                             
                         </a></li>
                         <li><a href="javascript:void()" (click)="navigateTo($event, 'admin/booking/all')">All booking</a></li>
-                        <!-- <li><a href="javascript:void()" (click)="navigateTo($event, 'admin/user-role/records')">Completed Bookings</a></li> -->
                     </ul>
-                </li>
+                </li> -->
                 <!-- <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
                         <span class="micon bi bi-diagram-3"></span
@@ -89,7 +99,7 @@
                 </li>
                 <li>
                     <a
-                    href="javascript:void()" (click)="navigateTo($event, '')"
+                    href="javascript:void()" (click)="website($event, '')"
                         target="_blank"
                         class="dropdown-toggle no-arrow"
                     >

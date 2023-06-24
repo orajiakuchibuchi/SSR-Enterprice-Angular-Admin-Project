@@ -59,6 +59,7 @@ export class RightSidebarComponent implements OnInit {
   }
   changeApp(app:App){
 	this._app.selectedApp.next(app);
-	this._app.saveLocalApp(app)
+	this._app.saveLocalApp(app);
+	this._ds.showPageLoader.next(((200 / 1000) % 60) * 100);
   }
 }

@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { CompanyService } from '../shared/services/company/company.service';
+import { Observable, BehaviorSubject, throwError, of } from 'rxjs';
+import { Company } from '../shared/models/Company';
 
 @Component({
   selector: 'app-admin',
@@ -6,8 +9,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
-
-  constructor() { }
+  company:Observable<Company[]> = this._cs.companys$;
+  constructor(private _cs: CompanyService) { }
 
   ngOnInit(): void {
   }

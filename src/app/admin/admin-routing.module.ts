@@ -4,6 +4,7 @@ import { AdminComponent } from './admin.component';
 import { UserResolver } from '../shared/resolvers/user/user.resolver';
 import { AppResolver } from '../shared/resolvers/app/app.resolver';
 import { AuthGuard } from '../shared/guards/auth/auth.guard';
+import { CompanyResolver } from '../shared/resolvers/company/company.resolver';
 
 const routes: Routes = [
   {
@@ -29,9 +30,13 @@ const routes: Routes = [
       {
         path: 'pricing',
         loadChildren: () => import('./pricing/pricing.module').then(m=> m.PricingModule)
-      }
+      },
+      {
+        path: 'employee',
+        loadChildren: () => import('./employee/employee.module').then(m=> m.EmployeeModule)
+      },
     ],
-    resolve: [UserResolver, AppResolver],
+    resolve: [UserResolver, AppResolver, CompanyResolver],
     canActivate: [AuthGuard]
   }
 ];

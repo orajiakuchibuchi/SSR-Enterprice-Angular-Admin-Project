@@ -2,11 +2,14 @@ import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angula
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user/user.service';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { User } from '../../models/User';
 import { AuthService } from '../../services/Index';
 import { Preference } from '../../models/Preference';
 import { DeviceService } from '../../services/client/device.service';
+import { Menu } from '../../models/Menu';
+import { AppService } from '../../services/client/app.service';
+import { App } from '../../models/App';
 declare const $: any
 @Component({
   selector: 'app-left-sidebar',
@@ -26,8 +29,28 @@ export class LeftSidebarComponent implements OnInit, AfterViewInit {
       return user.role.includes('Master')
     })
   )
+  menu:Map<number, Menu[]> = new Map<number, Menu[]>()
   config$:Observable<Preference> =this._ds.preference$;
-  constructor(private router: Router, private _us: UserService,private _ds: DeviceService, private _auth: AuthService) { }
+  selectedApp:App| undefined;
+  selectedApp$: Observable<any> = this._app.selectedApp.pipe(
+    switchMap((res:any)=>{
+      console.log(res)
+      let runningApp:any = res;
+      if(!res){
+        runningApp = this.selectedApp;
+      }
+      this.selectedApp = runningApp;
+      return this._us.app_Menus$.pipe(
+        tap((m:any)=>{
+          console.log(this.menu.get(runningApp.id));
+          this.menu.set(runningApp.id, m);
+          console.log(this.menu.get(runningApp.id));
+        })
+      );
+    })
+  );;
+  constructor(private router: Router, private _app: AppService, private _us: UserService,private _ds: DeviceService, private _auth: AuthService) {
+   }
   ngAfterViewInit(): void {
     $('.menu-icon, [data-toggle="left-sidebar-close"]').on("click", ()=> {
       //$(this.accordion.nativeElement).toggleClass('open');
@@ -153,8 +176,13 @@ export class LeftSidebarComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.selectedApp$
+    .subscribe(
+      m=>{
+        console.log(m)
+      }
+    )
     this.setActivePage();
-    
   }
   logout(){
     this._auth.logout().subscribe(
@@ -199,9 +227,29 @@ export class LeftSidebarComponent implements OnInit, AfterViewInit {
     }
     console.log(this.activePage)
   }
-  navigateTo(event: any, route:string){
+  navigateTo(event: any, menu:Menu){
     event.preventDefault();
-    console.log(route)
+    const route = menu.link;
+    console.log(event);
+    if(menu.children.length > 0){
+      const li = event.target.parentElement;
+      li.classList.toggle('show');
+      if(li.className.includes('show')){
+        li.children[1].style.display = 'block';
+      }else{
+        li.children[1].style.display = 'none';
+      }
+    }
+    if(route && route.length>0){
+      this.router.navigate([route]).catch((reason:any)=>{
+        console.log(reason);
+      }).finally(()=>{
+        this.setActivePage();
+      })
+    }
+  }
+  website(event: any, route:string){
+    event.preventDefault();
     this.router.navigate([route]).catch((reason:any)=>{
       console.log(reason);
     }).finally(()=>{

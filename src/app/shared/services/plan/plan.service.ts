@@ -16,12 +16,6 @@ export class PlanService {
   equalPlans = ( obj1:Plan, obj2:Plan ) => {
     let keyExist = false;
     for ( const [key, value] of Object.entries(obj1) ) {
-         // Search each key in reference object and attach a callback function to 
-         // compare the two object keys
-         console.log("============");
-         console.log(key);
-         console.log(value);
-         console.log("============");
         if( Object.keys(obj2).some( ( e ) => e == key ) ) {
             keyExist = true;
         }

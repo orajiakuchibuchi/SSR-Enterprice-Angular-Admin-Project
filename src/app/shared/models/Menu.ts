@@ -1,4 +1,5 @@
 import { Role } from "./Role";
+import { App } from "./App";
 
 export interface Menu {
     id: number;
@@ -6,5 +7,6 @@ export interface Menu {
     icon?: string;
     children: Menu[],
     link: undefined | string;
-    roles: Role[]
+    roles: Role[],
+    app_id: number
 }

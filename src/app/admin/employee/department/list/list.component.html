@@ -1,0 +1,42 @@
+<div class="card-box pb-10">
+    <div class="clearfix mb-20 pd-20">
+        <div class="pull-left">
+            <div class="h5 mb-0">List Of Departments</div>
+            <!-- <p>Total</p> -->
+            <!-- <p *ngIf="showCreateForm">Action: <small>About to add new role</small></p> -->
+        </div>
+        <div class="pull-right">
+            <app-department-create (department)="departmentEvent($event)"></app-department-create>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 container-fluid">
+            <div class="table-responsive p-2">
+                <table class="data-table table nowrap">
+                    <thead>
+                        <tr>
+                            <th class="table-plus">Logo</th>
+                            <th class="table-plus">Name</th>
+                            <th>Head Of Department</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let department of departments">
+                            <td></td>
+                            <td>{{department?.name}}</td>
+                            <td>{{department?.user?.firstName}}</td>
+                            <td>
+                                <a href="javascript:void()" class="btn btn-primary btn-sm scroll-click" rel="content-y"
+                                    data-toggle="collapse" role="button" aria-expanded="true" type="button">
+                                    
+                                    <span class="ml-2">View</span>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

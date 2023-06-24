@@ -17,7 +17,14 @@
 <div class="mobile-menu-overlay"></div>
 
 <div class="main-container">
-    <div class="xs-pd-20-10 pd-ltr-20">
-        <router-outlet></router-outlet>
+    <div class="xs-pd-20-10 pd-ltr-20" *ngIf="company | async as comp">
+        <router-outlet *ngIf="comp.length > 0 "></router-outlet>
+        <div class="text-center" *ngIf="comp.length ==0 ">
+            <h4 class="mb-10">Please create/select a company to start your journey.</h4>
+            <button class="btn btn-primary" data-backdrop="static" data-toggle="modal" data-target="#create-company-modal" type="button">
+                Create App
+            </button>
+        </div>
+        
     </div>
 </div>

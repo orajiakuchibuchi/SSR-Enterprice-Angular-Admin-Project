@@ -6,6 +6,11 @@ interface User {
     country: string;
     email: string;
     password: string;
+    state?: string;
+    city?: string;
+    address?: string;
+    date_of_employment?: string;
+    dob?: string;
     authToken?: string;
     status: string;
     role: string[];

@@ -1,0 +1,384 @@
+<div class="row">
+    <div class="col-12 p-2 mb-2" *ngIf="showTitle">
+        <h3>Create a new user</h3>
+    </div>
+    <div class="col-md-6 p-2 mb-2">
+        <div class="alert alert-danger" role="alert" *ngIf="errorMessage.length > 0">
+            {{errorMessage}}
+        </div>
+        <div class="wizard-content">
+            <form class="tab-wizard wizard-circle wizard">
+                <h5>Personal Info</h5>
+                <section>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Employee ID :</label>
+                                <input type="number" class="form-control" name="employeeID" placeholder="Employee ID" 
+                                (ngModelChange)="valueChange($event)"  [(ngModel)]="newEmployee.employeeID"
+                                 required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>First Name :</label>
+                                <input type="text" class="form-control" name="firstName" placeholder="First name"  [(ngModel)]="newEmployee.firstName"
+                                required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Last Name :</label>
+                                <input type="text" class="form-control" name="lastName" placeholder="Last name"  [(ngModel)]="newEmployee.lastName"
+                                required />
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Email:</label>
+                                <input type="email" class="form-control" name="email" placeholder="Email"  [(ngModel)]="newEmployee.email"
+                                required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Phone Number :</label>
+                                <input type="number" class="form-control" name="phone" placeholder="Phone"  [(ngModel)]="newEmployee.phone"
+                                required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Password :</label>
+                                <input type="password" class="form-control" placeholder="Password"  [(ngModel)]="newEmployee.password" name="password"
+                                required />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Role :</label>
+                                <select class="custom-select form-control" name="role"  [(ngModel)]="newEmployee.role">
+                                    <option value="">Select Role</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Gender :</label>
+                                <select class="custom-select form-control" name="gender"  [(ngModel)]="newEmployee.gender">
+                                    <option value="">Select Gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Marital Status :</label>
+                                <select class="custom-select form-control" name="marital_status"  [(ngModel)]="newEmployee.marital_status">
+                                    <option value="">Select Marital Status</option>
+                                    <option value="single">single</option>
+                                    <option value="married">married</option>
+                                    <option value="domestic partnership">domestic partnership</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Country :</label>
+                                <input type="text" class="form-control" name="country" placeholder="Country"  [(ngModel)]="newEmployee.country"
+                                required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>State :</label>
+                                <input type="text" class="form-control" name="state" placeholder="State"  [(ngModel)]="newEmployee.state"
+                                required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>City :</label>
+                                <input type="text" class="form-control" name="city" placeholder="City"  [(ngModel)]="newEmployee.city"
+                                required />
+                            </div>
+                        </div>
+                    
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Address :</label>
+                                <input type="text" name="address" class="form-control" placeholder="Address"  [(ngModel)]="newEmployee.address"
+                                required />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Date of Birth :</label>
+                                <input
+                                    type="date"
+                                     [(ngModel)]="newEmployee.dob"
+                                    name="dob"
+                                    class="form-control date-picker"
+                                    placeholder="Select Date"
+                                />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Date of Employment :</label>
+                                <input
+                                    type="date"
+                                     [(ngModel)]="newEmployee.date_of_employment"
+                                    class="form-control date-picker"
+                                    name="date_of_employment"
+                                    placeholder="Select Date"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Step 2 -->
+                <h5>Employment Details </h5>
+                <section>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Job Title :</label>
+                                <input type="text" class="form-control" name="job_title"  [(ngModel)]="newEmployee.job_title" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Department:</label>
+                                <select class="custom-select form-control" name="department"  [(ngModel)]="newEmployee.department">
+                                    <option value="">Select Marital Status</option>
+                                    <option value="single">single</option>
+                                    <option value="married">married</option>
+                                    <option value="domestic partnership">domestic partnership</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Reports to :</label>
+                                <select class="custom-select form-control" name="reports_to"  [(ngModel)]="newEmployee.reports_to">
+                                    <option value="">Select Marital Status</option>
+                                    <option value="single">single</option>
+                                    <option value="married">married</option>
+                                    <option value="domestic partnership">domestic partnership</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Type of contract :</label>
+                                <select class="custom-select form-control" name="type_of_contract"  [(ngModel)]="newEmployee.type_of_contract">
+                                    <option value="">Select Type of contract</option>
+                                    <option value="Fixed">Fixed</option>
+                                    <option value="Full-time">Full-time</option>
+                                    <option value="Contract">Contract</option>
+                                    <option value="Part-time">Part-time</option>
+                                    <option value="Intern">Intern</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Working Hours :</label>
+                                <input type="number" class="form-control" name="working_hours"  [(ngModel)]="newEmployee.working_hours" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Company Full-time annual leave entitlement :</label>
+                                <input type="text" class="form-control" name="cfale"  [(ngModel)]="newEmployee.cfale" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Annual leave entitlement :</label>
+                                <input type="text" class="form-control" name="ale"  [(ngModel)]="newEmployee.ale" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Annual leave allowance :</label>
+                                <input type="text" class="form-control" name="ala"  [(ngModel)]="newEmployee.ala" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Location :</label>
+                                <input type="text" class="form-control" name="location"  [(ngModel)]="newEmployee.location" />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Probation required:</label>
+                                <select class="custom-select form-control" name="probation"  [(ngModel)]="newEmployee.probation">
+                                    <option value="">Probation required?</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Step 3 -->
+                <h5>Salary Details</h5>
+                <section>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Amount :</label>
+                                <input type="text" class="form-control" name="amount"  [(ngModel)]="newEmployee.amount" />
+                            </div>
+                            <div class="form-group">
+                                <label>Pay Type :</label>
+                                <select class="form-control" name="pay_type"  [(ngModel)]="newEmployee.pay_type">
+                                    <option>Salary</option>
+                                    <option>Hourly</option>
+                                    <option>
+                                        commission only
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Payroll Number :</label>
+                                <input type="text" class="form-control" name="payroll"  [(ngModel)]="newEmployee.payroll" />
+                            </div>
+                            <div class="form-group">
+                                <label>Pension Eligible :</label>
+                                <select class="form-control" name="pension"  [(ngModel)]="newEmployee.pension">
+                                    <option>Yes</option>
+                                    <option>No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Name on account :</label>
+                                <input
+                                    type="text"
+                                    class="form-control date-picker"
+                                    placeholder="Select Date"
+                                    name="name_of_acc"  [(ngModel)]="newEmployee.name_of_acc"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label>Name of Bank :</label>
+                                <input
+                                    class="form-control time-picker"
+                                    placeholder="Select time"
+                                    type="text"
+                                    name="name_of_bank"  [(ngModel)]="newEmployee.name_of_bank"
+                                />
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Account Num :</label>
+                                <input
+                                    type="text"
+                                    class="form-control date-picker"
+                                    placeholder="Select Date"
+                                    name="acc_num"  [(ngModel)]="newEmployee.acc_num"
+                                />
+                            </div>
+                            <div class="form-group">
+                                <label>Sort Code :</label>
+                                <input
+                                    class="form-control time-picker"
+                                    placeholder="Select time"
+                                    type="text"
+                                    name="sort_code"  [(ngModel)]="newEmployee.sort_code"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <!-- Step 4 -->
+                <h5>Remark</h5>
+                <section>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Behaviour :</label>
+                                <input type="text" class="form-control" name="behavior"  [(ngModel)]="newEmployee.behavior" />
+                            </div>
+                            <div class="form-group">
+                                <label>Confidance</label>
+                                <input type="text" class="form-control" name="confidance"  [(ngModel)]="newEmployee.confidance" />
+                            </div>
+                            <div class="form-group">
+                                <label>Result</label>
+                                <select class="form-control" name="result"  [(ngModel)]="newEmployee.result">
+                                    <option>Select Result</option>
+                                    <option>Selected</option>
+                                    <option>Rejected</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Comments</label>
+                                <textarea class="form-control" name="comments"  [(ngModel)]="newEmployee.comments"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-6 p-2 mb-2 text-center">
+        <h2 class="mb-20">Bulk Upload</h2>
+        <button class="btn btn-sm btn-outline-primary" (click)="clickedUploadFile()">Upload File</button>
+        <div class="mb-3 d-none">
+            <label for="formFile" class="form-label">Upload File</label>
+            <input class="form-control" type="file" id="formFile">
+        </div>
+    </div>
+</div>
+
+					<!-- success Popup html Start -->
+					<div
+						class="modal fade"
+						id="success-modal"
+						tabindex="-1"
+						role="dialog"
+						aria-labelledby="exampleModalCenterTitle"
+						aria-hidden="true"
+					>
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-body text-center font-18">
+									<h3 class="mb-20">Form Submitted!</h3>
+									<div class="mb-30 text-center">
+										<img src="vendors/images/success.png" />
+									</div>
+									Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+									do eiusmod
+								</div>
+								<div class="modal-footer justify-content-center">
+									<button
+										type="button"
+										class="btn btn-primary"
+										data-dismiss="modal"
+									>
+										Done
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- success Popup html End -->

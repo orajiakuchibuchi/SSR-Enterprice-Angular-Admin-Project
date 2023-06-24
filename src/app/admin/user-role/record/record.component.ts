@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-record',
@@ -6,10 +7,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./record.component.scss']
 })
 export class RecordComponent implements OnInit {
-
-  constructor() { }
+  page:string = '';
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
+    this.route
+    .data
+    .subscribe(v => this.page = v.component);
   }
 
 }

@@ -1,0 +1,85 @@
+<a href="javascript:void()" class="btn btn-primary btn-sm scroll-click"
+rel="content-y" data-toggle="collapse" role="button" aria-expanded="true" 
+data-backdrop="static" data-toggle="modal" data-target="#create-department-modal" type="button">
+<i class="fa fa-plus"></i>
+<span class="ml-2">Create</span>
+</a>
+
+<div class="modal fade" id="create-department-modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="row">
+                <div class="col-12">
+                    <div class="p-4">
+                        <div class="login-title">
+                            <h2 class="text-center text-primary">
+                                New Department
+                            </h2>
+                        </div>
+                        <form>
+                            <div class="form-group row">
+                                <label class="col-sm-12 col-md-12 col-lg-12 col-form-label">Name <span class="text-danger">*</span></label>
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <input class="form-control" [(ngModel)]="newDepartment.name" 
+                                    name="name" type="text" placeholder="Department name">
+                                </div>
+                            </div>
+                            <div class="row pb-30">
+                                <div class="col-12">
+                                    <div class="custom-control custom-checkbox">
+                                        <input
+                                            type="checkbox"
+                                            class="custom-control-input"
+                                            id="assign"
+                                            name="assign"
+                                            [(ngModel)]="newDepartment.assign"
+                                            (click)="toggleAssign($event)"
+                                        />
+                                        <label class="custom-control-label" for="assign"
+                                            >Assign Head Of Department</label
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row" *ngIf="newDepartment.assign">
+                                <label class="col-sm-12 col-md-12 col-lg-12 col-form-label">Search By First / Last name</label>
+                                <div class="col-sm-12 col-md-12 col-lg-12">
+                                    <input class="form-control" [(ngModel)]="newDepartment.search" (ngModelChange)="nameSearchChange($event)" 
+                                    name="search" type="text" placeholder="Search for user by furst or last name">
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="newDepartment.assign">
+                                <div class="col-md-12">
+                                    <mat-selection-list #shoes [style.background]="'black'" [multiple]="false">
+                                        <mat-list-option *ngFor="let user of result" (click)="newDepartment.user = user">
+                                          {{user?.firstName}}  {{user?.lastName}}
+                                        </mat-list-option>
+                                      </mat-selection-list>                               
+                                      <p>
+                                        Options selected: {{shoes.selectedOptions.selected.length}}
+                                      </p>
+                                      
+                                </div>
+                                
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 p-2">
+                                    <div class="input-group mb-0">
+                                        <a class="btn btn-success btn-block btn-sm" (click)="save($event)" type="button" href="javascript:void()">Create</a>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 p-2">
+                                    <div class="input-group mb-0">
+                                        <a class="btn btn-danger btn-block btn-sm" type="button" 
+                                        data-dismiss="modal" (click)="closeModal()" id="closeAddCompanyModal" 
+                                        href="javascript;;">Close</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

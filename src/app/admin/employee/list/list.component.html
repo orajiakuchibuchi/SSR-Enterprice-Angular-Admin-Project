@@ -1,0 +1,72 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive" *ngIf="(users$ | async) as users">
+            <div class="row">
+                <div class="col-sm-12 col-md-3">
+                    <div class="dataTables_length" id="DataTables_Table_0_length">
+                        <label>Show 
+                            <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" 
+                                    class="custom-select custom-select-sm form-control form-control-sm">
+                                        <option value="10">10</option>
+                                        <option value="25">25</option>
+                                        <option value="50">50</option>
+                                        <option value="-1">All</option>
+                                    </select>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-9">
+                    <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                        <label class="label">Search: 
+                            <input type="search" class="form-control form-control-sm" placeholder="Search" 
+                                aria-controls="DataTables_Table_0">
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <table class="data-table table nowrap" *ngIf="users.length > 0">
+                <thead>
+                    <tr>
+                        <th class="table-plus">First & Last name</th>
+                        <th>Email</th>
+                        <th>Country</th>
+                        <th>Phone</th>
+                        <th>Role</th>
+                        <!-- <th class="datatable-nosort">Actions</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of users">
+                        <td class="table-plus">
+                            <div class="name-avatar d-flex align-items-center">
+                                <div class="avatar mr-2 flex-shrink-0">
+                                    <i class="dw dw-user1"></i>
+                                </div>
+                                <div class="txt">
+                                    <div class="weight-600">{{user.firstName}} {{user?.lastName}}</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.country}}</td>
+                        <td>{{user.phone}}</td>
+                        <td>{{user.role}}</td>
+                        <!-- <td>
+                            <div class="table-actions">
+                                <a href="#" data-color="#265ed7"
+                                    ><i class="icon-copy dw dw-edit2"></i
+                                ></a>
+                                <a href="#" data-color="#e95959"
+                                    ><i class="icon-copy dw dw-delete-3"></i
+                                ></a>
+                            </div>
+                        </td> -->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center p-2" *ngIf="(users$ | async) as users">
+            <p *ngIf="users.length < 1">No user found</p>
+        </div>
+    </div>
+</div>
