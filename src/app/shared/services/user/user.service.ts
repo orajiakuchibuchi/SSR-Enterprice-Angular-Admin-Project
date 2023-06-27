@@ -180,5 +180,8 @@ export class UserService {
   setuser(user:User){
     this.user.next(user);
   }
+  getuser(){
+    return this.user.value;
+  }
 
 }

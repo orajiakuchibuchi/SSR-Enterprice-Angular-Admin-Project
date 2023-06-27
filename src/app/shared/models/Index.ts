@@ -7,6 +7,7 @@ import {Booking} from './Booking'
 import {Notification} from './Notification'
 import {Preference} from './Preference'
 import {Company} from './Company'
+import {Document} from './Document'
 import {App} from './App'
 export {
     User,
@@ -18,6 +19,7 @@ export {
     Booking,
     Notification,
     Preference,
+    Document as DocumentNode,
     App,
     GUESS
 }

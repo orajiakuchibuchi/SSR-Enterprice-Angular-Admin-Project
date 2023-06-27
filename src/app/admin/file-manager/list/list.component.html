@@ -1,0 +1,76 @@
+<div class="row">
+    <div class="col-md-12">
+        <mat-list>
+            <div mat-subheader class="d-block">
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <span class="pr-2 point">
+                            <strong *ngFor="let n of nav; let i=index">
+                                <span>{{n}}</span>
+                                <span *ngIf="i != nav.length-1"> > </span>
+                            </strong>
+                        </span>
+                    </div>
+                    <div class="col-md-6 text-right">
+
+                        <span class="pr-2 point" *ngIf="totalSelected > 0">
+                            <i class="icon-copy bi bi-folder-plus"></i> {{totalSelected}} Selected
+                        </span>
+                        <span class="pr-2 point text-danger" *ngIf="totalSelected > 0">
+                            <i class="icon-copy bi bi-trash-fill"></i> Delete
+                        </span>
+                        <!-- <span class="pr-2 point text-primary" *ngIf="!isCreating" (click)="createFolder()">
+                            <i class="icon-copy bi bi-folder-plus"></i> New Folder
+                        </span>
+                        <span class="pr-2 point text-primary" *ngIf="!isCreating" (click)="createFile()">
+                            <i class="icon-copy bi bi-file-earmark-plus-fill"></i> New File
+                        </span>
+                        <span class="pr-2 point text-success" *ngIf="isCreating" (click)="saveNew()">
+                            <i class="icon-copy bi bi-check-square-fill"></i> Save
+                        </span> -->
+                        <span class="pr-2 point text-primary" *ngIf="isCreating" (click)="cancelSelected()">
+                            <i class="icon-copy bi bi-x-square-fill"></i> Cancel New
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" [style.background]="'#021645'">
+                <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+                    <button mat-icon-button disabled></button>
+                    <mat-checkbox class="checklist-leaf-node" [checked]="checklistSelection.isSelected(node)"
+                        (change)="todoLeafItemSelectionToggle(node)">{{node.name}}</mat-checkbox>
+                </mat-tree-node>
+
+                <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
+                    <button mat-icon-button disabled></button>
+                    <mat-form-field>
+                        <mat-label>New ...</mat-label>
+                        <input matInput #itemValue placeholder="Name">
+                    </mat-form-field>
+                    <button mat-button (click)="saveNode(node, itemValue.value)">Save</button>
+                </mat-tree-node>
+
+                <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
+                    <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'Toggle ' + node.name" 
+                    [ngClass]="{'d-none': node.type == 'file'}">
+                        <mat-icon class="mat-icon-rtl-mirror">
+                            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                        </mat-icon>
+                    </button>
+                    <mat-checkbox [checked]="descendantsAllSelected(node)"
+                        [indeterminate]="descendantsPartiallySelected(node)"
+                        class="pr-2"
+                        (change)="todoItemSelectionToggle(node)">
+                    <strong class="pt-2" *ngIf="node.type == 'folder'">{{node.name}}</strong>
+                    <span class="pt-2" *ngIf="node.type == 'file'">{{node.name}}</span>
+                    </mat-checkbox>
+                    <button title="New Folder" class="pr-2 btn-sm" [ngClass]="{'d-none': node.type == 'file'}" mat-icon-button (click)="addNewItem(node, 'folder')"><mat-icon>create_new_folder</mat-icon></button>
+                    <button title="New File" class="pr-2 btn-sm" [ngClass]="{'d-none': node.type == 'file'}" mat-icon-button (click)="addNewItem(node, 'file')"><mat-icon>add</mat-icon></button>
+                    <button title="Copy Path"  class="pr-2 btn-sm" mat-icon-button><mat-icon>link</mat-icon></button>
+                    <button title="Move to trash" mat-icon-button class="text-danger btn-sm"><mat-icon>delete</mat-icon></button>
+                </mat-tree-node>
+            </mat-tree>
+        </mat-list>
+    </div>
+</div>

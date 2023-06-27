@@ -24,6 +24,10 @@ const routes: Routes = [
         loadChildren: () => import('./user-role/user-role.module').then(m => m.UserRoleModule)
       },
       {
+        path: 'file-manager',
+        loadChildren: () => import('./file-manager/file-manager.module').then(m => m.FileManagerModule)
+      },
+      {
         path: 'booking',
         loadChildren: () => import('./booking/booking.module').then(m => m.BookingModule)
       },
