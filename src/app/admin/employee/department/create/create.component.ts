@@ -9,6 +9,7 @@ declare const $:any;
 export class CreateComponent implements OnInit {
   newDepartment:any = {
     name: '',
+    id: '',
     search: '',
     user: null,
     assign: true
@@ -32,9 +33,15 @@ export class CreateComponent implements OnInit {
   }
   nameSearchChange(event:any){
     console.log(this.newDepartment.search)
-    const key = (<string>this.newDepartment.search).toLowerCase().trim()
+    const key = (<string>this.newDepartment.search).toLowerCase().trim();
+    console.log((<string>this.newDepartment.search).length)
+    console.log(key.length)
     this.result = this._us.listOfUsersValue().filter(u=>u.firstName.toLowerCase().includes(key) || u.lastName.toLowerCase().includes(key));
     console.log(this.result)
+  }
+
+  handlePassportUpload(event:any){
+    
   }
   toggleAssign(event:any){
     console.log(event.target)

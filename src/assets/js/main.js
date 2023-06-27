@@ -70,3 +70,9 @@
     
 })(jQuery);
 
+function clickId(id){
+    let elem = document.getElementById(id);
+    if(elem){
+        elem.click();
+    }
+}

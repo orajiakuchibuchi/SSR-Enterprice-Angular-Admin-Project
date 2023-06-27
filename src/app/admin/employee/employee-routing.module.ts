@@ -15,11 +15,13 @@ const routes: Routes = [
   },
   {
     path: 'all',
-    component: IndexComponent
+    component: IndexComponent,
+    data: { tab: 'View'}
   },
   {
     path: 'create',
-    component: CreateComponent
+    component: IndexComponent,
+    data: { tab: 'Create'}
   },
   {
     path: 'list',
