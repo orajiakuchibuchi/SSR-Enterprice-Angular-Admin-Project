@@ -2,26 +2,47 @@
     <div class="col-md-12">
         <div class="table-responsive" *ngIf="(users$ | async) as users">
             <div class="row">
-                <div class="col-sm-12 col-md-3">
-                    <div class="dataTables_length" id="DataTables_Table_0_length">
-                        <label>Show 
-                            <select name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" 
-                                    class="custom-select custom-select-sm form-control form-control-sm">
-                                        <option value="10">10</option>
-                                        <option value="25">25</option>
-                                        <option value="50">50</option>
-                                        <option value="-1">All</option>
-                                    </select>
-                        </label>
+                <div class="col-md-2 pt-20">
+                    <h2><strong>List Of Employees</strong></h2>
+                </div>
+                <div class="col-md-4 text-left pt-20">
+                    <div class="form-group mb-0">
+                        <input type="text" class="form-control" name="searchKey"  
+                        placeholder="Search For Employee" required />
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-9">
-                    <div id="DataTables_Table_0_filter" class="dataTables_filter">
-                        <label class="label">Search: 
-                            <input type="search" class="form-control form-control-sm" placeholder="Search" 
-                                aria-controls="DataTables_Table_0">
-                        </label>
+                <div class="col-md-2 text-left pt-20">
+                    <div class="form-group mb-0">
+                        <select class="custom-select form-control form-control-sm" 
+                        id="sort_cat_id_gender" name="gender">
+                            <option value="" selected="">Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
                     </div>
+                </div>
+                <div class="col-md-2 text-right pt-20">
+                    <div class="form-group mb-0">
+                        <select class="custom-select form-control form-control-sm" 
+                        id="sort_role_id" name="role">
+                            <option value="" selected>Role</option>
+                            <option value="name">Name</option>
+                            <option value="size">Size</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-2 text-right pt-20">
+                    <div class="form-group mb-0">
+                        <select class="custom-select form-control form-control-sm" 
+                        id="sort_cat_id" name="sort">
+                            <option value="date">Date (Recently Added)</option>
+                            <option value="name">Name</option>
+                            <option value="size">Size</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-12 pb-20">
+                    <hr>
                 </div>
             </div>
             <table class="data-table table nowrap" *ngIf="users.length > 0">

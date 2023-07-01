@@ -28,6 +28,10 @@ const routes: Routes = [
         loadChildren: () => import('./file-manager/file-manager.module').then(m => m.FileManagerModule)
       },
       {
+        path: 'recruitment',
+        loadChildren: () => import('./recruitment/recruitment.module').then(m => m.RecruitmentModule)
+      },
+      {
         path: 'booking',
         loadChildren: () => import('./booking/booking.module').then(m => m.BookingModule)
       },

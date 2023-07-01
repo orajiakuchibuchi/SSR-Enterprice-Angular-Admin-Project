@@ -1,0 +1,70 @@
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="clearfix mb-20">
+            <div class="pull-left">
+                <h4 class="text-blue h4">
+                    {{!creating ? 'List Of Job Openings' : 'Create New Job Opening '}}
+                </h4>
+            </div>
+            <div class="pull-right">
+                <a href="javascript:void()" (click)="creating = !creating" class="btn btn-primary btn-sm scroll-click" rel="content-y" data-toggle="collapse" role="button">
+                    <i class="fa fa-plus" *ngIf="!creating"></i> 
+                    {{!creating ? 'New Opening' : 'Return To List'}}
+            </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="table-responsive" *ngIf="!creating">
+            <table class="data-table table nowrap">
+                <thead>
+                    <tr>
+                        <th class="table-plus">#</th>
+                        <th class="table-plus">Created</th>
+                        <th class="table-plus">Title</th>
+                        <th>Code</th>
+                        <th>Deadline</th>
+                        <th>Status</th>
+                        <th>Public URL</th>
+                        <!-- <th>Private URL</th> -->
+                        <th class="datatable-nosort">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let opening of opening$ | async; let i=index;">
+                        <td><strong>{{i}}</strong></td>
+                        <td>{{opening.created_at | date}}</td>
+                        <td>{{opening.title}}</td>
+                        <td>{{opening.code}}</td>
+                        <td>{{opening.deadline}}</td>
+                        <td>{{opening.status}}</td>
+                        <td>
+                            <span><mat-icon>file_copy</mat-icon>  <mat-icon>open_in_new</mat-icon>                            </span>
+                            <!-- {{opening.public_url}} -->
+                        </td>
+                        <!-- <td>{{opening.private_url}}</td> -->
+                        <td>
+                            <div class="table-actions">
+                                <a href="#" data-color="#265ed7"
+                                    ><i class="icon-copy dw dw-edit2"></i
+                                ></a>
+                                <a href="#" data-color="#e95959"
+                                    ><i class="icon-copy dw dw-delete-3"></i
+                                ></a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center p-2" *ngIf="!creating">
+            <!-- <p *ngIf="users.length < 1">No user found</p> -->
+        </div>
+        <div *ngIf="creating">
+            <app-recruitment-opening-create [loadForm]="true"></app-recruitment-opening-create>
+        </div>
+    </div>
+</div>

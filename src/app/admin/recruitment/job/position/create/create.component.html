@@ -1,0 +1,278 @@
+<div class="row">
+    <div class="col-12 p-2 mb-2" *ngIf="showTitle">
+        <h3>Create A Job Position</h3>
+    </div>
+    <div class="col-md-9 p-2 mb-2 min-height-200px">
+        <div class="alert alert-danger" role="alert" *ngIf="errorMessage.length > 0">
+            {{errorMessage}}
+        </div>
+        <!-- SmartWizard html -->
+        <div id="smartwizardCreatePosition">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url}}#step-1">
+                        <div class="num">1</div>
+                        Job Info
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url}}#step-2">
+                        <span class="num">2</span>
+                        Salary Details
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url}}#step-3">
+                        <span class="num">3</span>
+                        Promotion Details
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="{{url}}#step-4">
+                        <span class="num">4</span>
+                        Review
+                    </a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
+                    <section>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label><span class="text-danger">*</span> Title: </label>
+                                            <input type="text" class="form-control" name="title"
+                                                placeholder="Position Title" (ngModelChange)="valueChange($event)"
+                                                [(ngModel)]="newJobPosition.title" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label><span class="text-danger">*</span> Code :</label>
+                                            <input type="text" class="form-control" name="code" placeholder="Position Code"
+                                                [(ngModel)]="newJobPosition.code" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label><span class="text-danger">*</span> Department:</label>
+                                            <select class="custom-select form-control" name="department"
+                                                [(ngModel)]="newJobPosition.department_id">
+                                                <option value="{{department.code}}" *ngFor="let department of departments$ | async">{{department.name}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label><span class="text-danger">*</span> Job Type:</label>
+                                            <select class="custom-select form-control" name="job_type"
+                                                [(ngModel)]="newJobPosition.job_type">
+                                                <option value="On-Site">On-Site</option>
+                                                <option value="Remote">Remote</option>
+                                                <option value="Hybrid">Hybrid</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label><span class="text-danger">*</span> Description :</label>
+                                            <angular-editor [config]="editorConfig" [placeholder]="'Enter text here...'" [(ngModel)]="newJobPosition.description"></angular-editor>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label><span class="text-danger">*</span> Responsibility :</label>
+                                            <angular-editor [config]="editorConfig" [placeholder]="'Enter text here...'" [(ngModel)]="newJobPosition.responsibility"></angular-editor>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </section>
+                </div>
+                <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2">
+                    <section>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><span class="text-danger">*</span> Base Earning :</label>
+                                    <input type="number" class="form-control" name="base_earning"
+                                        [(ngModel)]="newJobPosition.base_earning" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><span class="text-danger">*</span> Max Earning :</label>
+                                    <input type="number" class="form-control" name="max_earning"
+                                        [(ngModel)]="newJobPosition.max_earning" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><span class="text-danger">*</span> Payment Type :</label>
+                                    <select class="form-control" name="pay_type" [(ngModel)]="newJobPosition.pay_type">
+                                        <option value="salary">Salary</option>
+                                        <option value="hourly">Hourly</option>
+                                        <option value="commission">
+                                            commission only
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6" *ngIf="newJobPosition.pay_type == 'hourly'">
+                                <div class="form-group">
+                                    <label><span class="text-danger">*</span> Working Hours :</label>
+                                    <input type="number" class="form-control" name="working_hours"
+                                        [(ngModel)]="newJobPosition.working_hours" />
+                                </div>
+                            </div>
+                            <div class="col-md-6" *ngIf="newJobPosition.pay_type == 'salary'">
+                                <div class="form-group">
+                                    <label><span class="text-danger">*</span> Salary :</label>
+                                    <input type="number" class="form-control" name="salary"
+                                        [(ngModel)]="newJobPosition.salary" />
+                                </div>
+                            </div>
+                            <div class="col-md-6" *ngIf="newJobPosition.pay_type == 'commission'">
+                                <div class="form-group">
+                                    <label><span class="text-danger">*</span> Commission :</label>
+                                    <input type="number" class="form-control" name="commission"
+                                        [(ngModel)]="newJobPosition.commission" />
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
+                    <section>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><span class="text-danger">*</span> Required Documents :</label>
+                                    <select class="form-control" multiple name="required_documents"
+                                    [(ngModel)]="newJobPosition.required_documents">
+                                        <option value="No Required Document">No Required Document</option>
+                                        <option [value]="doc" *ngFor="let doc of allowableDoc">{{doc}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><span class="text-danger">*</span> Optional Documents :</label>
+                                    <select class="form-control" multiple name="optional_documents"
+                                    [(ngModel)]="newJobPosition.optional_documents">
+                                    <option value="No Optional/Additional Document Allowed">No Optional/Additional Document Allowed</option>
+                                    <option [value]="doc" *ngFor="let doc of allowableDoc">{{doc}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>{{newJobPosition.promotable ? 'Position Can be promoted ' : 'Position Cannot be promoted '}} </label>
+                                    <mat-slide-toggle value="newJobPosition.promotable ? 'primary' : 'danger'" [(ngModel)]="newJobPosition.promotable">
+                                        
+                                    </mat-slide-toggle>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div id="step-4" class="tab-pane" role="tabpanel" aria-labelledby="step-4">
+                    <section>
+                        <h4>Review</h4>
+                        <div [innerHtml]="summary"></div>
+                    </section>
+                </div>
+
+            </div>
+            <button class="btn btn-success d-none" (click)="submit()" id="createEmployeeSubmitBtnHidden">Force
+                Submit</button>
+            <button class="btn btn-success d-none" (click)="resetConfirmation()" id="resetEmployeeFormBtnHidden">Force
+                Reset</button>
+
+            <!-- Include optional progressbar HTML -->
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0"
+                    aria-valuemax="100"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 p-2 mb-2">
+        <div class="card-box height-100-p pd-20 min-height-200px">
+            <div class="d-flex justify-content-between pb-10">
+                <div class="h5 mb-0">Existing Positions</div>
+                <div class="dropdown">
+                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" data-color="#1b3133" href="javascript:void(0);" role="button" data-toggle="dropdown" style="color: rgb(27, 49, 51);">
+                        <i class="dw dw-more"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                        <a class="dropdown-item" href="javascript:void(0);" (click)="wantToSearch=!wantToSearch"><i class="dw dw-eye"></i> Search</a>
+                        <!-- <a class="dropdown-item" href="javascript:void(0);"><i class="dw dw-edit2"></i> Edit</a> -->
+                        <!-- <a class="dropdown-item" href="javascript:void(0);"><i class="dw dw-delete-3"></i> Hide</a> -->
+                    </div>
+                </div>
+            </div>
+            <div class="user-list">
+                <mat-form-field class="example-form-field">
+                    <mat-label>Search Department</mat-label>
+                    <input matInput type="text" [(ngModel)]="value">
+                    <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+                  
+                <ul>
+                    <li class="d-flex align-items-center justify-content-between">
+                        <div class="name-avatar d-flex align-items-center pr-2">
+                            <div class="txt">
+                                <span class="badge badge-pill badge-sm" data-bgcolor="#e7ebf5" data-color="#265ed7" style="color: rgb(38, 94, 215); background-color: rgb(231, 235, 245);">4 Employees</span>
+                                <div class="font-14 weight-600">HR</div>
+                                <div class="font-12 weight-500" data-color="#b2b1b6" style="color: rgb(178, 177, 182);">
+                                    Last Employeed: 20/09/2019
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cta flex-shrink-0">
+                            <a href="javascript:void(0);" class="btn btn-sm btn-outline-primary">Send Notice</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- success Popup html Start -->
+<div class="modal fade" id="danger-modal" tabindex="-1" role="dialog" aria-labelledby="Are you sure?"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center font-18">
+                <h3 class="mb-20">Are you sure?</h3>
+                <div class="mb-30 text-center">
+                    <span class="font-18">
+                        <i class="icon-copy bi bi-trash-fill"></i>
+                    </span>
+                    <span class="font-18">
+                        <i class="icon-copy bi bi-question-lg"></i>
+                    </span>
+                </div>
+                You are about to clear all existing values in the form field, including including any uploaded file
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-success" (click)="reset()" data-dismiss="modal">
+                    Yes, Reset
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- success Popup html End -->

@@ -7,13 +7,15 @@ import { CreateComponent  } from './create/create.component';
 import { ListComponent } from './list/list.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { UserRoleModule } from '../user-role/user-role.module';
+import { GalleryComponent } from './gallery/gallery.component';
 
 
 @NgModule({
   declarations: [
     CreateComponent,
     IndexComponent,
-    ListComponent
+    ListComponent,
+    GalleryComponent
   ],
   imports: [
     CommonModule,

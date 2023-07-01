@@ -34,7 +34,6 @@ export class LeftSidebarComponent implements OnInit, AfterViewInit {
   selectedApp:App| undefined;
   selectedApp$: Observable<any> = this._app.selectedApp.pipe(
     switchMap((res:any)=>{
-      console.log(res)
       let runningApp:any = res;
       if(!res){
         runningApp = this.selectedApp;
@@ -42,9 +41,7 @@ export class LeftSidebarComponent implements OnInit, AfterViewInit {
       this.selectedApp = runningApp;
       return this._us.app_Menus$.pipe(
         tap((m:any)=>{
-          console.log(this.menu.get(runningApp.id));
           this.menu.set(runningApp.id, m);
-          console.log(this.menu.get(runningApp.id));
         })
       );
     })
@@ -126,7 +123,6 @@ export class LeftSidebarComponent implements OnInit, AfterViewInit {
   
       item.unbind("click").on("click", ()=> {
         var a = $(this.accordion.nativeElement);
-        console.log(a)
         if (options.autohide) {
           a.parent()
             .parent()
@@ -177,17 +173,12 @@ export class LeftSidebarComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.selectedApp$
-    .subscribe(
-      m=>{
-        console.log(m)
-      }
-    )
+    .subscribe()
     this.setActivePage();
   }
   logout(){
     this._auth.logout().subscribe(
       res=>{
-        console.log(res);
         this._us.forgetUser();
         this.router.navigate(['']);
       }
@@ -224,15 +215,18 @@ export class LeftSidebarComponent implements OnInit, AfterViewInit {
       case 'booking':
         this.activePage = 'Booking';
         break;
+      case 'recruitment':
+        this.activePage = 'Recruitment';
+        break;
     }
     console.log(this.activePage)
   }
   navigateTo(event: any, menu:Menu){
     event.preventDefault();
     const route = menu.link;
-    console.log(event);
     if(menu.children.length > 0){
       const li = event.target.parentElement;
+      console.log(li)
       li.classList.toggle('show');
       if(li.className.includes('show')){
         li.children[1].style.display = 'block';

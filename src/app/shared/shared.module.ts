@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NotificationComponent } from './components/notification/notification.component';
 import { SitemapComponent } from './components/sitemap/sitemap.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     ReactiveFormsModule,
     MaterialExampleModule,
     FlutterwaveModule,
-    HttpClientModule
+    HttpClientModule,
+    AngularEditorModule
   ],
   exports: [
     CommonModule,
@@ -42,7 +44,8 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     HttpClientModule,
     FlutterwaveModule,
     NotificationComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    AngularEditorModule
   ]
 })
 export class SharedModule { }

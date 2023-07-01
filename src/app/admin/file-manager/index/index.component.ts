@@ -29,7 +29,6 @@ export class IndexComponent implements OnInit {
       this.tab = v.tab;
       console.log(this.tab)
       this.url = this.router.url;
-      
     });
   }
   goto(url:any, tab:string){

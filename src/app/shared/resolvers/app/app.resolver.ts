@@ -19,7 +19,6 @@ export class AppResolver implements Resolve<App> {
     return this._app.apps$.pipe(
       take(1),
       tap((res:any)=>{
-        console.log(res);
         if(localApp && localApp.id){
           let appExists = res.find((_a:App)=>_a.id == localApp.id);
           if(appExists){

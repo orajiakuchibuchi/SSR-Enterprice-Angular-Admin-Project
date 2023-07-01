@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { DepartmentService } from 'src/app/shared/services/department/department.service';
 import { UserService } from 'src/app/shared/services/user/user.service';
 declare const $:any;
 @Component({
@@ -9,7 +10,7 @@ declare const $:any;
 export class CreateComponent implements OnInit {
   newDepartment:any = {
     name: '',
-    id: '',
+    code: '',
     search: '',
     user: null,
     assign: true
@@ -17,14 +18,29 @@ export class CreateComponent implements OnInit {
   result:any[]= [];
   typesOfShoes: string[] = ['Boots', 'Clogs', 'Loafers', 'Moccasins', 'Sneakers'];
   @Output() department: EventEmitter<any> = new EventEmitter<any>();
-  constructor(private _us: UserService) { }
+  constructor(private _us: UserService, private _deptService: DepartmentService) { }
 
   ngOnInit(): void {
   }
   save(event:any){
     event.preventDefault();
-    this.department.emit(this.newDepartment);
-    $('#create-department-modal').modal('hide');
+    const submitedAt = new Date(Date.now());
+    const newDepartment = {
+      name: this.newDepartment.name,
+      code: this.newDepartment.code,
+      created_at: submitedAt,
+      updated_at: submitedAt,
+      hod: null,
+      status: 'Active'
+    };
+    if(this.newDepartment.user){
+      newDepartment.hod = this.newDepartment.user.id;
+    }
+    // this.department.emit(this.newDepartment);
+    this._deptService.add(newDepartment).subscribe(
+      res=>$('#create-department-modal').modal('hide')
+    );
+    // $('#create-department-modal').modal('hide');
     // const closeAddCompanyModal:any = document.getElementById('closeAddCompanyModal');
     // console.log(closeAddCompanyModal)
     // if(this.newDepartment.name){

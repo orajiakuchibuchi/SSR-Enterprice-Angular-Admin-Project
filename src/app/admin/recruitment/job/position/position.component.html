@@ -1,0 +1,61 @@
+<div class="page-header">
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>Job Position</h4>
+            </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="javascript:void()" [routerLink]="['/admin/employee/all']"
+                            routerLinkActive="router-link-active">Recruitment</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Job Position
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row">
+    <div class="col-12 pd-20 pt-10">
+        <div class="card card-box m-2">
+            <div class="card-body">
+                <div class="tab">
+                    <ul class="nav nav-tabs customtab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab"
+                                href="admin/recruitment/job-position#viewJobPosition" role="tab"
+                                (click)="goto('job-position#viewJobPosition', 'View')" aria-selected="true">View</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab"
+                                (click)="goto('job-position#createJobPosition', 'Create')"
+                                href="admin/recruitment/job-position#createJobPosition" role="tab"
+                                aria-selected="false">Create</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane fade" [ngClass]="{'active': tab =='View', 'show': tab =='View'}"
+                            id="viewJobPosition" role="tabpanel">
+                            <div class="pd-20">
+                                <app-recruitment-position-list></app-recruitment-position-list>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade " [ngClass]="{'active': tab =='Create', 'show': tab =='Create'}"
+                            id="createJobPosition" role="tabpanel">
+                            <div class="pd-20">
+                                <app-recruitment-position-create
+                                    [loadForm]="loadForm"></app-recruitment-position-create>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

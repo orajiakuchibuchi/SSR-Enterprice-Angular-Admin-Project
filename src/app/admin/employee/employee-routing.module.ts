@@ -6,6 +6,7 @@ import { CreateComponent as DepartmentCreateComponent } from './department/creat
 import { ListComponent as DepartmentListComponent } from './department/list/list.component';
 import { CreateComponent } from './create/create.component';
 import { ListComponent } from './list/list.component';
+import { DepartmentResolver } from 'src/app/shared/resolvers/company/department.resolver';
 
 
 const routes: Routes = [
@@ -29,7 +30,8 @@ const routes: Routes = [
   },
   {
     path: 'department',
-    component: DepartmentIndexComponent
+    component: DepartmentIndexComponent,
+    resolve: [DepartmentResolver]
   },
   {
     path: 'department/create',
@@ -37,7 +39,8 @@ const routes: Routes = [
   },
   {
     path: 'department/list',
-    component: DepartmentListComponent
+    component: DepartmentListComponent,
+    resolve: [DepartmentResolver]
   },
 ];
 

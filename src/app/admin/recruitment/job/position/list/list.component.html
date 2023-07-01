@@ -1,0 +1,47 @@
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="data-table table nowrap">
+                <thead>
+                    <tr>
+                        <th class="table-plus">Created</th>
+                        <th class="table-plus">Title</th>
+                        <th>Department</th>
+                        <th>Job Type</th>
+                        <th>Payment Method</th>
+                        <th>Base Salary</th>
+                        <th>Max Salary</th>
+                        <th class="datatable-nosort">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let position of positions$ | async">
+                        <td>{{position.created_at | date}}</td>
+                        <td>{{position.title}}</td>
+                        <td>{{position.department_id}}</td>
+                        <td>{{position.job_type}}</td>
+                        <td>{{position.pay_type}}</td>
+                        <td>{{position.base_earning}}</td>
+                        <td>{{position.max_earning}}</td>
+                        <td>
+                            <div class="table-actions">
+                                <a href="#" data-color="#265ed7"
+                                    ><i class="icon-copy dw dw-edit2"></i
+                                ></a>
+                                <a href="#" data-color="#e95959"
+                                    ><i class="icon-copy dw dw-delete-3"></i
+                                ></a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="text-center p-2">
+            <!-- <p *ngIf="users.length < 1">No user found</p> -->
+        </div>
+    </div>
+</div>

@@ -59,7 +59,6 @@ export class ListComponent implements OnInit {
        this.dataSource.data = data;
      });
    }
- 
    getLevel = (node: DocumentNodeFlatNode) => node.level;
  
    isExpandable = (node: DocumentNodeFlatNode) => node.expandable;
@@ -222,7 +221,7 @@ export class ListComponent implements OnInit {
       type: 'file'
     },
   ];
-  nav: string[] = ['Home'];
+  nav: string[] = ['Manage Files & Folders'];
   selectedDocument:any = {
     folder: [],
     file: []

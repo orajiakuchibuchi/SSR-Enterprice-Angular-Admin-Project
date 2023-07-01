@@ -1,12 +1,11 @@
 <div class="right-sidebar">
     <div class="sidebar-title">
-        <h3 class="weight-600 font-16 text-blue">
-            Sparkling Green
-            <span class="btn-block font-weight-400 font-12"
-                >Switch to other available app & services </span
-            >
-        </h3>
-        <div class="close-sidebar" data-toggle="right-sidebar-close">
+        <img
+                [src]="'assets/img/zinder_1.svg'"
+                alt=""
+                class="dark-logo lgbv"
+            />
+        <div class="close-sidebar text-white" data-toggle="right-sidebar-close">
             <i class="icon-copy ion-close-round"></i>
         </div>
     </div>
@@ -14,7 +13,9 @@
         <div class="right-sidebar-body-content">
             <div class="row" *ngIf="user$ | async as user">
                 <label class="col-sm-12 col-md-12 col-form-label">
-                    Switch Apps
+                    <span class="btn-block font-weight-400 font-12"
+                >Switch to other available app & services </span
+                >
                 </label>
                 <div class="col-6 p-2 app_item" *ngFor="let app of apps| async">
                     <div class="card bg-light bg-white card-box mn-h-100" [ngClass]="{'active': (selectedApp | async ) && (selectedApp | async )?.id == app.id}" (click)="changeApp(app)">

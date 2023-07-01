@@ -1,0 +1,227 @@
+<div class="row">
+    <div class="col-12 p-2 mb-2" *ngIf="showTitle">
+        <h3>Create A Job Position</h3>
+    </div>
+    <div class="col-md-9 p-2 mb-2 min-height-200px">
+        <div class="alert alert-danger" role="alert" *ngIf="errorMessage.length > 0">
+            {{errorMessage}}
+        </div>
+        <!-- SmartWizard html -->
+        <div id="smartwizardCreateOpening">
+            <ul class="nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url}}#step-1">
+                        <div class="num">1</div>
+                        Job Position
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url}}#step-2">
+                        <span class="num">2</span>
+                        Job Info
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url}}#step-3">
+                        <span class="num">3</span>
+                        Promotion Details
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " href="{{url}}#step-4">
+                        <span class="num">4</span>
+                        Review
+                    </a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+                <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
+                    <section>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label><span class="text-danger">*</span> <strong>Job Position:</strong> </label>
+                                            <input type="text" class="form-control" name="title"
+                                                placeholder="Search position" (ngModelChange)="nameSearchChange($event)"
+                                                [(ngModel)]="search" required />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <section class="example-section">
+                                            <label class="example-margin">Search Result:</label>
+                                            <mat-radio-group [(ngModel)]="newJobOpening.position">
+                                              <mat-radio-button class="example-margin blx" value="{{res.code}}" *ngFor="let res of result">{{res.title}}</mat-radio-button>
+                                            </mat-radio-group>
+                                          </section>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </section>
+                </div>
+                <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2">
+                    <section>
+                        <div class="row">
+                           
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><span class="text-danger">*</span> Title: </label>
+                                    <input type="text" class="form-control" name="title"
+                                        placeholder="Position Title" (ngModelChange)="valueChange($event)"
+                                        [(ngModel)]="newJobOpening.title" required />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><span class="text-danger">*</span> Code :</label>
+                                    <input type="text" class="form-control" name="code" placeholder="Position Code"
+                                        [(ngModel)]="newJobOpening.code" required />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><span class="text-danger">*</span> Deadline :</label>
+                                    <input type="date" class="form-control" name="deadline" placeholder="Position Code"
+                                        [(ngModel)]="newJobOpening.deadline" required />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><span class="text-danger">*</span> Status:</label>
+                                    <select class="custom-select form-control" name="status"
+                                        [(ngModel)]="newJobOpening.status">
+                                        <option value="Open">Open</option>
+                                        <option value="Closed">Closed</option>
+                                        <option value="Extended">Extended</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label><span class="text-danger">*</span> Description :</label>
+                                    <angular-editor [config]="editorConfig" [placeholder]="'Enter text here...'" [(ngModel)]="newJobOpening.info"></angular-editor>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
+                    <section>
+                        <div class="row">
+              
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><span class="text-danger">*</span> Public URL: </label>
+                                    <input type="text" class="form-control" name="public_url" (ngModelChange)="valueChange($event)"
+                                        [(ngModel)]="newJobOpening.public_url" required />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><span class="text-danger">*</span> Private URL :</label>
+                                    <input type="text" class="form-control" name="private_url"
+                                        [(ngModel)]="newJobOpening.private_url" required />
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div id="step-4" class="tab-pane" role="tabpanel" aria-labelledby="step-4">
+                    <section>
+                        <h4>Review</h4>
+                        <div [innerHtml]="summary"></div>
+                    </section>
+                </div>
+
+            </div>
+            <button class="btn btn-success d-none" (click)="submit()" id="createEmployeeSubmitBtnHidden">Force
+                Submit</button>
+            <button class="btn btn-success d-none" (click)="resetConfirmation()" id="resetEmployeeFormBtnHidden">Force
+                Reset</button>
+
+            <!-- Include optional progressbar HTML -->
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0"
+                    aria-valuemax="100"></div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 p-2 mb-2">
+        <div class="card-box height-100-p pd-20 min-height-200px">
+            <div class="d-flex justify-content-between pb-10">
+                <div class="h5 mb-0">Active Opening</div>
+                <div class="dropdown">
+                    <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" data-color="#1b3133" href="javascript:void(0);" role="button" data-toggle="dropdown" style="color: rgb(27, 49, 51);">
+                        <i class="dw dw-more"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
+                        <a class="dropdown-item" href="javascript:void(0);" (click)="wantToSearch=!wantToSearch"><i class="dw dw-eye"></i> Search</a>
+                        <!-- <a class="dropdown-item" href="javascript:void(0);"><i class="dw dw-edit2"></i> Edit</a> -->
+                        <!-- <a class="dropdown-item" href="javascript:void(0);"><i class="dw dw-delete-3"></i> Hide</a> -->
+                    </div>
+                </div>
+            </div>
+            <div class="user-list">
+                <mat-form-field class="example-form-field">
+                    <mat-label>Search Department</mat-label>
+                    <input matInput type="text" [(ngModel)]="value">
+                    <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                  </mat-form-field>
+                  
+                <ul>
+                    <li class="d-flex align-items-center justify-content-between">
+                        <div class="name-avatar d-flex align-items-center pr-2">
+                            <div class="txt">
+                                <span class="badge badge-pill badge-sm" data-bgcolor="#e7ebf5" data-color="#265ed7" style="color: rgb(38, 94, 215); background-color: rgb(231, 235, 245);">4 Applications</span>
+                                <div class="font-14 weight-600">Junior Developer Needed</div>
+                                <div class="font-12 weight-500" data-color="#b2b1b6" style="color: rgb(178, 177, 182);">
+                                    Status: Open
+                                </div>
+                            </div>
+                        </div>
+                        <div class="cta flex-shrink-0">
+                            <a href="javascript:void(0);" class="btn btn-sm btn-outline-primary">View</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- success Popup html Start -->
+<div class="modal fade" id="danger-modal" tabindex="-1" role="dialog" aria-labelledby="Are you sure?"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center font-18">
+                <h3 class="mb-20">Are you sure?</h3>
+                <div class="mb-30 text-center">
+                    <span class="font-18">
+                        <i class="icon-copy bi bi-trash-fill"></i>
+                    </span>
+                    <span class="font-18">
+                        <i class="icon-copy bi bi-question-lg"></i>
+                    </span>
+                </div>
+                You are about to clear all existing values in the form field, including including any uploaded file
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-success" (click)="reset()" data-dismiss="modal">
+                    Yes, Reset
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- success Popup html End -->

@@ -15,6 +15,7 @@
                 <table class="data-table table nowrap">
                     <thead>
                         <tr>
+                            <th class="table-plus"> #</th>
                             <th class="table-plus"> ID</th>
                             <th class="table-plus">Name</th>
                             <th>Head Of Department</th>
@@ -22,17 +23,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let department of departments">
+                        <tr *ngFor="let department of departments; let i=index;">
                             <td class="padleft">
-                                {{department?.id}}
+                                {{i}}
+                            </td>
+                            <td class="padleft">
+                                {{department?.code}}
                             </td>
                             <td class="padleft">{{department?.name}}</td>
-                            <td class="padleft">{{department?.user?.firstName}}</td>
+                            <td class="padleft">---</td>
                             <td>
                                 <a href="javascript:void()" class="btn btn-primary btn-sm scroll-click" rel="content-y"
                                     data-toggle="collapse" role="button" aria-expanded="true" type="button">
                                     
-                                    <span>View</span>
+                                    <span>Visit</span>
                                 </a>
                             </td>
                         </tr>

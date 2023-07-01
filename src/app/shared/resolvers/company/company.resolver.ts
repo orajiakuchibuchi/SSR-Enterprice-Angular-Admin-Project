@@ -20,7 +20,6 @@ export class CompanyResolver implements Resolve<Company[]> {
     return this._cs.getCompanysApi$.pipe(
       take(1),
       tap((res:any)=>{
-        console.log(res);
         const local = this._cs.getSessionCompany();
         if(!local && res.length > 0){
           this._cs.saveSessionCompany(res[0]);

@@ -31,7 +31,6 @@ export class RightSidebarComponent implements OnInit {
 		private _auth: AuthService) { }
   
   ngOnInit(): void {
-	console.log(this.selectedApp);
     		//Layout settings visible
 		$('[data-toggle="right-sidebar"]').on("click", function () {
 			jQuery(".right-sidebar").addClass("right-sidebar-visible");
@@ -45,13 +44,11 @@ export class RightSidebarComponent implements OnInit {
 
   }
   changeColor(preference:any){
-	console.log(preference);
 	this._ds.setPreference(preference);
   }
   logout(){
     this._auth.logout().subscribe(
       res=>{
-        console.log(res);
         this._us.forgetUser();
         this.router.navigate(['']);
       }

@@ -50,9 +50,7 @@ export class UserService {
         return this.getMenusApi().pipe(
           map((res:any)=>{
             const app:any = this._app.selectedApp.value;
-            console.log(app)
             const menusForAppndRole:any =res.filter((m:any)=>{return (m.roles == 'everyone' || u.role.includes(m.roles)) && m.app_id ==  app.id});
-            console.log(menusForAppndRole);
             this.app_menus.next(menusForAppndRole);
             return this.app_menus.value;
           }),
@@ -75,10 +73,8 @@ export class UserService {
     return this.http.post(`${this.apiUrl}/users`, user).pipe(
       map(
         (res: any) => {
-          console.log(res);
           const existingList = this.listOfUsers.getValue();
           existingList.push(res);
-          console.log(existingList)
           this.listOfUsers.next(existingList);
           return {
             status: '200',
