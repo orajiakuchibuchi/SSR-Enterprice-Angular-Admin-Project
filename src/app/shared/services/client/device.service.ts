@@ -5,7 +5,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { tap, map, shareReplay, switchMap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { UserService } from '../user/user.service';
-import { NotificationsService } from 'angular2-notifications';
+import { NotificationsService, Notification as Ang2Notification } from 'angular2-notifications';
+import { ScriptsService } from './scripts.service';
 
 
 @Injectable({
@@ -13,14 +14,17 @@ import { NotificationsService } from 'angular2-notifications';
 })
 export class DeviceService {
   apiUrl: string = environment.api;
-  private toastOptions: any = {
+  toastOptions: any = {
     timeOut: 3000,
     showProgressBar: true,
     pauseOnHover: true,
-    clickToClose: true
+    clickToClose: true,
+    maxStack: 2,
+    preventLastDuplicates: true,
   };
   private listOfNotifications: BehaviorSubject<Notification[]> = new BehaviorSubject<Notification[]>([]);
   showPageLoader: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  private _availableId: BehaviorSubject<number> = new BehaviorSubject<number>(this._sservice.generateRandomAlphanumeric(5));
   notifications$: Observable<Notification[]> = this.listOfNotifications.asObservable();
   private configuration: BehaviorSubject< Preference > = new BehaviorSubject({
     sideNavColor: ''
@@ -43,20 +47,27 @@ export class DeviceService {
       if(user.id){
         return this.getNotificationsApi(user)
       }
-      return of([])
+      return of(this.listOfNotifications.value)
     }),
-    tap((list:any[])=>{
-      this.listOfNotifications.next(list)
+    map((res:any)=>{
+      let val = this.listOfNotifications.value;
+      var ids = new Set(val.map(d => d.id));
+      var merged = [...val, ...res.filter((d:any) => !ids.has(d.id))];
+      merged.sort((a: Notification, b: Notification) => {
+        return (new Date(a.created_at)).getTime() - (new Date(b.created_at)).getTime();
+      }).reverse();
+      this.listOfNotifications.next(merged);
+      return merged;
     }),
     shareReplay()
   );
   private user$: Observable<any> = this._us.user$;
-  constructor(private http: HttpClient, private _us: UserService, private _ns: NotificationsService) { 
+  constructor(private http: HttpClient, private _sservice:ScriptsService, private _us: UserService, private _ns: NotificationsService) { 
     this.configuration;
    }
   private getNotificationsApi(user:any): Observable<any> {
     let headerParams = new HttpParams().set('user.userID', user.userID);
-    return this.http.get(`${this.apiUrl}/notifications`, {params: headerParams})
+    return this.http.get(`${this.apiUrl}/notifications`, {params: headerParams});
   }
   add(event: any) {
     return this.http.post(`${this.apiUrl}/notifications`, event).pipe(
@@ -71,7 +82,11 @@ export class DeviceService {
     )
 
   }
-
+  get availableId():number{
+    const _availableId = this._availableId.value;
+    this._availableId.next(this._sservice.generateRandomAlphanumeric(5));
+    return _availableId;
+  }
   private get localStorageSideNavColor(){
     return localStorage.getItem('_sidenavcolor');
   }
@@ -87,7 +102,7 @@ export class DeviceService {
 
 
   openSuccessNotification(title:string, content: string, clickHandler?: Function ){
-    const _fullOption = {...this.toastOptions,id: this.listOfNotifications.value.length+1}
+    const _fullOption = {...this.toastOptions,id: this.availableId}
     const toast = this._ns.success(title, content, _fullOption);
     console.log(toast);
     toast.click?.pipe
@@ -105,6 +120,57 @@ export class DeviceService {
         clickHandler();
       }
     })
+  }
+  oErrorNotification(title:string, content: string,options:Ang2Notification = this.toastOptions ){
+    this.toastOptions = {...this.toastOptions,id: this.availableId}
+    const list = this.listOfNotifications.value;
+    const user: any = this._us.getuser;
+    const today: any = new Date(Date.now());
+    list.unshift({
+      id: this.toastOptions.id,
+      title,
+      message: content,
+      status: 'unseen',
+      userID: user ? user.id : 0,
+      created_at: today,
+      updated_at: today
+    })
+    this.listOfNotifications.next(list);
+    this._ns.error(title, content, {...options,id: this.toastOptions.id});
+  }
+  oSuccessNotification(title:string, content: string, options:Ang2Notification = this.toastOptions ){
+    this.toastOptions = {...this.toastOptions,id: this.availableId}
+    const list = this.listOfNotifications.value;
+    const user: any = this._us.getuser;
+    const today: any = new Date(Date.now());
+    list.unshift({
+      id: this.toastOptions.id,
+      title,
+      message: content,
+      status: 'unseen',
+      userID: user ? user.id : 0,
+      created_at: today,
+      updated_at: today
+    })
+    this.listOfNotifications.next(list);
+    this._ns.success(title, content, {...options,id: this.toastOptions.id});
+  }
+  oInfoNotification(title:string, content: string, options:Ang2Notification = this.toastOptions ){
+    this.toastOptions = {...this.toastOptions,id: this.availableId}
+    const list = this.listOfNotifications.value;
+    const user: any = this._us.getuser;
+    const today: any = new Date(Date.now());
+    list.unshift({
+      id: this.toastOptions.id,
+      title,
+      message: content,
+      status: 'unseen',
+      userID: user ? user.id : 0,
+      created_at: today,
+      updated_at: today
+    })
+    this.listOfNotifications.next(list);
+    this._ns.info(title, content, {...options,id: this.toastOptions.id});
   }
   openInfoNotification(title:string, content: string, clickHandler?: Function ){
     const toast = this._ns.info(title, content, this.toastOptions);

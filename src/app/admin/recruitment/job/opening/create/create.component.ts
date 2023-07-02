@@ -45,17 +45,18 @@ export class CreateComponent implements OnInit, AfterViewInit, OnChanges {
     'Cover Letter',
     'Additional Document'
   ];
+  code:any = `JO-${this._script.generateRandomAlphanumeric(3)}`;
   newJobOpening: any = {
     title: '',
-    code: `JO-${this._script.generateRandomAlphanumeric(3)}`,
+    code: this.code,
     info: '',
     position: '',
     deadline: '',
     created_at: '',
     updated_at: '',
     status: '',
-    public_url: '',
-    private_url: ''
+    public_url: this.public_url,
+    private_url: this.private_url
   }
   search:string = '';
   editorConfig: AngularEditorConfig = {
@@ -276,6 +277,8 @@ export class CreateComponent implements OnInit, AfterViewInit, OnChanges {
     if (!this.formValid) {
       this._ds.openErrorNotification('Opps..', `Please reconfirm form. Some fields are required`);
     } else {
+      this.newJobOpening.public_url = this.public_url;
+      this.newJobOpening.private_url = this.private_url;
       this._js.addOpening(this.newJobOpening).subscribe(
         res=>{
           this._ds.openSuccessNotification('Position Created', 'Saving job position info to the database..');
@@ -296,6 +299,12 @@ export class CreateComponent implements OnInit, AfterViewInit, OnChanges {
       html += this._build(key,v)
     }
     return html;
+  }
+  get public_url(){
+    return `${environment.appDomain}/admin/recruitment/job-opening/preview/${this.code}`
+  }
+  get private_url(){
+    return `${environment.appDomain}/admin/recruitment/job-opening/applications/${this.code}`
   }
   private _build(key:any, v:any){
     let html:string = '';

@@ -12,6 +12,7 @@ import { CreateComponent as OpeningCreateComponent } from './job/opening/create/
 import { CreateComponent as PositionCreateComponent } from './job/position/create/create.component';
 import { ListComponent as PositionListComponent } from './job/position/list/list.component';
 import { ListComponent as OpeningListComponent } from './job/opening/list/list.component';
+import { PreviewComponent } from './job/opening/preview/preview.component';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { ListComponent as OpeningListComponent } from './job/opening/list/list.c
     PositionListComponent,
     OpeningListComponent,
     OpeningCreateComponent,
+    PreviewComponent,
   ],
   imports: [
     CommonModule,

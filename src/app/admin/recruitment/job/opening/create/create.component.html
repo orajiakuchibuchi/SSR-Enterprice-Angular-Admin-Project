@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row mt-4">
     <div class="col-12 p-2 mb-2" *ngIf="showTitle">
         <h3>Create A Job Position</h3>
     </div>
@@ -35,7 +35,7 @@
                 </li>
             </ul>
 
-            <div class="tab-content">
+            <div class="tab-content min-height-300px">
                 <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
                     <section>
                         <div class="row">
@@ -76,21 +76,14 @@
                                         [(ngModel)]="newJobOpening.title" required />
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label><span class="text-danger">*</span> Code :</label>
-                                    <input type="text" class="form-control" name="code" placeholder="Position Code"
-                                        [(ngModel)]="newJobOpening.code" required />
-                                </div>
-                            </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label><span class="text-danger">*</span> Deadline :</label>
                                     <input type="date" class="form-control" name="deadline" placeholder="Position Code"
                                         [(ngModel)]="newJobOpening.deadline" required />
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-3">
                                 <div class="form-group">
                                     <label><span class="text-danger">*</span> Status:</label>
                                     <select class="custom-select form-control" name="status"
@@ -114,18 +107,24 @@
                     <section>
                         <div class="row">
               
-                            <div class="col-md-6">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label><span class="text-danger">*</span> Code :</label>
+                                    <input type="text" class="form-control" name="code" [value]="newJobOpening.code" placeholder="Position Code" readonly/>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label><span class="text-danger">*</span> Public URL: </label>
                                     <input type="text" class="form-control" name="public_url" (ngModelChange)="valueChange($event)"
-                                        [(ngModel)]="newJobOpening.public_url" required />
+                                    [value]="public_url"  readonly required />
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label><span class="text-danger">*</span> Private URL :</label>
                                     <input type="text" class="form-control" name="private_url"
-                                        [(ngModel)]="newJobOpening.private_url" required />
+                                        [value]="private_url" readonly required />
                                 </div>
                             </div>
                         </div>

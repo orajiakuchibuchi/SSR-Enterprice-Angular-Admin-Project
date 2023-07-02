@@ -8,7 +8,8 @@ export const environment = {
   flutter_private_key: 'FLWSECK_TEST-65474a7f10fa663422b0182f9cd9ed66-X',
   api: 'http://localhost:3000',
   appName: 'Sparkling Green',
-  uploadApi: 'http://localhost:3002'
+  uploadApi: 'http://localhost:3002',
+  appDomain: 'http://localhost:5001'
 };
 
 /*

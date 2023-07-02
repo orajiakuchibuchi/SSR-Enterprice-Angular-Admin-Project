@@ -14,8 +14,8 @@
                 <div class="col-lg-3">
                     <div class="brand">
                         <a href="javascript:void()">
-                            <span class="font-9 titlText">Sparkling Green</span>
-                            <!-- <img src="assets/img/logo.png" alt="Logo"> -->
+                            <!-- <span class="font-9 titlText">Sparkling Green</span> -->
+                            <img src="assets/img/zinder_1.svg" alt="Logo" class="logo">
                         </a>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                             <div class="navbar-nav ml-auto">
                                 <a href="javascript:void()" [routerLink]="['/']" routerLinkActive="router-link-active"  class="nav-item nav-link" [ngClass]="{'active': urL == '/'}">Home</a>
                                 <a  href="javascript:void()" [routerLink]="['/about']" routerLinkActive="router-link-active" class="nav-item nav-link" [ngClass]="{'active': urL == '/about'}">About</a>
-                                <a  href="javascript:void()" [routerLink]="['/services']" routerLinkActive="router-link-active" class="nav-item nav-link" [ngClass]="{'active': urL == '/services'}">Service</a>
+                                <a  href="javascript:void()" [routerLink]="['/services']" routerLinkActive="router-link-active" class="nav-item nav-link" [ngClass]="{'active': urL == '/services'}">Our Products</a>
                                 <a href="javascript:void()" [routerLink]="['/admin']" routerLinkActive="router-link-active" class="btn" *ngIf="isloggedIn && $user | async">{{($user | async).firstName + "'s"}} Dashboard</a>
                                 <a href="javascript:void()" [routerLink]="['/auth/login']" routerLinkActive="router-link-active" class="btn" *ngIf="!isloggedIn">Book now</a>
                             </div>
@@ -58,30 +58,44 @@
             
             <div class="hero row align-items-center" id="HeroTop">
                 <div class="col-md-7">
-                    <h2>The Finest</h2>
-                    <h2><span>Organic Cleaning</span> Service</h2>
+                    <h2>The All-In-One</h2>
+                    <h2><span>Software</span> Solution</h2>
                     <p>
-                        Find local cleaners near you, request for regular or a oneoff job all within youur budget!
-
+                        Run Your Business Via Zinder Platform Or Bring Your Own Entity. 
+                        Get Started Today. 
+                        Zinder HR Systems - Everything You Need To Run a Global Workforce In One Place. 
+                        Zinder Accounting - Everything You Need To Manage Your Finances. 
+                        Zinder Assets - Everything You need To Manage & Control Your Business ASsets. 
+                        Zinder Church - An all-in-one church management system designed to help you and your team
                     </p>
-                    <a class="btn" href="javascript:void()" *ngIf="$user | async as user" [routerLink]="[isloggedIn ? '/admin/booking/all' : 'auth/register']" routerLinkActive="router-link-active">Book Now</a>
+                    <a class="btn btn-sm" href="javascript:void()" *ngIf="$user | async as user" [routerLink]="[isloggedIn ? '/admin/booking/all' : 'auth/register']" routerLinkActive="router-link-active">Book Now</a>
                 </div>
                 <div class="col-md-5">
                     <div class="form">
-                        <h3>Get A Quote</h3>
+                        <h3>Schedule A Meeting</h3>
                         <form>
-                            <input class="form-control" type="text" placeholder="Your Name">
-                            <input class="form-control" type="text" placeholder="Mobile Number">
+                            <input class="form-control" type="text" placeholder="Your Name" name="name" [(ngModel)]="meeting.name">
+                            <input class="form-control" type="number" placeholder="Mobile Number" name="phone" [(ngModel)]="meeting.phone">
+                            <input class="form-control" type="email" placeholder="Email" name="email" [(ngModel)]="meeting.email">
                             <div class="control-group">
-                                <select class="custom-select">
-                                    <option selected>Choose a service</option>
-                                    <option value="1">House Cleaning</option>
-                                    <option value="2">Apartment Cleaning</option>
-                                    <option value="3">Office Cleaning</option>
+                                <select class="custom-select" name="app" [(ngModel)]="meeting.app">
+                                    <option selected value="">App Of Interest</option>
+                                    <option [value]="app.short_name +  ' (' + app.long_name + ')'" *ngFor="let app of $apps | async">{{app.short_name +  ' (' + app.long_name + ')'}}</option>
                                 </select>
                             </div>
-                            <textarea class="form-control" placeholder="Description"></textarea>
-                            <button class="btn btn-block">Get A Quote</button>
+                            <div class="form-group row p0" [style.padding]="'0px !important'">
+								<label class="col-sm-12 col-md-4 col-form-label text-white">Preferred Date 1: </label>
+								<div class="col-sm-12 col-md-8">
+                                    <input class="form-control" type="datetime-local" [min]="today" [(ngModel)]="meeting.free_day_1" name="free_day_1">
+								</div>
+							</div>
+                            <div class="form-group row p0" [style.padding]="'0px !important'">
+								<label class="col-sm-12 col-md-4 col-form-label text-white">Preferred Date 2: </label>
+								<div class="col-sm-12 col-md-8">
+                                    <input class="form-control" type="datetime-local" [min]="today" [(ngModel)]="meeting.free_day_2" name="free_day_2">
+								</div>
+							</div>
+                            <button class="btn btn-block" (click)="submit()">Book Schedule</button>
                         </form>
                     </div>
                 </div>
@@ -91,7 +105,7 @@
     <!-- Header End -->
     
     
-    <router-outlet></router-outlet>
+    <!-- <router-outlet></router-outlet> -->
     <!-- Footer Start -->
     <client-footer></client-footer>
     <!-- Footer End -->
