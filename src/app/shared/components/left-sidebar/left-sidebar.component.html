@@ -1,4 +1,4 @@
-<div class="left-side-bar" [style.background-color]="(config$| async)?.sideNavColor">
+<div class="left-side-bar" id="left-side-bar" [style.background-color]="(config$| async)?.sideNavColor">
     <div class="brand-logo">
         <a href="javascript:void()" (click)="website($event,'admin/home')">
             <img [src]="'assets/img/zinder_1.svg'" alt="" class="dark-logo lgbv" />

@@ -1,9 +1,9 @@
-<div class="header">
+<div class="header p-2" id="header">
     <div class="header-left">
-        <div class="menu-icon bi bi-list"></div>
+        <div class="menu-icon bi bi-list" id="iclist"></div>
         <h2 class="pt-3">Z-People</h2>
         <div class="search-toggle-icon bi bi-search" data-toggle="header_search"></div>
-        <div class="header-search">
+        <div class="header-search" id="hsform">
             <form>
                 <div class="form-group mb-0">
                     <select class="custom-select form-control" id="selectCompany_header" name="company" (change)="selectCompany($event)">
@@ -18,7 +18,7 @@
             </a>
         </div>
     </div>
-    <div class="header-right">
+    <div class="header-right" id="hdrh">
         <div class="dashboard-setting user-notification">
             <div class="dropdown">
                 <a class="dropdown-toggle no-arrow" href="javascript:;" data-toggle="right-sidebar">

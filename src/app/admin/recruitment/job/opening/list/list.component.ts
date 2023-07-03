@@ -29,5 +29,8 @@ export class ListComponent implements OnInit {
     let opt = {...this._ds.toastOptions, theClass: 'welcome-modal', timeOut:3000 };
     this._ds.oSuccessNotification('Copied Job Opening URL', `${url} copied to clipboard.`, opt);
   }
+  goToLink(url: string){
+    window.open(url, "_blank");
+}
 
 }

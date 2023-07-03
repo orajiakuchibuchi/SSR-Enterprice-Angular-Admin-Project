@@ -52,8 +52,8 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card card-box m-2">
-                                    <div class="card-header"><span class="text-primary">Applications
-                                            #{{element['title']}}</span></div>
+                                    <div class="card-header"><span class="text-primary">
+                                            Application List</span></div>
                                     <div class="card-body">
                                         <div class="table-responsive" *ngIf="!creating">
                                             <table class="data-table table nowrap">
@@ -65,7 +65,6 @@
                                                         <th>Code</th>
                                                         <th>Deadline</th>
                                                         <th>Status</th>
-                                                        <th>Public URL</th>
                                                         <th class="datatable-nosort">Actions</th>
                                                     </tr>
                                                 </thead>
@@ -78,16 +77,19 @@
                                                         <td>{{opening.deadline}}</td>
                                                         <td>{{opening.status}}</td>
                                                         <td>
-                                                            <span><mat-icon>file_copy</mat-icon>
-                                                                <mat-icon>open_in_new</mat-icon> </span>
-                                                        </td>
-                                                        <td>
-                                                            <div class="table-actions">
-                                                                <a href="javascript:void()" data-color="#265ed7"><i
-                                                                        class="icon-copy dw dw-edit2"></i></a>
-                                                                <a href="javascript:void()" data-color="#e95959"><i
-                                                                        class="icon-copy dw dw-delete-3"></i></a>
-                                                            </div>
+                                                            <span> <span class="p-2 pointer" title="Copy Job Application URl">
+                                                                <button [cdkCopyToClipboard]="opening.public_url" class="bd-none" (click)="copied(opening.public_url)"><mat-icon>file_copy</mat-icon></button>
+                                                                </span>
+                                                                <span class="p-2 pointer" title="Preview/Visit In New Tab">
+                                                                    <mat-icon>open_in_new</mat-icon>
+                                                                </span>
+                                                                <span class="p-2 pointer" title="View Job Opening to update status or view more information about job">
+                                                                    <mat-icon>remove_red_eye</mat-icon>
+                                                                </span>
+                                                                <span class="p-2 pointer" title="Delete Job Info">
+                                                                    <mat-icon>delete_forever</mat-icon>
+                                                                </span>
+                                                            </span>
                                                         </td>
                                                     </tr>
                                                 </tbody>

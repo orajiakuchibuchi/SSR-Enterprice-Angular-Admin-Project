@@ -5,7 +5,7 @@ import { Department, Plan } from '../../models/Index';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { UserService } from '../user/user.service';
-import { tap, map, shareReplay, switchMap, distinctUntilChanged } from 'rxjs/operators';
+import { tap, map, shareReplay, switchMap, mergeMap, distinctUntilChanged } from 'rxjs/operators';
 import { JobPosition } from '../../models/JobPosition';
 import { JobOpening } from '../../models/JobOpening';
 
@@ -38,14 +38,41 @@ export class JobService  {
   private getJoPositionsApi(): Observable<any> {
     return this.http.get(`${this.apiUrl}/jobPositions`);
   }
+  getJobPosition(code:any): Observable<any> {
+    return this.http.get(`${this.apiUrl}/jobPositions?code=${code}`).pipe(
+      map(
+        (res:any)=>res.pop()
+      )
+    );
+  }
   private getJobOpeningsApi(): Observable<any> {
     return this.http.get(`${this.apiUrl}/jobOpenings`);
+  }
+  getJobOpening(code:any): Observable<any> {
+    return this.http.get(`${this.apiUrl}/jobOpenings?code=${code}`).pipe(
+      map(
+        (res:any)=>res.pop()
+      )
+    );
+  }
+  previewJobOpening(code:any): Observable<any> {
+    return this.getJobOpening(code).pipe(
+      mergeMap(
+        opening=>{
+          opening.views++;
+          return this.updateJobOpening(opening)
+        }
+      )
+    )
   }
   private newJobPositionApi(position:any): Observable<any> {
     return this.http.post(`${this.apiUrl}/jobPositions`, position);
   }
   private newJobOpeningApi(position:any): Observable<any> {
     return this.http.post(`${this.apiUrl}/jobOpenings`, position);
+  }
+  private updateJobOpeningApi(position:any): Observable<any> {
+    return this.http.patch(`${this.apiUrl}/jobOpenings/${position.id}`, position);
   }
   addPosition(position:any){
     return this.newJobPositionApi(position).pipe(
@@ -55,7 +82,16 @@ export class JobService  {
     )
   }
   addOpening(opening:any){
+    opening.views = 0;
+    opening.applications = 0;
     return this.newJobOpeningApi(opening).pipe(
+      tap((res:JobOpening)=>{
+        this._openings.value.unshift(res);        
+      })
+    )
+  }
+  updateJobOpening(opening:any){
+    return this.updateJobOpeningApi(opening).pipe(
       tap((res:JobOpening)=>{
         this._openings.value.unshift(res);        
       })

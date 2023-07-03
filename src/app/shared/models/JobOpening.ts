@@ -4,6 +4,8 @@ export interface JobOpening{
     code: string;
     info: string;
     position: any;
+    views:number,
+    applications:number,
     deadline: any;
     status: string;
     public_url: any;

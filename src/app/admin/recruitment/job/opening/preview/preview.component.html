@@ -1,1 +1,118 @@
-<p>preview works!</p>
+<div class="page-header">
+    <div class="row">
+        <div class="col-md-6 col-sm-12">
+            <div class="title">
+                <h4>Job Opening</h4>
+            </div>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="javascript:void()" [routerLink]="['/admin/file-manager/home']"
+                            routerLinkActive="router-link-active">Recruitment</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="javascript:void()">Job Opening</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">
+                        Ooening #{{code}}
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-12 pd-20 pt-10">
+        <div class="blog-wrap">
+            <div class="row">
+                <div class="col-md-8 col-sm-12">
+                    <div class="blog-detail card-box overflow-hidden mb-30">
+                        <div class="blog-img">
+                            <img src="assets/img/zinder_1.svg" class="card-img-top" alt="" />
+                        </div>
+                        <div class="blog-caption" *ngIf="opening | async as open">
+                            <h2 class="mb-10" >
+                                {{open.title}}
+                            </h2>
+                            <div [innerHTML]="open.info" class="text-primary"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-12">
+                    <div class="card-box mb-30">
+                        <h5 class="pd-20 h5 mb-0">Opening Info</h5>
+                        <div class="list-group" *ngIf="opening | async as open">
+                            <a
+                                href="javascript:void()"
+                                class="list-group-item d-flex align-items-center justify-content-between"
+                                >Views
+                                <span class="badge badge-primary badge-pill">{{open.views}}</span></a
+                            >
+                            <a
+                                href="javascript:void()"
+                                class="list-group-item d-flex align-items-center justify-content-between"
+                                >Job Position
+                                <span class="badge badge-primary badge-pill" *ngIf="position | async as pos">{{pos.title}}</span></a
+                            >
+                            <a
+                                href="javascript:void()"
+                                class="list-group-item d-flex align-items-center justify-content-between"
+                                >Deadline
+                                <span class="badge badge-primary badge-pill"
+                                    >{{open.deadline}}</span
+                                ></a
+                            >
+                            <a
+                                href="javascript:void()"
+                                class="list-group-item d-flex align-items-center justify-content-between"
+                                >Status
+                                <span class="badge badge-primary badge-pill">{{open.status}}</span></a
+                            >
+                            <a
+                                href="javascript:void()"
+                                class="list-group-item d-flex align-items-center justify-content-between active"
+                                >Interested?
+                                <span class="badge badge-primary badge-pill" *ngIf="opening | async as open">Apply Now</span></a
+                            >
+                        </div>
+                    </div>
+                    <div class="card-box mb-30">
+                        <h5 class="pd-20 h5 mb-0">FAQ</h5>
+                        <div class="latest-post">
+                            <ul>
+                                <li>
+                                    <h4>
+                                        <a href="javascript:void()"
+                                            >Learn About Zinder H-R Enterprise Solution</a
+                                        >
+                                    </h4>
+                                    <span>Zinder Platform</span>
+                                </li>
+                                <li>
+                                    <h4>
+                                        <a href="javascript:void()"
+                                            >Report this post</a
+                                        >
+                                    </h4>
+                                    <span>Zinder Support</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-box overflow-hidden">
+                        <h5 class="pd-20 h5 mb-0">Other Job Opening</h5>
+                        <div class="list-group">
+                            <a
+                                href="javascript:void()"
+                                class="list-group-item d-flex align-items-center justify-content-between"
+                                >Snr Developer Needed </a
+                            >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

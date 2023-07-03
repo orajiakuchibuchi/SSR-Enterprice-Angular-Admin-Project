@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import { shareReplay,tap } from 'rxjs/operators';
 import { JobOpening } from 'src/app/shared/models/JobOpening';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import { DeviceService } from 'src/app/shared/services/client/device.service';
 
 @Component({
   selector: 'app-recruitment-application-list',
@@ -31,13 +32,17 @@ export class ListComponent implements OnInit {
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement: JobOpening | null = null;
 
-  constructor(private _js: JobService) { }
+  constructor(private _js: JobService, private _ds: DeviceService) { }
 
   ngOnInit(): void {
     this.opening$.subscribe()
   }
   translate(key:string){
     return `${key.replace('_', ' ')}`;
+  }
+  copied(url:string){
+    let opt = {...this._ds.toastOptions, theClass: 'welcome-modal', timeOut:3000 };
+    this._ds.oSuccessNotification('Copied Job Opening URL', `${url} copied to clipboard.`, opt);
   }
 
 }

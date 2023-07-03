@@ -43,7 +43,7 @@
                                     <span> <span class="p-2 pointer" title="Copy Job Application URl">
                                         <button [cdkCopyToClipboard]="opening.public_url" class="bd-none" (click)="copied(opening.public_url)"><mat-icon>file_copy</mat-icon></button>
                                         </span>
-                                        <span class="p-2 pointer" title="Preview/Visit In New Tab">
+                                        <span class="p-2 pointer" title="Preview/Visit In New Tab" (click)="goToLink(opening.public_url)">
                                             <mat-icon>open_in_new</mat-icon>
                                         </span>
                                         <span class="p-2 pointer" title="View Job Opening to update status or view more information about job">
