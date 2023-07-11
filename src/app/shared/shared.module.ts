@@ -9,7 +9,7 @@ import { NotificationComponent } from './components/notification/notification.co
 import { SitemapComponent } from './components/sitemap/sitemap.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
-
+import {NgxPaginationModule} from 'ngx-pagination'; 
 
 @NgModule({
   declarations: [
@@ -29,7 +29,8 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     MaterialExampleModule,
     FlutterwaveModule,
     HttpClientModule,
-    AngularEditorModule
+    AngularEditorModule,
+    NgxPaginationModule
   ],
   exports: [
     CommonModule,
@@ -45,7 +46,8 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     FlutterwaveModule,
     NotificationComponent,
     NotFoundComponent,
-    AngularEditorModule
+    AngularEditorModule,
+    NgxPaginationModule
   ]
 })
 export class SharedModule { }

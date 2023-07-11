@@ -10,18 +10,22 @@ import {Company} from './Company'
 import {Document} from './Document'
 import {Department} from './Department'
 import {App} from './App'
+import {File} from './File'
+import {JobApplication} from './JobApplication'
 export {
+    App,
+    File,
     User,
     Role,
+    Plan,
+    Menu,
+    GUESS,
     Script,
     Company,
-    Menu,
-    Plan,
     Booking,
-    Notification,
     Preference,
     Department,
+    Notification,
+    JobApplication,
     Document as DocumentNode,
-    App,
-    GUESS
 }

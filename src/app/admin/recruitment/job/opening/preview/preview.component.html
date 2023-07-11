@@ -14,7 +14,7 @@
                         <a href="javascript:void()">Job Opening</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        Ooening #{{code}}
+                        Job ID #{{code}}
                     </li>
                 </ol>
             </nav>
@@ -33,84 +33,98 @@
                             <img src="assets/img/zinder_1.svg" class="card-img-top" alt="" />
                         </div>
                         <div class="blog-caption" *ngIf="opening | async as open">
-                            <h2 class="mb-10" >
+                            <h2 class="mb-10">
                                 {{open.title}}
                             </h2>
                             <div [innerHTML]="open.info" class="text-primary"></div>
+                            <div *ngIf="position | async as pos" [innerHTML]="pos.info" class="text-primary"></div>
+                            <div *ngIf="position | async as pos" [innerHTML]="pos.description" class="text-primary">
+                            </div>
+                            <div *ngIf="position | async as pos" [innerHTML]="pos.responsibility" class="text-primary">
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-12">
                     <div class="card-box mb-30">
-                        <h5 class="pd-20 h5 mb-0">Opening Info</h5>
+                        <h3 class="pd-20 h3 mb-0">Opening Records</h3>
                         <div class="list-group" *ngIf="opening | async as open">
-                            <a
-                                href="javascript:void()"
-                                class="list-group-item d-flex align-items-center justify-content-between"
-                                >Views
-                                <span class="badge badge-primary badge-pill">{{open.views}}</span></a
-                            >
-                            <a
-                                href="javascript:void()"
-                                class="list-group-item d-flex align-items-center justify-content-between"
-                                >Job Position
-                                <span class="badge badge-primary badge-pill" *ngIf="position | async as pos">{{pos.title}}</span></a
-                            >
-                            <a
-                                href="javascript:void()"
-                                class="list-group-item d-flex align-items-center justify-content-between"
-                                >Deadline
-                                <span class="badge badge-primary badge-pill"
-                                    >{{open.deadline}}</span
-                                ></a
-                            >
-                            <a
-                                href="javascript:void()"
-                                class="list-group-item d-flex align-items-center justify-content-between"
-                                >Status
-                                <span class="badge badge-primary badge-pill">{{open.status}}</span></a
-                            >
-                            <a
-                                href="javascript:void()"
+                            <a href="javascript:void()"
                                 class="list-group-item d-flex align-items-center justify-content-between active"
-                                >Interested?
-                                <span class="badge badge-primary badge-pill" *ngIf="opening | async as open">Apply Now</span></a
-                            >
+                                *ngIf="position | async as pos">Job Position
+                                <span class="badge badge-primary badge-pill">{{pos.title}}</span></a>
+
+                            <a href="javascript:void()"
+                                class="list-group-item d-flex align-items-center justify-content-between">Views
+                                <span class="badge badge-primary badge-pill">{{open.views}}</span></a>
+                            <a href="javascript:void()"
+                                class="list-group-item d-flex align-items-center justify-content-between">Deadline
+                                <span class="badge badge-primary badge-pill"
+                                    [ngClass]="{'bg-danger': inpast(open.deadline)}">{{open.deadline}}</span></a>
+                            <a href="javascript:void()"
+                                class="list-group-item d-flex align-items-center justify-content-between">Status
+                                <span class="badge badge-primary badge-pill"
+                                    [ngClass]="{'bg-danger': inpast(open.deadline)}">{{open.status}}</span></a>
+                            <a href="javascript:void()" *ngIf="!inpast(open.deadline)" (click)="loadForm = true"
+                                class="list-group-item d-flex align-items-center justify-content-between "
+                                id="applyNowModalBtn"
+                                [ngClass]="{'active': (!inpast(open.deadline) && !application)}" data-toggle="modal"
+                                data-target="#bd-example-modal-lg">
+                                <span class="sls">{{application ? application?.public_url : 'Interested?'}}</span>
+                                <span class="badge badge-primary badge-pill" *ngIf="!application"
+                                    (click)="loadForm = !loadForm">Apply Now</span>
+                                <span class="badge badge-primary badge-pill" *ngIf="application">Applied</span>
+                            </a>
                         </div>
                     </div>
-                    <div class="card-box mb-30">
+
+                    <div class="card-box overflow-hidden mb-30" *ngIf="availableOpenings | async as opens">
+                        <h5 class="pd-20 h5 mb-0">Other Job Openings</h5>
+                        <div class="list-group" *ngFor="let opn of opens">
+                            <a href="{{opn.public_url}}" target="_blank"
+                                class="list-group-item d-flex align-items-center justify-content-between">
+                                Closing {{opn.deadline | date}}: {{opn.title}}</a>
+                        </div>
+                    </div>
+                    <div class="card-box ">
                         <h5 class="pd-20 h5 mb-0">FAQ</h5>
                         <div class="latest-post">
                             <ul>
                                 <li>
                                     <h4>
-                                        <a href="javascript:void()"
-                                            >Learn About Zinder H-R Enterprise Solution</a
-                                        >
+                                        <a href="javascript:void()">Learn About Zinder H-R Enterprise Solution</a>
                                     </h4>
                                     <span>Zinder Platform</span>
                                 </li>
                                 <li>
                                     <h4>
-                                        <a href="javascript:void()"
-                                            >Report this post</a
-                                        >
+                                        <a href="javascript:void()">Report this post</a>
                                     </h4>
                                     <span>Zinder Support</span>
                                 </li>
                             </ul>
                         </div>
                     </div>
-                    <div class="card-box overflow-hidden">
-                        <h5 class="pd-20 h5 mb-0">Other Job Opening</h5>
-                        <div class="list-group">
-                            <a
-                                href="javascript:void()"
-                                class="list-group-item d-flex align-items-center justify-content-between"
-                                >Snr Developer Needed </a
-                            >
-                        </div>
-                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade bs-example-modal-lg" id="bd-example-modal-lg" tabindex="-1" role="dialog"
+        aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myLargeModalLabel">
+                        Apply
+                    </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                        ×
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <app-opening-apply [loadForm]="loadForm" [position]="position | async" [opening]="opening | async"
+                        (hasSaved)="hasSavedApplicatin($event)" (hasSavedForm)="hasSavedApplicatinForm($event)"
+                        [routeCode]="code"></app-opening-apply>
                 </div>
             </div>
         </div>

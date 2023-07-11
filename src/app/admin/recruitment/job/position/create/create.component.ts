@@ -42,7 +42,7 @@ export class CreateComponent implements OnInit, AfterViewInit, OnChanges {
   allowableDoc: string[] = [
     'CV',
     'Resume',
-    'Cover Letter',
+    'Cover Letter Upload',
     'Additional Document'
   ];
   newJobPosition: any = {

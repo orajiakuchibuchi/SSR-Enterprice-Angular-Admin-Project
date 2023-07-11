@@ -17,4 +17,11 @@ export class FileService {
       })
     )
   }
+  _upload(fileForm: any){
+    return this.http.post(`${this.apiUrl}/upload-v2`, fileForm).pipe(
+      map((response:any)=>{
+        return {...response, file: `${this.apiUrl}${response.uploadPath}`}
+      })
+    )
+  }
 }

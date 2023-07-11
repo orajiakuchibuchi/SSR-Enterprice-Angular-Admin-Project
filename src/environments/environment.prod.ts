@@ -6,5 +6,5 @@ export const environment = {
   // api: 'https://node-data-server.echelinks.com',
   appName: 'Sparkling Green',
   uploadApi: 'https://node-file-server.echelinks.com',
-  appDomain: 'http://localhost:5001'
+  appDomain: 'https://zinder.onrender.com'
 };

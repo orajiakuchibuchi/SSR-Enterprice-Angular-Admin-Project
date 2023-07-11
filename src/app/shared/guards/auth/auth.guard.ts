@@ -17,8 +17,11 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       this.setsessionAuthToken = this._auth.sessionAuth;
       if(!this.setsessionAuthToken){
-        this.router.navigate(['auth/login']);
-        return false;
+        const url = window.location.href.split("/");
+        if(url.length > 6 && url[4] != 'recruitment' && url[5] != 'job-opening' && url[6] != 'preview'){
+          this.router.navigate(['auth/login']);
+          return false;
+        }
       }
     return true;
   }

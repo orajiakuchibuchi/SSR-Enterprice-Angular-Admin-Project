@@ -15,6 +15,9 @@ import { ListComponent as PositionListComponent } from './job/position/list/list
 import { ListComponent as OpeningListComponent } from './job/opening/list/list.component';
 import { ListComponent as ApplicationListComponent } from './job/application/list/list.component';
 import { PreviewComponent } from './job/opening/preview/preview.component';
+import { ApplyComponent } from './job/opening/preview/apply/apply.component';
+import { SearchComponent } from './job/opening/preview/search/search.component';
+import { ViewComponent } from './job/application/view/view.component';
 
 
 @NgModule({
@@ -29,6 +32,9 @@ import { PreviewComponent } from './job/opening/preview/preview.component';
     ApplicationListComponent,
     OpeningCreateComponent,
     PreviewComponent,
+    ApplyComponent,
+    SearchComponent,
+    ViewComponent,
   ],
   imports: [
     CommonModule,

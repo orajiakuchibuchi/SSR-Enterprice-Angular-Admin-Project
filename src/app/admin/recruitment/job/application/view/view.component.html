@@ -1,0 +1,110 @@
+<span class="p-2 pointer" (click)="view()" title="View" data-toggle="modal" [attr.data-target]="'#bs-example-modal-lg-'+ application?.code">
+    <small><mat-icon>remove_red_eye</mat-icon></small>
+</span>
+<div class="modal fade bs-example-modal-xl" id="bg-job-app-lg" tabindex="-1" role="dialog"
+    aria-labelledby="myLargeModalLabel" aria-hidden="true" [attr.id]="'bs-example-modal-lg-'+application?.code">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myLargeModalLabel">
+                    Application #{{application?.code}}
+                </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                    ×
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="p-2">
+                            <div class="card card-box">
+								<div class="card-header">
+                                    Information
+                                </div>
+								<div class="card-body">
+                                    <div class="max-height-300 min-height-300px">
+                                        <p>
+                                            <span class="text-success">{{application?.firstName}} </span>
+                                            <span class="text-success">{{application?.lastName}}</span>
+                                            <span class="text-primary"> from </span>
+                                            <span class="text-success">{{application?.country}}</span>
+                                            <span class="text-primary"> applied on </span>
+                                            <span class="text-success">{{application?.created_at | date}}</span>
+                                            <span class="text-primary"> with the phone number </span>
+                                            <span class="text-success">{{application?.phone}}</span>
+                                            <span class="text-primary"> and email </span>
+                                            <span class="text-success">{{application?.email}}.</span>
+                                            <span class="text-primary"> This job was last updated on </span>
+                                            <span class="text-success">{{application?.updated_at | date}}</span>
+                                            <span class="text-primary">. Current status: </span>
+                                            <span class="text-success">{{application?.status}}</span>
+                                        </p>
+                                        <p>Referred By: {{application?.referredBy}}</p>
+                                        <p>Public url: {{application?.public_url}}</p>
+                                    </div>
+								</div>
+							</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-2">
+                            <div class="card card-box">
+								<div class="card-header">
+                                    Cover Letter
+                                </div>
+								<div class="card-body">
+                                    <div class="max-height-300 min-height-300px scr">
+                                        <div [innerHTML]="application?.coverLetterTypeContent"></div>
+                                    </div>
+                                </div>
+							</div>
+                            
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <hr>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card card-box">
+                            <div class="card-header">
+                                Job Status
+                            </div>
+                            <div class="card-body">
+                                <select class="custom-select form-control" name="status" >
+                                    <option value="Open">Viewed</option>
+                                    <option value="Closed">Pending Interview Acceptance</option>
+                                    <option value="Closed">Accepted Interview</option>
+                                    <option value="Closed">Passed Interview</option>
+                                    <option value="Extended">Failed Interview</option>
+                                    <option value="Extended">Rejected</option>
+                                    <option value="Extended">Accepted</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="card card-box">
+                            <div class="card-header">
+                                Message
+                            </div>
+                            <div class="card-body">
+                                <angular-editor [config]="editorConfig" [placeholder]="'Dear '+application?.firstName+ '...'" [(ngModel)]="response"></angular-editor>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">
+                    <small><mat-icon>reply</mat-icon></small>
+                </button> -->
+                <button type="button" class="btn btn-sm btn-danger" *ngIf="application?.status == 'submitted'">
+                    Reject
+                </button>
+                <button type="button" class="btn btn-sm btn-primary" *ngIf="application?.status == 'submitted'">
+                    <small><mat-icon>reply</mat-icon></small> <span>Request Interview</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

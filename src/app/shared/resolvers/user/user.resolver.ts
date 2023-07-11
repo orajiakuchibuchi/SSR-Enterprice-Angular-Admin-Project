@@ -26,7 +26,10 @@ export class UserResolver implements Resolve<User> {
           this._us.setuser(res)
         }else{
           this._auth.clearsessionAuth();
-          this.router.navigate(['auth/login']);
+          const url = window.location.href.split("/");
+          if(url.length > 6 && url[4] != 'recruitment' && url[5] != 'job-opening' && url[6] != 'preview'){
+            this.router.navigate(['auth/login']);
+          }
         }
       })
     );
