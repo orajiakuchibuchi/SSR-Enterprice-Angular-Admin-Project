@@ -16,7 +16,7 @@ export class PricingComponent implements OnInit {
   plans$: Observable<Plan[]> = this.ps.getPlansApi$;
   isadmin: Observable<any> = this._us.user$.pipe(
 		map((user:User)=>{
-			return user && user.role && (<string[]>user.role).includes('Admin')
+			return user && user.role && ((<string[]>user.role).includes('Admin') || (<string[]>user.role).includes('Master'))
 		})
 	)
   constructor(private ps: PlanService, private _us: UserService) { }
@@ -114,11 +114,12 @@ export class PricingComponent implements OnInit {
         break;
       
       case 'suggestion': 
-        this.newPlan.suggestion.status = value.length < 50;
+        console.log(value.length)
+        this.newPlan.suggestion.status = value.length < 100;
         if(this.newPlan.suggestion.status){
           this.newPlan.suggestion.message = 'Suggestion accepted!';
         }else{
-          this.newPlan.suggestion.message = 'Suggestion must be less than 50 characters (Brief highlight)';
+          this.newPlan.suggestion.message = 'Suggestion must be less than 100 characters (Brief highlight)';
         }
         break;
       case 'amount': 
