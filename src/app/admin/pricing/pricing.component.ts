@@ -150,8 +150,13 @@ export class PricingComponent implements OnInit {
           this.newPlan.name.message = 'Plan with name exists';
           this.newPlan.name.status =false;
         }else{
-          this.ps.add(plan);
-          this.newPlan = this.planReset;
+          this.ps.add(plan).subscribe(
+            p=>{
+              console.log(p);
+              this.newPlan = this.planReset;
+            }
+          );
+          
         }
       }
     )

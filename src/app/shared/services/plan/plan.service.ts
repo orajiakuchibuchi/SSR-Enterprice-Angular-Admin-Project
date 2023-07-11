@@ -41,17 +41,15 @@ export class PlanService {
     return this.http.get(`${this.apiUrl}/plans`)
   }
   add(plan:any){
-    
-    this.listOfPlans.value.unshift(
-      {
-        ...plan,
-        id: this.listOfPlans.value.length + 1 
-      }
+    return this.http.post(`${this.apiUrl}/plans`, plan).pipe(
+      tap((evnt:any)=>{
+        this.listOfPlans.value.unshift(evnt);
+        this.listOfPlans.next(
+          [
+            ...this.listOfPlans.value
+          ]
+        )
+      })
     );
-    this.listOfPlans.next(
-      [
-        ...this.listOfPlans.value
-      ]
-    )
   }
 }

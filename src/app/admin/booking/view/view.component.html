@@ -18,8 +18,14 @@
             </div>
             <div class="modal-body">
                 <div class="pd-20 card-box">
-                    <h4 class="mb-30 h4">{{booking?.name}}, {{booking?.postal}} , {{booking?.country}}</h4>
-                    <dl class="row">
+                    <h4 class="mb-30 h4"><mat-icon> location_on</mat-icon> {{booking?.name}}, {{booking?.postal}} , {{booking?.country}}</h4>
+                    <p class="text-dark p-10">
+                        <small>
+                            This Order was booked at {{booking?.created_at | date}} of current status {{ booking?.status}} starts at {{ booking?.start | date}} ending at {{ booking?.end | date}} frequently {{booking?.frequency}} and was last updated at {{booking?.updated_at | date}} Booking Description {{booking?.description}} Address: {{booking?.name}}, {{booking?.postal}} , {{booking?.country}}
+                        </small>
+                    </p>
+                    <hr>
+                    <!-- <dl class="row">
                         <dt class="col-sm-3">Created At</dt>
                         <dd class="col-sm-9">
                             {{booking?.created_at | date}}
@@ -78,9 +84,9 @@
                                 {{booking?.description}}
                             </span>
                         </dd>
-                    </dl>
+                    </dl> -->
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="card card-box">
                                 <img class="card-img-top mx-h-300" src="assets/img/team-1.jpg" alt="Card image cap">
                                 <div class="card-body">
@@ -91,12 +97,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-8">
 
                             <div class="form-group">
-                                <label>{{(isAdmin | async) ? 'Booking Status': 'Request update'}}</label>
+                                <label>{{(isAdmin | async) ? 'Booking Status': 'Booking Request'}}</label>
                                 <select class="form-control" *ngIf="cleaners$ | async as cleaners" name="cleaner"
-                                    [(ngModel)]="booking.status">
+                                    [(ngModel)]="bstatus">
                                     <option [value]="booking.status  | titlecase" selected>{{booking.status |
                                         titlecase}}</option>
                                     <option [value]="stat" *ngFor="let stat of statList">{{ stat | titlecase }}</option>
@@ -105,7 +111,8 @@
 
                             <div class="form-group">
                                 <label>Message</label>
-                                <textarea class="form-control" name="message" rows="3" cols="3" placeholder="Optional Message"></textarea>
+                                <textarea [(ngModel)]="booking.request" class="form-control" name="message" rows="3" cols="3" placeholder="Optional Message"></textarea>
+                                <p>Must be up to 10 characters</p>
                             </div>
                         </div>
                     </div>
@@ -121,19 +128,16 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">
-                    Close
-                </button>
                 <button type="button" class="btn btn-sm" [ngClass]="{'btn-outline-danger': !confirmed, 'btn-danger':confirmed}"
                     *ngIf="isAdmin | async as admin">
                     <a href="javascript:void()" data-color="#ffffff" class="text-dark" (click)="confirmed = true" *ngIf="!confirmed"><i class="icon-copy dw dw-delete-3"></i> Delete</a>
                     <a href="javascript:void()" data-color="#ffffff" class="text-white" data-dismiss="modal" (click)="deleteBooking($event)" *ngIf="confirmed"><i class="icon-copy dw dw-delete-3"></i> Yes, I want to delete</a>
                 </button>
-                <a *ngIf="user$ | async as user"
-                    href="mailto:{{user.email}}?Subject=My Booking #{{booking.id}}&body=Order was booked at {{booking?.created_at | date}} of current status {{ booking?.status}} starts at {{ booking?.start | date}} ending at {{ booking?.end | date}} frequently {{booking?.frequency}} and was last updated at {{booking?.updated_at | date}} \n Booking Description {{booking?.description}} \nAddress: {{booking?.name}}, {{booking?.postal}} , {{booking?.country}}"
-                    type="button" class="btn btn-primary text-white btn-sm" target="_top">Mail Invoice</a>
-                <button type="button" class="btn btn-success btn-sm" (click)="updateBooking()">
-                    Update
+                    <span *ngIf="dispCounter && !dispCounter.response" class="text-secondary">Sending Email...</span>
+                    <span *ngIf="dispCounter && dispCounter.response" class="text-success">{{dispCounter.message}}</span>
+                <button *ngIf="(user$ | async) && !dispCounter"  type="button" class="btn btn-primary text-white btn-sm" (click)="mailInvoice()">Email Invoice</button>
+                <button type="button" class="btn btn-success btn-sm" *ngIf="!(isAdmin | async ) && booking.request && booking.request.length > 10" (click)="updateBooking()">
+                    Submit
                 </button>
             </div>
         </div>

@@ -108,7 +108,7 @@
                             <select class="form-control" name="pricing" (ngModelChange)="setAmount($event)" [(ngModel)]="newBooking.pricing">
                                 <option value="" selected>Select Pricing</option>
                                 <option [value]="plan.id" *ngFor="let plan of plans$ | async">
-                                    {{plan.name}}
+                                    {{plan.name}} £{{plan.amount}} per hour
                                 </option>
                             </select>
                         </div>

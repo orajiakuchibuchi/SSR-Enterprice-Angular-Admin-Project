@@ -10,6 +10,7 @@ export interface Booking {
     end: Date | string;
     description: string;
     frequency: string;
+    request: any;
     color: string;
     date:string;
     icon: string;

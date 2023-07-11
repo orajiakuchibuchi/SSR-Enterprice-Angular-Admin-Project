@@ -33,6 +33,7 @@ export class DeviceService {
     shareReplay()
   );
   apiUrl: string = environment.api;
+  emailApiUrl: string = environment.emailApi;
   private user$: Observable<any> = this._us.user$;
   constructor(private http: HttpClient, private _us: UserService, private _ns: NotificationsService) {  }
   private getNotificationsApi(user:any): Observable<any> {
@@ -48,6 +49,14 @@ export class DeviceService {
             ...this.listOfNotifications.value
           ]
         )
+      })
+    )
+
+  }
+  mail(event: any) {
+    return this.http.post(`${this.emailApiUrl}`, event).pipe(
+      tap((evnt:any)=>{
+        console.log(evnt)
       })
     )
 
